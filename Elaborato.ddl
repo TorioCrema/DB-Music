@@ -85,7 +85,7 @@ create table FIRMATARIO (
 
 create table FornituraMerch (
      Codice numeric(10) not null,
-     QtaProdotta numeric(4) not null,
+     QtaProdotta numeric(10) not null,
      PrezzoFornituraUnitario numeric(3) not null,
      ID_Produttore numeric(10) not null,
      constraint FKFor_MER_ID primary key (Codice));
@@ -124,7 +124,7 @@ create table PRODOTTO (
      Nome varchar(20) not null,
      Descrizione varchar(50) not null,
      Prezzo numeric(6,2) not null,
-     QtaProdotta numeric(4) not null,
+     QtaProdotta numeric(10) not null,
      DataUscita date not null,
      Tipo varchar(10) not null,
      Formato numeric(2),
