@@ -34,7 +34,7 @@ create table ALBUM (
 
 create table BIGLIETTO (
      ID_Biglietto numeric(10) not null,
-     Costo numeric(4,2) not null,
+     Costo numeric(6,2) not null,
      Descrizione varchar(50) not null,
      DispTot numeric(5) not null,
      NumVenduti numeric(5) not null,
@@ -60,7 +60,7 @@ create table CONCERTO (
 
 create table CONTRATTO (
      Codice numeric(20) not null,
-     Importo numeric(10,2) not null,
+     Importo numeric(12,2) not null,
      DataInizio date not null,
      DataFine date not null,
      ID_Firmatario numeric(10) not null,
@@ -92,7 +92,7 @@ create table FornituraMerch (
 
 create table FornituraProdotto (
      Codice numeric(10) not null,
-     Costo numeric(7,2) not null,
+     Costo numeric(9,2) not null,
      ID_Produttore numeric(10) not null,
      constraint FKFor_PRO_1_ID primary key (Codice));
 
@@ -105,7 +105,7 @@ create table LUOGO (
 create table MERCHANDISING (
      Codice numeric(10) not null,
      Descrizione varchar(50) not null,
-     Prezzo numeric(4,2) not null,
+     Prezzo numeric(6,2) not null,
      ID_Progetto numeric(10) not null,
      constraint ID_MERCHANDISING_ID primary key (Codice));
 
@@ -123,7 +123,7 @@ create table PRODOTTO (
      Codice numeric(10) not null,
      Nome varchar(20) not null,
      Descrizione varchar(50) not null,
-     Prezzo numeric(4,2) not null,
+     Prezzo numeric(6,2) not null,
      QtaProdotta numeric(4) not null,
      DataUscita date not null,
      Tipo varchar(10) not null,
