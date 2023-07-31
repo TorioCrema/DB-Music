@@ -115,7 +115,7 @@ create table Partecipazione (
      constraint ID_Partecipazione_ID primary key (ID_Progetto, ID_Firmatario));
 
 create table Performance (
-     ID_Concerto numeric(1) not null,
+     ID_Concerto numeric(10) not null,
      ID_Progetto numeric(10) not null,
      constraint ID_Performance_ID primary key (ID_Concerto, ID_Progetto));
 
