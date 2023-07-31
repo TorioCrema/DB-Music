@@ -3,7 +3,7 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.2              
 -- * Generator date: Sep 20 2021              
--- * Generation date: Mon Jul 31 11:11:03 2023 
+-- * Generation date: Mon Jul 31 11:31:07 2023 
 -- * LUN file: /home/torio/git/DB-Music/Elaborato.lun 
 -- * Schema: MUSICLABELDB/SQL 
 -- ********************************************* 
@@ -36,6 +36,8 @@ create table BIGLIETTO (
      Costo numeric(4,2) not null,
      Descrizione varchar(50) not null,
      DispTot numeric(5) not null,
+     NumVenduti numeric(5) not null,
+     ID_Concerto numeric(1) not null,
      constraint ID_BIGLIETTO_ID primary key (ID_Biglietto));
 
 create table Collaborazione (
@@ -62,12 +64,6 @@ create table CONTRATTO (
      DataFine date not null,
      ID_Firmatario numeric(10) not null,
      constraint ID_CONTRATTO_ID primary key (Codice));
-
-create table Disposizione (
-     ID_Biglietto numeric(10) not null,
-     NumVenduti char(1) not null,
-     ID_Concerto numeric(1) not null,
-     constraint FKDis_BIG_ID primary key (ID_Biglietto));
 
 create table Feature (
      ID_Progetto numeric(10) not null,
@@ -181,9 +177,9 @@ alter table ALBUM add constraint FKScrittura_Album
      foreign key (ID_Progetto)
      references PROGETTO_MUSICALE;
 
-alter table BIGLIETTO add constraint ID_BIGLIETTO_CHK
-     check(exists(select * from Disposizione
-                  where Disposizione.ID_Biglietto = ID_Biglietto)); 
+alter table BIGLIETTO add constraint FKDisposizione_FK
+     foreign key (ID_Concerto)
+     references CONCERTO;
 
 alter table Collaborazione add constraint FKCol_TRA
      foreign key (ID_Traccia)
@@ -202,8 +198,8 @@ alter table Composizione add constraint FKCom_ALB
      references ALBUM;
 
 alter table CONCERTO add constraint ID_CONCERTO_CHK
-     check(exists(select * from Disposizione
-                  where Disposizione.ID_Concerto = ID_Concerto)); 
+     check(exists(select * from BIGLIETTO
+                  where BIGLIETTO.ID_Concerto = ID_Concerto)); 
 
 alter table CONCERTO add constraint ID_CONCERTO_CHK
      check(exists(select * from Performance
@@ -220,14 +216,6 @@ alter table CONCERTO add constraint FKAppartenenza_FK
 alter table CONTRATTO add constraint FKFirma_FK
      foreign key (ID_Firmatario)
      references FIRMATARIO;
-
-alter table Disposizione add constraint FKDis_CON_FK
-     foreign key (ID_Concerto)
-     references CONCERTO;
-
-alter table Disposizione add constraint FKDis_BIG_FK
-     foreign key (ID_Biglietto)
-     references BIGLIETTO;
 
 alter table Feature add constraint FKFea_TRA
      foreign key (ID_Traccia)
@@ -314,6 +302,9 @@ create unique index SID_ALBUM_IND
 create unique index ID_BIGLIETTO_IND
      on BIGLIETTO (ID_Biglietto);
 
+create index FKDisposizione_IND
+     on BIGLIETTO (ID_Concerto);
+
 create unique index ID_Collaborazione_IND
      on Collaborazione (ID_Traccia, ID_Firmatario);
 
@@ -340,12 +331,6 @@ create unique index ID_CONTRATTO_IND
 
 create index FKFirma_IND
      on CONTRATTO (ID_Firmatario);
-
-create index FKDis_CON_IND
-     on Disposizione (ID_Concerto);
-
-create unique index FKDis_BIG_IND
-     on Disposizione (ID_Biglietto);
 
 create unique index ID_Feature_IND
      on Feature (ID_Traccia, ID_Progetto);
