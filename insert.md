@@ -9,10 +9,10 @@ insert into Firmatario values (8, 'RNGSTH00P08C573D', 'Ringo', 'Starr', 1, 'Abbe
 insert into Firmatario values (9, 'TWNPTE77FBSJABDI', 'Pete', 'Townshend', 60, 'Kensington Palace Gardens', 'London', null);
 insert into Firmatario values (10, 'RGRDLS00P08C573D', 'Roger', 'Daltrey', 60, 'Kensington Palace Gardens', 'London', null);
 
-insert into ProgettoMusicale values (1, 'The Beatles', '1960-08-01', '1970-04-10', 'Band', 4);
-insert into ProgettoMusicale values (2, 'The Who', '1964-01-01', null, 'Band', 4);
-insert into ProgettoMusicale values (3, 'Sined', '2022-10-28', null, 'Solista', null);
-insert into ProgettoMusicale values (4, 'MarioRossi', '1960-08-01', null, 'Solista', null);
+insert into Progetto_musicale values (1, 'The Beatles', '1960-08-01', '1970-04-10', 'Band', 4);
+insert into Progetto_musicale values (2, 'The Who', '1964-01-01', null, 'Band', 4);
+insert into Progetto_musicale values (3, 'Sined', '2022-10-28', null, 'Solista', null);
+insert into Progetto_musicale values (4, 'MarioRossi', '1960-08-01', null, 'Solista', null);
 
 insert into Tour values (1, 'The Beatles Tour');
 insert into Tour values (2, 'The Who Tour');
