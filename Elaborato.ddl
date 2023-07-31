@@ -173,29 +173,41 @@ alter table ALBUM add constraint ID_ALBUM_CHK
      check(exists(select * from Composizione
                   where Composizione.ID_Album = ID_Album)); 
 
-alter table ALBUM add constraint FKScrittura_Album
-     foreign key (ID_Progetto)
-     references PROGETTO_MUSICALE;
+-- alter table ALBUM add constraint FKScrittura_Album
+--      foreign key (ID_Progetto)
+--      references PROGETTO_MUSICALE;
 
-alter table BIGLIETTO add constraint FKDisposizione_FK
-     foreign key (ID_Concerto)
-     references CONCERTO;
+alter table ALBUM add foreign key (ID_Progetto) references PROGETTO_MUSICALE(ID_Progetto);
 
-alter table Collaborazione add constraint FKCol_TRA
-     foreign key (ID_Traccia)
-     references TRACCIA;
+-- alter table BIGLIETTO add constraint FKDisposizione_FK
+--      foreign key (ID_Concerto)
+--      references CONCERTO;
 
-alter table Collaborazione add constraint FKCol_FIR_FK
-     foreign key (ID_Firmatario)
-     references FIRMATARIO;
+alter table BIGLIETTO add foreign key (ID_Concerto) references CONCERTO(ID_Concerto);
 
-alter table Composizione add constraint FKCom_TRA_FK
-     foreign key (ID_Traccia)
-     references TRACCIA;
+-- alter table Collaborazione add constraint FKCol_TRA
+--      foreign key (ID_Traccia)
+--      references TRACCIA;
 
-alter table Composizione add constraint FKCom_ALB
-     foreign key (ID_Album)
-     references ALBUM;
+alter table Collaborazione add foreign key (ID_Traccia) references TRACCIA(ID_TRACCIA);
+
+-- alter table Collaborazione add constraint FKCol_FIR_FK
+--      foreign key (ID_Firmatario)
+--      references FIRMATARIO;
+
+alter table Collaborazione add foreign key (ID_Firmatario) references FIRMATARIO(ID_Firmatario);
+
+-- alter table Composizione add constraint FKCom_TRA_FK
+--      foreign key (ID_Traccia)
+--      references TRACCIA;
+
+alter table Composizione add foreign key (ID_Traccia) references TRACCIA(ID_TRACCIA);
+
+-- alter table Composizione add constraint FKCom_ALB
+--      foreign key (ID_Album)
+--      references ALBUM;
+
+alter table Composizione add foreign key (ID_Album) references ALBUM(ID_Album);
 
 alter table CONCERTO add constraint ID_CONCERTO_CHK
      check(exists(select * from BIGLIETTO
@@ -205,77 +217,107 @@ alter table CONCERTO add constraint ID_CONCERTO_CHK
      check(exists(select * from Performance
                   where Performance.ID_Concerto = ID_Concerto)); 
 
-alter table CONCERTO add constraint FKOspita_FK
-     foreign key (ID_Luogo)
-     references LUOGO;
+-- alter table CONCERTO add constraint FKOspita_FK
+--      foreign key (ID_Luogo)
+--      references LUOGO;
 
-alter table CONCERTO add constraint FKAppartenenza_FK
-     foreign key (ID_Tour)
-     references TOUR;
+alter table CONCERTO add foreign key (ID_Luogo) references LUOGO(ID_Luogo);
 
-alter table CONTRATTO add constraint FKFirma_FK
-     foreign key (ID_Firmatario)
-     references FIRMATARIO;
+-- alter table CONCERTO add constraint FKAppartenenza_FK
+--      foreign key (ID_Tour)
+--      references TOUR;
 
-alter table Feature add constraint FKFea_TRA
-     foreign key (ID_Traccia)
-     references TRACCIA;
+alter table CONCERTO add foreign key (ID_Tour) references TOUR(ID_Tour);
 
-alter table Feature add constraint FKFea_PRO_FK
-     foreign key (ID_Progetto)
-     references PROGETTO_MUSICALE;
+-- alter table CONTRATTO add constraint FKFirma_FK
+--      foreign key (ID_Firmatario)
+--      references FIRMATARIO;
+
+alter table CONTRATTO add foreign key (ID_Firmatario) references FIRMATARIO(ID_Firmatario);
+
+-- alter table Feature add constraint FKFea_TRA
+--      foreign key (ID_Traccia)
+--      references TRACCIA;
+
+alter table Feature add foreign key (ID_Traccia) references TRACCIA(ID_Traccia);
+
+-- alter table Feature add constraint FKFea_PRO_FK
+--      foreign key (ID_Progetto)
+--      references PROGETTO_MUSICALE;
+
+alter table Feature add foreign key (ID_Progetto) references PROGETTO_MUSICALE(ID_Progetto);
 
 alter table FIRMATARIO add constraint ID_FIRMATARIO_CHK
      check(exists(select * from CONTRATTO
                   where CONTRATTO.ID_Firmatario = ID_Firmatario)); 
 
-alter table FornituraMerch add constraint FKFor_PRO_2_FK
-     foreign key (ID_Produttore)
-     references PRODUTTORE;
+-- alter table FornituraMerch add constraint FKFor_PRO_2_FK
+--      foreign key (ID_Produttore)
+--      references PRODUTTORE;
 
-alter table FornituraMerch add constraint FKFor_MER_FK
-     foreign key (Codice)
-     references MERCHANDISING;
+alter table FornituraMerch add foreign key (ID_Produttore) references PRODUTTORE(ID_Produttore);
 
-alter table FornituraProdotto add constraint FKFor_PRO_1_FK
-     foreign key (Codice)
-     references PRODOTTO;
+-- alter table FornituraMerch add constraint FKFor_MER_FK
+--      foreign key (Codice)
+--      references MERCHANDISING;
 
-alter table FornituraProdotto add constraint FKFor_PRO_FK
-     foreign key (ID_Produttore)
-     references PRODUTTORE;
+alter table FornituraMerch add foreign key (Codice) references MERCHANDISING(Codice);
+
+-- alter table FornituraProdotto add constraint FKFor_PRO_1_FK
+--      foreign key (Codice)
+--      references PRODOTTO;
+
+alter table FornituraProdotto add foreign key (Codice) references PRODOTTO(Codice);
+
+-- alter table FornituraProdotto add constraint FKFor_PRO_FK
+--      foreign key (ID_Produttore)
+--      references PRODUTTORE;
+
+alter table FornituraProdotto add foreign key (ID_Produttore) references PRODUTTORE(ID_Produttore);
 
 alter table MERCHANDISING add constraint ID_MERCHANDISING_CHK
      check(exists(select * from FornituraMerch
                   where FornituraMerch.Codice = Codice)); 
 
-alter table MERCHANDISING add constraint FKCreazione_FK
-     foreign key (ID_Progetto)
-     references PROGETTO_MUSICALE;
+-- alter table MERCHANDISING add constraint FKCreazione_FK
+--      foreign key (ID_Progetto)
+--      references PROGETTO_MUSICALE;
 
-alter table Partecipazione add constraint FKPar_PRO
-     foreign key (ID_Progetto)
-     references PROGETTO_MUSICALE;
+alter table MERCHANDISING add foreign key (ID_Progetto) references PROGETTO_MUSICALE(ID_Progetto);
 
-alter table Partecipazione add constraint FKPar_FIR_FK
-     foreign key (ID_Firmatario)
-     references FIRMATARIO;
+-- alter table Partecipazione add constraint FKPar_PRO
+--      foreign key (ID_Progetto)
+--      references PROGETTO_MUSICALE;
 
-alter table Performance add constraint FKPer_PRO_FK
-     foreign key (ID_Progetto)
-     references PROGETTO_MUSICALE;
+alter table Partecipazione add foreign key (ID_Progetto) references PROGETTO_MUSICALE(ID_Progetto);
 
-alter table Performance add constraint FKPer_CON
-     foreign key (ID_Concerto)
-     references CONCERTO;
+-- alter table Partecipazione add constraint FKPar_FIR_FK
+--      foreign key (ID_Firmatario)
+--      references FIRMATARIO;
+
+alter table Partecipazione add foreign key (ID_Firmatario) references FIRMATARIO(ID_Firmatario);
+
+-- alter table Performance add constraint FKPer_PRO_FK
+--      foreign key (ID_Progetto)
+--      references PROGETTO_MUSICALE;
+
+alter table Performance add foreign key (ID_Progetto) references PROGETTO_MUSICALE(ID_Progetto);
+
+-- alter table Performance add constraint FKPer_CON
+--      foreign key (ID_Concerto)
+--      references CONCERTO;
+
+alter table Performance add foreign key (ID_Concerto) references CONCERTO(ID_Concerto);
 
 alter table PRODOTTO add constraint ID_PRODOTTO_CHK
      check(exists(select * from FornituraProdotto
                   where FornituraProdotto.Codice = Codice)); 
 
-alter table PRODOTTO add constraint FKEdizioneFisica_FK
-     foreign key (ID_Album)
-     references ALBUM;
+-- alter table PRODOTTO add constraint FKEdizioneFisica_FK
+--      foreign key (ID_Album)
+--      references ALBUM;
+
+alter table PRODOTTO add foreign key (ID_Album) references ALBUM(ID_Album);
 
 alter table PROGETTO_MUSICALE add constraint ID_PROGETTO_MUSICALE_CHK
      check(exists(select * from Partecipazione
@@ -285,10 +327,11 @@ alter table TOUR add constraint ID_TOUR_CHK
      check(exists(select * from CONCERTO
                   where CONCERTO.ID_Tour = ID_Tour)); 
 
-alter table TRACCIA add constraint FKScrittura_Traccia
-     foreign key (ID_Progetto)
-     references PROGETTO_MUSICALE;
+-- alter table TRACCIA add constraint FKScrittura_Traccia
+--      foreign key (ID_Progetto)
+--      references PROGETTO_MUSICALE;
 
+alter table TRACCIA add foreign key (ID_Progetto) references PROGETTO_MUSICALE(ID_Progetto);
 
 -- Index Section
 -- _____________ 
