@@ -14,6 +14,7 @@
 
 create database MUSICLABELDB;
 
+use MUSICLABELDB;
 
 -- DBSpace Section
 -- _______________
