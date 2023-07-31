@@ -88,7 +88,7 @@ insert into Biglietto values (15, 220, 'Tribuna', 60000, 25000, 8);
 insert into Biglietto values (16, 130, 'Prato', 80000, 20000, 9);
 insert into Biglietto values (17, 50, 'Prato', 40000, 0, 10);
 
-	insert into Traccia values (1, 'Obladi Oblada', 1, '1968-06-01', 188, 'La la la la la la');
+insert into Traccia values (1, 'Obladi Oblada', 1, '1968-06-01', 188, 'La la la la la la');
 insert into Traccia values (2, 'Hey Jude', 1, '1968-12-05', 425, 'Hey Jude, dont make it bad');
 insert into Traccia values (3, 'Behind Blue Eyes', 2, '1965-06-01', 221, 'No one knows what its like');
 insert into Traccia values (4, 'My Generation', 2, '1960-06-01', 198, 'People try to put us d-down');
@@ -102,7 +102,7 @@ insert into Feature values (1, 6);
 
 insert into Album values (1, 'White Album', 1, 613, '1968-12-05');
 insert into Album values (2, 'Who\'s Next', 2, 419, '1971-08-14');
-insert into Album values (3, 'Questa notte deve ancora parlare', 3, 355, '2023-12-12');
+insert into Album values (3, 'Nomadi', 3, 355, '2023-12-12');
 
 insert into Composizione values (1, 1);
 insert into Composizione values (1, 2);
@@ -112,13 +112,13 @@ insert into Composizione values (3, 5);
 insert into Composizione values (3, 6);
 
 insert into Prodotto values (1, 'White Album', 'Album dei Beatles', 30, 200000, '1968-12-05', 'Vinile', 33, 1);
-insert into Prodotto values (1, 'White Album', 'Album dei Beatles', 17, 100000, '1968-12-05', 'CD', null, 1);
-insert into Prodotto values (2, 'Who\'s Next', 'Album dei The Who', 32, 50000, '1971-08-14', 'Vinile', 33, 2);
-insert into Prodotto values (2, 'Who\'s Next', 'Album dei The Who', 15, 50000, '1971-08-14', 'CD', null, 2);
-insert into Prodotto values (3, 'Questa notte deve ancora parlare', 'Album di Sined', 35, 999999, '2023-12-12', 'Vinile', 33, 3);
-insert into Prodotto values (3, 'Questa notte deve ancora parlare', 'Album di Sined', 20, 999999, '2023-12-12', 'CD', null, 3);
+insert into Prodotto values (2, 'White Album', 'Album dei Beatles', 17, 100000, '1968-12-05', 'CD', null, 1);
+insert into Prodotto values (3, 'Who\'s Next', 'Album dei The Who', 32, 50000, '1971-08-14', 'Vinile', 33, 2);
+insert into Prodotto values (4, 'Who\'s Next', 'Album dei The Who', 15, 50000, '1971-08-14', 'CD', null, 2);
+insert into Prodotto values (5, 'Nomadi', 'Album di Sined', 35, 999999, '2023-12-12', 'Vinile', 33, 3);
+insert into Prodotto values (6, 'Nomadi', 'Album di Sined', 20, 999999, '2023-12-12', 'CD', null, 3);
 
-	insert into Produttore values (1, '12345678901', 'Sony', 1, 'Via Sony', 'Tokyo', 6);
+insert into Produttore values (1, '12345678901', 'Sony', 1, 'Via Sony', 'Tokyo', 6);
 insert into Produttore values (2, '12345678902', 'EMI', 2, 'Via EMI', 'London', 4);
 
 insert into FornituraProdotto values (1, 1000000, 1);
@@ -128,7 +128,7 @@ insert into FornituraProdotto values (4, 250000, 1);
 insert into FornituraProdotto values (5, 999999, 2);
 insert into FornituraProdotto values (6, 999999, 2);
 
-	insert into Merchandising values (1, 'Maglietta Beatles', 20, 1);
+insert into Merchandising values (1, 'Maglietta Beatles', 20, 1);
 insert into Merchandising values (2, 'Maglietta The Who', 20, 2);
 insert into Merchandising values (3, 'Maglietta Sined', 50, 4);
 insert into Merchandising values (4, 'Felpa Simone Zama', 45, 3);
