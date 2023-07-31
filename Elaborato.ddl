@@ -124,7 +124,7 @@ create table PRODOTTO (
      Nome varchar(20) not null,
      Descrizione varchar(50) not null,
      Prezzo numeric(6,2) not null,
-     QtaProdotta numeric(4) not null,
+     QtaProdotta numeric(10) not null,
      DataUscita date not null,
      Tipo varchar(10) not null,
      Formato numeric(2),
