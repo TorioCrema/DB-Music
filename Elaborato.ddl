@@ -37,7 +37,7 @@ create table BIGLIETTO (
      Descrizione varchar(50) not null,
      DispTot numeric(5) not null,
      NumVenduti numeric(5) not null,
-     ID_Concerto numeric(1) not null,
+     ID_Concerto numeric(10) not null,
      constraint ID_BIGLIETTO_ID primary key (ID_Biglietto));
 
 create table Collaborazione (
@@ -51,7 +51,7 @@ create table Composizione (
      constraint ID_Composizione_ID primary key (ID_Album, ID_Traccia));
 
 create table CONCERTO (
-     ID_Concerto numeric(1) not null,
+     ID_Concerto numeric(10) not null,
      Data date not null,
      ID_Luogo numeric(10) not null,
      ID_Tour numeric(10) not null,
@@ -137,7 +137,7 @@ create table PRODUTTORE (
      Ind_NumCivico numeric(4) not null,
      Ind_Via varchar(50) not null,
      Ind_Citta varchar(50) not null,
-     NumForniture char(1) not null,
+     NumForniture numeric(4) not null,
      constraint ID_PRODUTTORE_ID primary key (ID_Produttore),
      constraint SID_PRODUTTORE_ID unique (PIVA));
 
