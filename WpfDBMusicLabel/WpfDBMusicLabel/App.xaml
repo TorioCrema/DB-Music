@@ -1,7 +1,7 @@
-﻿<Application x:Class="DB_Music.App"
+﻿<Application x:Class="WpfDBMusicLabel.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DB_Music"
+             xmlns:local="clr-namespace:WpfDBMusicLabel"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

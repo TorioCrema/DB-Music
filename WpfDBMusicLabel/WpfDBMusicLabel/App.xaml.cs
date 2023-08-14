@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace DB_Music
+namespace WpfDBMusicLabel
 {
     /// <summary>
     /// Interaction logic for App.xaml
