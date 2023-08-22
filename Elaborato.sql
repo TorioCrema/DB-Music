@@ -166,67 +166,67 @@ create table Traccia (
 --      foreign key (ID_Progetto)
 --      references PROGETTO_MUSICALE;
 
-alter table Album add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto);
+alter table Album add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto) on delete cascade;
 
 -- alter table BIGLIETTO add constraint FKDisposizione_FK
 --      foreign key (ID_Concerto)
 --      references CONCERTO;
 
-alter table Biglietto add foreign key (ID_Concerto) references Concerto(ID_Concerto);
+alter table Biglietto add foreign key (ID_Concerto) references Concerto(ID_Concerto) on delete cascade;
 
 -- alter table Collaborazione add constraint FKCol_TRA
 --      foreign key (ID_Traccia)
 --      references TRACCIA;
 
-alter table Collaborazione add foreign key (ID_Traccia) references Traccia(ID_TRACCIA);
+alter table Collaborazione add foreign key (ID_Traccia) references Traccia(ID_TRACCIA) on delete cascade;
 
 -- alter table Collaborazione add constraint FKCol_FIR_FK
 --      foreign key (ID_Firmatario)
 --      references FIRMATARIO;
 
-alter table Collaborazione add foreign key (ID_Firmatario) references Firmatario(ID_Firmatario);
+alter table Collaborazione add foreign key (ID_Firmatario) references Firmatario(ID_Firmatario) on delete cascade;
 
 -- alter table Composizione add constraint FKCom_TRA_FK
 --      foreign key (ID_Traccia)
 --      references TRACCIA;
 
-alter table Composizione add foreign key (ID_Traccia) references Traccia(ID_TRACCIA);
+alter table Composizione add foreign key (ID_Traccia) references Traccia(ID_TRACCIA) on delete cascade;
 
 -- alter table Composizione add constraint FKCom_ALB
 --      foreign key (ID_Album)
 --      references ALBUM;
 
-alter table Composizione add foreign key (ID_Album) references Album(ID_Album);
+alter table Composizione add foreign key (ID_Album) references Album(ID_Album) on delete cascade;
 
 -- alter table CONCERTO add constraint FKOspita_FK
 --      foreign key (ID_Luogo)
 --      references LUOGO;
 
-alter table Concerto add foreign key (ID_Luogo) references Luogo(ID_Luogo);
+alter table Concerto add foreign key (ID_Luogo) references Luogo(ID_Luogo) on delete cascade;
 
 -- alter table CONCERTO add constraint FKAppartenenza_FK
 --      foreign key (ID_Tour)
 --      references TOUR;
 
-alter table Concerto add foreign key (ID_Tour) references Tour(ID_Tour);
+alter table Concerto add foreign key (ID_Tour) references Tour(ID_Tour) on delete cascade;
 
 -- alter table CONTRATTO add constraint FKFirma_FK
 --      foreign key (ID_Firmatario)
 --      references FIRMATARIO;
 
-alter table Contratto add foreign key (ID_Firmatario) references Firmatario(ID_Firmatario);
+alter table Contratto add foreign key (ID_Firmatario) references Firmatario(ID_Firmatario) on delete cascade;
 
 -- alter table Feature add constraint FKFea_TRA
 --      foreign key (ID_Traccia)
 --      references TRACCIA;
 
-alter table Feature add foreign key (ID_Traccia) references Traccia(ID_Traccia);
+alter table Feature add foreign key (ID_Traccia) references Traccia(ID_Traccia) on delete cascade;
 
 -- alter table Feature add constraint FKFea_PRO_FK
 --      foreign key (ID_Progetto)
 --      references PROGETTO_MUSICALE;
 
-alter table Feature add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto);
+alter table Feature add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto) on delete cascade;
 
 -- alter table FornituraMerch add constraint FKFor_PRO_2_FK
 --      foreign key (ID_Produttore)
@@ -248,47 +248,47 @@ alter table Feature add foreign key (ID_Progetto) references Progetto_Musicale(I
 --      foreign key (ID_Progetto)
 --      references PROGETTO_MUSICALE;
 
-alter table Merchandising add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto);
+alter table Merchandising add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto) on delete cascade;
 
-alter table Merchandising add foreign key (ID_Produttore) references Produttore(ID_Produttore);
+alter table Merchandising add foreign key (ID_Produttore) references Produttore(ID_Produttore) on delete cascade;
 
 -- alter table Partecipazione add constraint FKPar_PRO
 --      foreign key (ID_Progetto)
 --      references PROGETTO_MUSICALE;
 
-alter table Partecipazione add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto);
+alter table Partecipazione add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto) on delete cascade;
 
 -- alter table Partecipazione add constraint FKPar_FIR_FK
 --      foreign key (ID_Firmatario)
 --      references FIRMATARIO;
 
-alter table Partecipazione add foreign key (ID_Firmatario) references Firmatario(ID_Firmatario);
+alter table Partecipazione add foreign key (ID_Firmatario) references Firmatario(ID_Firmatario) on delete cascade;
 
 -- alter table Performance add constraint FKPer_PRO_FK
 --      foreign key (ID_Progetto)
 --      references PROGETTO_MUSICALE;
 
-alter table Performance add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto);
+alter table Performance add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto) on delete cascade;
 
 -- alter table Performance add constraint FKPer_CON
 --      foreign key (ID_Concerto)
 --      references CONCERTO;
 
-alter table Performance add foreign key (ID_Concerto) references Concerto(ID_Concerto);
+alter table Performance add foreign key (ID_Concerto) references Concerto(ID_Concerto) on delete cascade;
 
 -- alter table PRODOTTO add constraint FKEdizioneFisica_FK
 --      foreign key (ID_Album)
 --      references ALBUM;
 
-alter table Prodotto add foreign key (ID_Album) references Album(ID_Album);
+alter table Prodotto add foreign key (ID_Album) references Album(ID_Album) on delete cascade;
 
-alter table Prodotto add foreign key (ID_Produttore) references Produttore(ID_Produttore);
+alter table Prodotto add foreign key (ID_Produttore) references Produttore(ID_Produttore) on delete cascade;
 
 -- alter table TRACCIA add constraint FKScrittura_Traccia
 --      foreign key (ID_Progetto)
 --      references PROGETTO_MUSICALE;
 
-alter table Traccia add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto);
+alter table Traccia add foreign key (ID_Progetto) references Progetto_Musicale(ID_Progetto) on delete cascade;
 
 -- Index Section
 -- _____________ 
