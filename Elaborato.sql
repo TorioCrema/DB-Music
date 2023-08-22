@@ -39,7 +39,8 @@ create table Biglietto (
      DispTot INT UNSIGNED not null,
      NumVenduti INT UNSIGNED not null,
      ID_Concerto INT UNSIGNED not null,
-     constraint ID_BIGLIETTO_ID primary key (ID_Biglietto));
+     constraint ID_BIGLIETTO_ID primary key (ID_Biglietto))
+     constraint Limite_Vendita check(NumVenduti <= DispTot);
 
 create table Collaborazione (
      ID_Firmatario INT UNSIGNED not null,
@@ -94,7 +95,7 @@ create table Merchandising (
      Descrizione varchar(50) not null,
      Prezzo INT UNSIGNED not null,
      QtaProdotta INT UNSIGNED not null,
-     CostFornituraUnitario INT UNSIGNED not null,
+     CostoFornituraUnitario INT UNSIGNED not null,
      ID_Progetto INT UNSIGNED not null,
      ID_Produttore INT UNSIGNED not null,
      constraint ID_MERCHANDISING_ID primary key (Codice));
