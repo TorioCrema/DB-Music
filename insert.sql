@@ -60,6 +60,7 @@ insert into Concerto(Data, ID_Luogo, ID_Tour) values ('1965-06-01', 1, 1),
 	('2024-02-28', 4, 4);
 
 insert into Performance(ID_Concerto, ID_Progetto) values (1, 1),
+	(1, 2),
 	(2, 1),
 	(3, 1),
 	(4, 2),
@@ -121,7 +122,7 @@ insert into Prodotto(Nome, Descrizione, Prezzo, QtaProdotta, CostoFornitura, Dat
 	('Questa notte deve ancora parlare', 'Album di Sined', 3500, 999999, 1000000000, '2023-12-12', 'Vinile', 33, 3, 2),
 	('Questa notte deve ancora parlare', 'Album di Sined', 2000, 999999, 1000000000, '2023-12-12', 'CD', null, 3, 2);
 
-insert into Merchandising(Descrizione, Prezzo, QtaProdotta, CostFornituraUnitario, ID_Progetto, ID_Produttore) values ('Maglietta Beatles', 2000, 4000, 500, 1, 1),
+insert into Merchandising(Descrizione, Prezzo, QtaProdotta, CostoFornituraUnitario, ID_Progetto, ID_Produttore) values ('Maglietta Beatles', 2000, 4000, 500, 1, 1),
 	('Maglietta The Who', 2000, 10000, 1000, 2, 1),
 	('Maglietta Sined', 5000, 15000, 2000, 4, 2),
 	('Felpa Simone Zama', 4500, 7000, 2000, 3, 2);
