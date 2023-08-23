@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
+using WpfDBMusicLabel.ViewModel;
 
 namespace WpfDBMusicLabel
 {
@@ -21,27 +23,31 @@ namespace WpfDBMusicLabel
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MySqlConnection cnn;
+
         public MainWindow()
         {
             InitializeComponent();
+            DbConnection();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void DbConnection()
         {
             string connectionString = "SERVER=localhost; PORT=3306; DATABASE=musiclabeldb; UID=root; PASSWORD=sinio";
-            MySqlConnection cnn;
-
             try
             {
                 cnn = new MySqlConnection(connectionString);
                 cnn.Open();
-                MessageBox.Show("Connection open");
-                cnn.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            cnn.Close();
         }
     }
 }

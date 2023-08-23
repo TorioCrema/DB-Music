@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfDBMusicLabel"
+        xmlns:viewModels="clr-namespace:WpfDBMusicLabel.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Connect" HorizontalAlignment="Center" Margin="0,196,0,0" VerticalAlignment="Top" Height="33" Width="56" Click="Button_Click"/>
-
+        Title="MainWindow" Height="450" Width="800"
+        Closing="Window_Closing">
+    <Window.DataContext>
+        <viewModels:ViewModel x:Name="ViewModel" />
+    </Window.DataContext>
+    <Grid Name="Connection" Visibility="Visible">
+        <ListBox d:ItemsSource="{d:Bind ViewModel }" Margin="0,0,670,0" Visibility="Visible"/>
     </Grid>
 </Window>
