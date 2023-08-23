@@ -39,8 +39,8 @@ create table Biglietto (
      DispTot INT UNSIGNED not null,
      NumVenduti INT UNSIGNED not null,
      ID_Concerto INT UNSIGNED not null,
-     constraint ID_BIGLIETTO_ID primary key (ID_Biglietto))
-     constraint Limite_Vendita check(NumVenduti <= DispTot);
+     constraint ID_BIGLIETTO_ID primary key (ID_Biglietto),
+     constraint Limite_Vendita check(NumVenduti <= DispTot));
 
 create table Collaborazione (
      ID_Firmatario INT UNSIGNED not null,
