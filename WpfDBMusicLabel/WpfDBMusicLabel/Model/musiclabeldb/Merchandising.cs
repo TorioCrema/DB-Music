@@ -5,15 +5,32 @@ namespace WpfDBMusicLabel.musiclabeldb;
 
 public partial class Merchandising
 {
-    public decimal Codice { get; set; }
+    public int Codice { get; set; }
 
     public string Descrizione { get; set; } = null!;
 
-    public decimal Prezzo { get; set; }
+    public int Prezzo { get; set; }
 
-    public decimal IdProgetto { get; set; }
+    public int QtaProdotta { get; set; }
 
-    public virtual Fornituramerch? Fornituramerch { get; set; }
+    public int CostoFornituraUnitario { get; set; }
+
+    public int IdProgetto { get; set; }
+
+    public int IdProduttore { get; set; }
+
+    public virtual Produttore IdProduttoreNavigation { get; set; } = null!;
 
     public virtual ProgettoMusicale IdProgettoNavigation { get; set; } = null!;
+
+    public Merchandising(int codice, string desc, int prezzo, int qtaProd, int costoUnitario, int idProgetto, int idProduttore)
+    {
+        Codice = codice;
+        Descrizione = desc;
+        Prezzo = prezzo;
+        QtaProdotta = qtaProd;
+        CostoFornituraUnitario = costoUnitario;
+        IdProgetto = idProgetto;
+        IdProduttore = idProduttore;
+    }
 }

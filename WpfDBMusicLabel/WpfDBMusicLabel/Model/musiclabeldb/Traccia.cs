@@ -5,15 +5,15 @@ namespace WpfDBMusicLabel.musiclabeldb;
 
 public partial class Traccia
 {
-    public decimal IdTraccia { get; set; }
+    public int IdTraccia { get; set; }
 
     public string Nome { get; set; } = null!;
 
-    public decimal IdProgetto { get; set; }
+    public int IdProgetto { get; set; }
 
     public DateTime DataPubblicazione { get; set; }
 
-    public decimal Durata { get; set; }
+    public int Durata { get; set; }
 
     public string? Testo { get; set; }
 
@@ -24,4 +24,14 @@ public partial class Traccia
     public virtual ICollection<Firmatario> IdFirmatarios { get; set; } = new List<Firmatario>();
 
     public virtual ICollection<ProgettoMusicale> IdProgettos { get; set; } = new List<ProgettoMusicale>();
+
+    public Traccia(int idTraccia, string nome, int idProgetto, DateTime data, int durata, string? testo)
+    {
+        IdTraccia = idTraccia;
+        Nome = nome;
+        IdProgetto = idProgetto;
+        DataPubblicazione = data;
+        Durata = durata;
+        Testo = testo;
+    }
 }
