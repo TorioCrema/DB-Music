@@ -25,10 +25,6 @@ public partial class MusiclabeldbContext : DbContext
 
     public virtual DbSet<Firmatario> Firmatari { get; set; }
 
-    public virtual DbSet<Fornituramerch> Fornituremerch { get; set; }
-
-    public virtual DbSet<Fornituraprodotto> Fornitureprodotto { get; set; }
-
     public virtual DbSet<Luogo> Luoghi { get; set; }
 
     public virtual DbSet<Merchandising> Merchandising { get; set; }
@@ -242,61 +238,6 @@ public partial class MusiclabeldbContext : DbContext
                 .HasColumnName("Ind_Via");
             entity.Property(e => e.Nome).HasMaxLength(20);
             entity.Property(e => e.Ruolo).HasMaxLength(20);
-        });
-
-        modelBuilder.Entity<Fornituramerch>(entity =>
-        {
-            entity.HasKey(e => e.Codice).HasName("PRIMARY");
-
-            entity.ToTable("fornituramerch");
-
-            entity.HasIndex(e => e.Codice, "FKFor_MER_IND").IsUnique();
-
-            entity.HasIndex(e => e.IdProduttore, "FKFor_PRO_2_IND");
-
-            entity.Property(e => e.Codice).HasPrecision(10);
-            entity.Property(e => e.IdProduttore)
-                .HasPrecision(10)
-                .HasColumnName("ID_Produttore");
-            entity.Property(e => e.PrezzoFornituraUnitario).HasPrecision(3);
-            entity.Property(e => e.QtaProdotta).HasPrecision(4);
-
-            entity.HasOne(d => d.CodiceNavigation).WithOne(p => p.Fornituramerch)
-                .HasForeignKey<Fornituramerch>(d => d.Codice)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fornituramerch_ibfk_2");
-
-            entity.HasOne(d => d.IdProduttoreNavigation).WithMany(p => p.Fornituramerches)
-                .HasForeignKey(d => d.IdProduttore)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fornituramerch_ibfk_1");
-        });
-
-        modelBuilder.Entity<Fornituraprodotto>(entity =>
-        {
-            entity.HasKey(e => e.Codice).HasName("PRIMARY");
-
-            entity.ToTable("fornituraprodotto");
-
-            entity.HasIndex(e => e.Codice, "FKFor_PRO_1_IND").IsUnique();
-
-            entity.HasIndex(e => e.IdProduttore, "FKFor_PRO_IND");
-
-            entity.Property(e => e.Codice).HasPrecision(10);
-            entity.Property(e => e.Costo).HasPrecision(7);
-            entity.Property(e => e.IdProduttore)
-                .HasPrecision(10)
-                .HasColumnName("ID_Produttore");
-
-            entity.HasOne(d => d.CodiceNavigation).WithOne(p => p.Fornituraprodotto)
-                .HasForeignKey<Fornituraprodotto>(d => d.Codice)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fornituraprodotto_ibfk_1");
-
-            entity.HasOne(d => d.IdProduttoreNavigation).WithMany(p => p.Fornituraprodottos)
-                .HasForeignKey(d => d.IdProduttore)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fornituraprodotto_ibfk_2");
         });
 
         modelBuilder.Entity<Luogo>(entity =>

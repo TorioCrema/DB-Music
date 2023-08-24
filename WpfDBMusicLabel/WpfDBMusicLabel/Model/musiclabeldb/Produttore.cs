@@ -18,8 +18,4 @@ public partial class Produttore
     public string IndCitta { get; set; } = null!;
 
     public string NumForniture { get; set; } = null!;
-
-    public virtual ICollection<Fornituramerch> Fornituramerches { get; set; } = new List<Fornituramerch>();
-
-    public virtual ICollection<Fornituraprodotto> Fornituraprodottos { get; set; } = new List<Fornituraprodotto>();
 }
