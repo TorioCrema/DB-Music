@@ -24,11 +24,14 @@ namespace WpfDBMusicLabel
     public partial class MainWindow : Window
     {
         private MySqlConnection cnn;
+        //private VModel vm;
 
         public MainWindow()
         {
             InitializeComponent();
             DbConnection();
+            /*vm = new VModel();
+            ActionsListBox.ItemsSource = vm.GetActionsList();*/
         }
 
         private void DbConnection()
