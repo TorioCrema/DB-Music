@@ -21,11 +21,11 @@ public partial class ProgettoMusicale
 
     public virtual ICollection<Merchandising> Merchandisings { get; set; } = new List<Merchandising>();
 
-    public virtual ICollection<Traccium> Traccia { get; set; } = new List<Traccium>();
+    public virtual ICollection<Traccia> Traccia { get; set; } = new List<Traccia>();
 
     public virtual ICollection<Concerto> IdConcertos { get; set; } = new List<Concerto>();
 
     public virtual ICollection<Firmatario> IdFirmatarios { get; set; } = new List<Firmatario>();
 
-    public virtual ICollection<Traccium> IdTraccia { get; set; } = new List<Traccium>();
+    public virtual ICollection<Traccia> IdTraccia { get; set; } = new List<Traccia>();
 }

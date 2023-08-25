@@ -37,7 +37,7 @@ public partial class MusiclabeldbContext : DbContext
 
     public virtual DbSet<Tour> Tours { get; set; }
 
-    public virtual DbSet<Traccium> Traccia { get; set; }
+    public virtual DbSet<Traccia> Traccia { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseMySQL("SERVER=localhost; PORT=3306; DATABASE=musiclabeldb; UID=root; PASSWORD=73a6RV+(");
@@ -68,7 +68,7 @@ public partial class MusiclabeldbContext : DbContext
             entity.HasMany(d => d.IdTraccia).WithMany(p => p.IdAlbums)
                 .UsingEntity<Dictionary<string, object>>(
                     "Composizione",
-                    r => r.HasOne<Traccium>().WithMany()
+                    r => r.HasOne<Traccia>().WithMany()
                         .HasForeignKey("IdTraccia")
                         .HasConstraintName("composizione_ibfk_1"),
                     l => l.HasOne<Album>().WithMany()
@@ -335,7 +335,7 @@ public partial class MusiclabeldbContext : DbContext
             entity.Property(e => e.Nome).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<Traccium>(entity =>
+        modelBuilder.Entity<Traccia>(entity =>
         {
             entity.HasKey(e => e.IdTraccia).HasName("PRIMARY");
 
@@ -363,7 +363,7 @@ public partial class MusiclabeldbContext : DbContext
                     r => r.HasOne<Firmatario>().WithMany()
                         .HasForeignKey("IdFirmatario")
                         .HasConstraintName("collaborazione_ibfk_2"),
-                    l => l.HasOne<Traccium>().WithMany()
+                    l => l.HasOne<Traccia>().WithMany()
                         .HasForeignKey("IdTraccia")
                         .HasConstraintName("collaborazione_ibfk_1"),
                     j =>
@@ -382,7 +382,7 @@ public partial class MusiclabeldbContext : DbContext
                     r => r.HasOne<ProgettoMusicale>().WithMany()
                         .HasForeignKey("IdProgetto")
                         .HasConstraintName("feature_ibfk_2"),
-                    l => l.HasOne<Traccium>().WithMany()
+                    l => l.HasOne<Traccia>().WithMany()
                         .HasForeignKey("IdTraccia")
                         .HasConstraintName("feature_ibfk_1"),
                     j =>

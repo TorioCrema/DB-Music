@@ -19,5 +19,5 @@ public partial class Album
 
     public virtual ICollection<Prodotto> Prodottos { get; set; } = new List<Prodotto>();
 
-    public virtual ICollection<Traccium> IdTraccia { get; set; } = new List<Traccium>();
+    public virtual ICollection<Traccia> IdTraccia { get; set; } = new List<Traccia>();
 }

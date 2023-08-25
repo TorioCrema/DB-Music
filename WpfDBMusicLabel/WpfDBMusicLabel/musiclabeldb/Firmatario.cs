@@ -25,5 +25,5 @@ public partial class Firmatario
 
     public virtual ICollection<ProgettoMusicale> IdProgettos { get; set; } = new List<ProgettoMusicale>();
 
-    public virtual ICollection<Traccium> IdTraccia { get; set; } = new List<Traccium>();
+    public virtual ICollection<Traccia> IdTraccia { get; set; } = new List<Traccia>();
 }
