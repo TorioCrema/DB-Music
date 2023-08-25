@@ -11,24 +11,183 @@
     <Window.DataContext>
         <viewModels:VModel x:Name="VModel" />
     </Window.DataContext>
-    <Grid Name="Connection" Visibility="Visible">
-        <ComboBox Name="ActionsListCB" ItemsSource="{Binding ActionsList}" FontSize="15" Margin="10,39,0,0" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="153" />
-        <Button Name="ViewBtn"  Content="Visualizza" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
-        <Button Name="InsertBtn" Content="Inserisci" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
-        <Button Name="DeleteBtn" Content="Elimina" HorizontalAlignment="Left" Margin="10,152,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
-        <Grid Name="ViewGrid" Margin="183,1,0,-1" Visibility="Visible">
-            <ListBox Name="ViewLB" d:ItemsSource="{d:SampleData ItemCount=32}" FontSize="15" FontFamily="Georgia" Margin="0,37,570,10" SelectionMode="Single"/>
-            <Label Name="FoundLabel" Content="Tour trovati" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Width="197" FontSize="15" HorizontalContentAlignment="Center" />
-            <Label Name="ActionsLabel" Content="Azioni disponibili:" HorizontalAlignment="Left" Margin="234,4,0,0" VerticalAlignment="Top" Width="133" FontSize="15"/>
-            <ComboBox Name="ActionsCB" HorizontalAlignment="Left" Margin="234,39,0,0" VerticalAlignment="Top" Width="133"/>
-            <Button x:Name="ConfirmActionBtn" Content="Conferma Azione" HorizontalAlignment="Left" Margin="234,78,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.102" Width="133" Height="25"/>
-            <DataGrid Name="ResultsDG" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="395,37,0,0"/>
-            <Label Name="ResultsLabel" Content="Risultati trovati:" HorizontalAlignment="Left" Margin="520,4,0,0" VerticalAlignment="Top" Width="132" FontSize="15"/>
-            <ListBox Name="ChoiseLB" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="234,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="133" Height="206"/>
-            <Button Name="ConfirmChoiseBtn" Content="Conferma Scelta" HorizontalAlignment="Left" Margin="234,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.102" Width="133" Height="25"/>
+    <Grid Name="Connection" 
+          Visibility="Visible">
+        <ComboBox Name="ActionsListCB" 
+                  ItemsSource="{Binding ActionsList}" 
+                  FontSize="15" 
+                  Margin="10,39,0,0" 
+                  SelectedIndex="0" 
+                  VerticalAlignment="Top" 
+                  HorizontalAlignment="Left" 
+                  Width="153" />
+        <Button Name="ViewBtn"  
+                Content="Visualizza" 
+                HorizontalAlignment="Left" 
+                Margin="10,82,0,0" 
+                VerticalAlignment="Top" 
+                Height="30" 
+                Width="153" 
+                IsEnabled="False" />
+        <Button Name="InsertBtn" 
+                Content="Inserisci" 
+                HorizontalAlignment="Left" 
+                Margin="10,117,0,0" 
+                VerticalAlignment="Top" 
+                Height="30" 
+                Width="153" 
+                IsEnabled="False" />
+        <Button Name="DeleteBtn" 
+                Content="Elimina" 
+                HorizontalAlignment="Left" 
+                Margin="10,152,0,0" 
+                VerticalAlignment="Top" 
+                Height="30" 
+                Width="153" 
+                IsEnabled="False" />
+        <Grid Name="ViewGrid" 
+              Margin="183,1,0,-1" 
+              Visibility="Collapsed">
+            <ListBox Name="ViewLB" 
+                     d:ItemsSource="{d:SampleData ItemCount=32}" 
+                     FontSize="15" 
+                     FontFamily="Georgia" 
+                     Margin="0,37,570,10" 
+                     SelectionMode="Single"/>
+            <Label Name="FoundLabel" 
+                   Content="Tour trovati" 
+                   HorizontalAlignment="Left" 
+                   Margin="0,4,0,0" 
+                   VerticalAlignment="Top" 
+                   Width="197" 
+                   FontSize="15" 
+                   HorizontalContentAlignment="Center" />
+            <Label Name="ActionsLabel" 
+                   Content="Azioni disponibili:" 
+                   HorizontalAlignment="Left" 
+                   Margin="234,4,0,0" 
+                   VerticalAlignment="Top" 
+                   Width="133" 
+                   FontSize="15"/>
+            <ComboBox Name="ActionsCB" 
+                      HorizontalAlignment="Left" 
+                      Margin="234,39,0,0" 
+                      VerticalAlignment="Top" 
+                      Width="133"/>
+            <Button Name="ConfirmActionBtn" 
+                    Content="Conferma Azione" 
+                    HorizontalAlignment="Left" 
+                    Margin="234,78,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="133" 
+                    Height="25"/>
+            <DataGrid Name="ResultsDG" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Top" 
+                      Margin="395,37,0,0"/>
+            <Label Name="ResultsLabel" 
+                   Content="Risultati trovati:" 
+                   HorizontalAlignment="Left" 
+                   Margin="520,4,0,0" 
+                   VerticalAlignment="Top" 
+                   Width="132" 
+                   FontSize="15"/>
+            <ListBox Name="ChoiseLB" 
+                     ItemsSource="{d:SampleData ItemCount=5}" 
+                     Margin="234,0,0,0" 
+                     HorizontalAlignment="Left" 
+                     VerticalAlignment="Center" 
+                     Width="133" 
+                     Height="206"/>
+            <Button Name="ConfirmChoiseBtn" 
+                    Content="Conferma Scelta" 
+                    HorizontalAlignment="Left" 
+                    Margin="234,370,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="133" 
+                    Height="25"/>
         </Grid>
-        <Grid Name="InsertView" Margin="183,1,0,0" Visibility="Hidden">
-
+        <Grid Name="InsertGrid" 
+              Margin="183,0,0,0">
+            <Grid Name="MerchInsertGrid" 
+                  Margin="0,1,0,0" 
+                  Visibility="Visible">
+                <Label Name="ProjectLabel" 
+                       Content="Progetto Musicale:" 
+                       HorizontalAlignment="Left" 
+                       Margin="10,10,0,0" 
+                       VerticalAlignment="Top" 
+                       FontSize="15"/>
+                <ComboBox Name="ProjectsCB" 
+                          HorizontalAlignment="Left" 
+                          Margin="148,10,0,0" 
+                          VerticalAlignment="Top" 
+                          Width="149" 
+                          Height="30"/>
+                <Label Name="DescLabel" 
+                       Content="Descrizione:" 
+                       HorizontalAlignment="Left" 
+                       Margin="10,115,0,0" 
+                       VerticalAlignment="Top" 
+                       FontSize="15" 
+                       Width="95"/>
+                <RichTextBox HorizontalAlignment="Left" 
+                             Margin="148,115,0,10" 
+                             Width="350" 
+                             FontSize="15">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text=""/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <Label x:Name="PriceLabel" 
+                       Content="Prezzo:" 
+                       HorizontalAlignment="Left" 
+                       Margin="10,45,0,0" 
+                       VerticalAlignment="Top" 
+                       FontSize="15" 
+                       Width="133"/>
+                <TextBox Name="PriceTB" 
+                         HorizontalAlignment="Left" 
+                         Margin="148,45,0,0" 
+                         TextWrapping="Wrap" 
+                         Text="" 
+                         VerticalAlignment="Top" 
+                         Width="149" 
+                         Height="30" 
+                         FontSize="16"/>
+                <Label x:Name="QuantityLabel" 
+                       Content="Quantità:" 
+                       HorizontalAlignment="Left" 
+                       Margin="10,80,0,0" 
+                       VerticalAlignment="Top" 
+                       FontSize="15" 
+                       Width="133"/>
+                <TextBox Name="QuantityTB" 
+                         HorizontalAlignment="Left" 
+                         Margin="148,80,0,0" 
+                         TextWrapping="Wrap" 
+                         Text="" 
+                         VerticalAlignment="Top" 
+                         Width="149" 
+                         Height="30" 
+                         FontSize="16"/>
+            </Grid>
+            <Button Name="ConfirmBtn" 
+                    Content="Conferma dati" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Height="37" 
+                    Width="126" 
+                    Margin="578,218,0,0"/>
+            <Button Name="CancelBtn" 
+                    Content="Annulla" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Height="37" 
+                    Width="126" 
+                    Margin="578,268,0,0"/>
         </Grid>
     </Grid>
 </Window>
