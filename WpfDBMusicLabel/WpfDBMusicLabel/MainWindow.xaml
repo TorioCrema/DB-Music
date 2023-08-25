@@ -11,17 +11,24 @@
     <Window.DataContext>
         <viewModels:VModel x:Name="VModel" />
     </Window.DataContext>
-    <Grid Name="Connection" Visibility="Visible" Margin="0,0,0,-1">
-        <ComboBox Name="ActionsListCB" ItemsSource="{Binding ActionsList}" FontSize="15" Margin="10,13,797,486" SelectedIndex="0" />
-        <Button Content="Visualizza" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
-        <Button Content="Inserisci" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
-        <Button Content="Elimina" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
-        <Grid Name="ViewGrid" Margin="125,1,0,-1" Visibility="Hidden" Grid.Column="3">
-            <ListBox Name="ViewLB" d:ItemsSource="{d:SampleData ItemCount=5}" FontSize="15" FontFamily="Georgia" Margin="10,0,0,0"/>
+    <Grid Name="Connection" Visibility="Visible">
+        <ComboBox Name="ActionsListCB" ItemsSource="{Binding ActionsList}" FontSize="15" Margin="10,39,0,0" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="153" />
+        <Button Name="ViewBtn"  Content="Visualizza" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
+        <Button Name="InsertBtn" Content="Inserisci" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
+        <Button Name="DeleteBtn" Content="Elimina" HorizontalAlignment="Left" Margin="10,152,0,0" VerticalAlignment="Top" Height="30" Width="153" IsEnabled="False" />
+        <Grid Name="ViewGrid" Margin="183,1,0,-1" Visibility="Visible">
+            <ListBox Name="ViewLB" d:ItemsSource="{d:SampleData ItemCount=32}" FontSize="15" FontFamily="Georgia" Margin="0,37,570,10" SelectionMode="Single"/>
+            <Label Name="FoundLabel" Content="Tour trovati" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Width="197" FontSize="15" HorizontalContentAlignment="Center" />
+            <Label Name="ActionsLabel" Content="Azioni disponibili:" HorizontalAlignment="Left" Margin="234,4,0,0" VerticalAlignment="Top" Width="133" FontSize="15"/>
+            <ComboBox Name="ActionsCB" HorizontalAlignment="Left" Margin="234,39,0,0" VerticalAlignment="Top" Width="133"/>
+            <Button x:Name="ConfirmActionBtn" Content="Conferma Azione" HorizontalAlignment="Left" Margin="234,78,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.102" Width="133" Height="25"/>
+            <DataGrid Name="ResultsDG" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="395,37,0,0"/>
+            <Label Name="ResultsLabel" Content="Risultati trovati:" HorizontalAlignment="Left" Margin="520,4,0,0" VerticalAlignment="Top" Width="132" FontSize="15"/>
+            <ListBox Name="ChoiseLB" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="234,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="133" Height="206"/>
+            <Button Name="ConfirmChoiseBtn" Content="Conferma Scelta" HorizontalAlignment="Left" Margin="234,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.102" Width="133" Height="25"/>
         </Grid>
-        <Grid Name="SelectGrid" Margin="725,11,3,10" Visibility="Visible">
-            <ListBox Name="SelectLB" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionMode="Multiple" FontSize="15" FontFamily="Georgia" Margin="10,0,0,69"/>
-            <Button Content="Conferma" HorizontalAlignment="Center" Margin="0,452,0,0" VerticalAlignment="Top" Width="190" Height="42"/>
+        <Grid Name="InsertView" Margin="183,1,0,0" Visibility="Hidden">
+
         </Grid>
     </Grid>
 </Window>

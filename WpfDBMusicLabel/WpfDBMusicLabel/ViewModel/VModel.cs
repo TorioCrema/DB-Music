@@ -28,6 +28,7 @@ namespace WpfDBMusicLabel.ViewModel
 
         private MusiclabeldbContext _dbContext = new MusiclabeldbContext();
 
+        /*
         [RelayCommand]
         private void SaveChanges()
         {
@@ -36,9 +37,9 @@ namespace WpfDBMusicLabel.ViewModel
 
         public VModel()
         {
-             _dbContext.ProgettoMusicales.Load();
+            _dbContext.ProgettoMusicales.Load();
             Progetti = _dbContext.ProgettoMusicales.Local.ToObservableCollection();
-        }
+        }*/
 
         [ObservableProperty]
         private ObservableCollection<ProgettoMusicale> progetti;
