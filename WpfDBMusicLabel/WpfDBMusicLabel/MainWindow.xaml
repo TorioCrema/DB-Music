@@ -93,7 +93,7 @@
                    Width="132" 
                    FontSize="15"/>
             <ListBox Name="ChoiseLB" 
-                     ItemsSource="{d:SampleData ItemCount=5}" 
+                     d:ItemsSource="{d:SampleData ItemCount=5}" 
                      Margin="234,0,0,0" 
                      HorizontalAlignment="Left" 
                      VerticalAlignment="Center" 
