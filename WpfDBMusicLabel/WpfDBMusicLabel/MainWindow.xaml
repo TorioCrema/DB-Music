@@ -6,21 +6,27 @@
         xmlns:viewModels="clr-namespace:WpfDBMusicLabel.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="540" Width="960"
-        Closing="Window_Closing"
         ResizeMode="NoResize">
     <Window.DataContext>
         <viewModels:VModel x:Name="VModel" />
     </Window.DataContext>
     <Grid Name="Connection" 
           Visibility="Visible">
+        <Label Name="ActionLbl" Content="Seleziona azione:"
+               HorizontalAlignment="Left" 
+               Margin="10,9,0,0" 
+               VerticalAlignment="Top" 
+               Width="153" 
+               FontSize="15" 
+               HorizontalContentAlignment="Left" />
         <ComboBox Name="ActionsListCB" 
-                  ItemsSource="{Binding ActionsList}" 
+                  ItemsSource="{Binding ActionsList}"
+                  SelectedIndex="0"
                   FontSize="15" 
-                  Margin="10,39,0,0" 
-                  SelectedIndex="0" 
+                  Margin="10,39,0,0"
                   VerticalAlignment="Top" 
                   HorizontalAlignment="Left" 
-                  Width="153" />
+                  Width="153" SelectionChanged="ActionsListCB_SelectionChanged" />
         <Button Name="ViewBtn"  
                 Content="Visualizza" 
                 HorizontalAlignment="Left" 
@@ -28,7 +34,8 @@
                 VerticalAlignment="Top" 
                 Height="30" 
                 Width="153" 
-                IsEnabled="False" />
+                IsEnabled="{Binding ActionBtsEnabled}" 
+                Command="{Binding VisualizzaSelectedCommand}"/>
         <Button Name="InsertBtn" 
                 Content="Inserisci" 
                 HorizontalAlignment="Left" 
@@ -36,7 +43,7 @@
                 VerticalAlignment="Top" 
                 Height="30" 
                 Width="153" 
-                IsEnabled="False" />
+                IsEnabled="{Binding ActionBtsEnabled}" />
         <Button Name="DeleteBtn" 
                 Content="Elimina" 
                 HorizontalAlignment="Left" 
@@ -44,16 +51,23 @@
                 VerticalAlignment="Top" 
                 Height="30" 
                 Width="153" 
-                IsEnabled="False" />
+                IsEnabled="{Binding ActionBtsEnabled}" />
         <Grid Name="ViewGrid" 
               Margin="183,1,0,-1" 
-              Visibility="Collapsed">
-            <ListBox Name="ViewLB" 
-                     d:ItemsSource="{d:SampleData ItemCount=32}" 
-                     FontSize="15" 
-                     FontFamily="Georgia" 
+              Visibility="{Binding ViewGridVisibilty}"
+              >
+            <DataGrid Name="ViewLB" 
+                     ItemsSource="{Binding Tours}"
+                     SelectedItem="{Binding CurrentSelectedTour, Mode=TwoWay}"
                      Margin="0,37,570,10" 
-                     SelectionMode="Single"/>
+                     SelectionMode="Single"
+                     AutoGenerateColumns="False"
+                     CanUserResizeColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding IdTour}"/>
+                    <DataGridTextColumn Header="Nome" Binding="{Binding Nome}"/>
+                </DataGrid.Columns>
+            </DataGrid>
             <Label Name="FoundLabel" 
                    Content="Tour trovati" 
                    HorizontalAlignment="Left" 
@@ -73,7 +87,9 @@
                       HorizontalAlignment="Left" 
                       Margin="234,39,0,0" 
                       VerticalAlignment="Top" 
-                      Width="133"/>
+                      Width="133"
+                      ItemsSource="{Binding SubActionList}"
+                      SelectionChanged="ActionsCB_SelectionChanged"/>
             <Button Name="ConfirmActionBtn" 
                     Content="Conferma Azione" 
                     HorizontalAlignment="Left" 
@@ -82,9 +98,10 @@
                     Width="133" 
                     Height="25"/>
             <DataGrid Name="ResultsDG" 
-                      HorizontalAlignment="Center" 
+                      HorizontalAlignment="Left" 
                       VerticalAlignment="Top" 
-                      Margin="395,37,0,0"/>
+                      Margin="434,37,0,0"
+                      ItemsSource="{Binding Concerti}" Height="477" Width="288"/>
             <Label Name="ResultsLabel" 
                    Content="Risultati trovati:" 
                    HorizontalAlignment="Left" 
@@ -108,7 +125,8 @@
                     Height="25"/>
         </Grid>
         <Grid Name="InsertGrid" 
-              Margin="183,0,0,0">
+              Margin="183,0,0,0"
+              Visibility="Collapsed">
             <Grid Name="MerchInsertGrid" 
                   Margin="0,1,0,0" 
                   Visibility="Visible">
@@ -180,7 +198,8 @@
                     VerticalAlignment="Top" 
                     Height="37" 
                     Width="126" 
-                    Margin="578,218,0,0"/>
+                    Margin="578,218,0,0"
+                    Command="{Binding SaveChangesCommand}"/>
             <Button Name="CancelBtn" 
                     Content="Annulla" 
                     HorizontalAlignment="Left" 

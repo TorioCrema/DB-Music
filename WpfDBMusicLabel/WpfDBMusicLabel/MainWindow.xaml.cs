@@ -13,7 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CommunityToolkit.Mvvm.ComponentModel;
 using MySql.Data.MySqlClient;
+using WpfDBMusicLabel.Model;
 using WpfDBMusicLabel.ViewModel;
 
 namespace WpfDBMusicLabel
@@ -23,34 +25,19 @@ namespace WpfDBMusicLabel
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MySqlConnection cnn;
-        //private VModel vm;
-
         public MainWindow()
         {
             InitializeComponent();
-            DbConnection();
-            /*vm = new VModel();
-            ActionsListBox.ItemsSource = vm.GetActionsList();*/
+        }
+        
+        private void ActionsListCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VModel.SetCurrentAction(((ComboBox)e.Source).SelectedItem.ToString());
         }
 
-        private void DbConnection()
+        private void ActionsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string connectionString = "SERVER=localhost; PORT=3306; DATABASE=musiclabeldb; UID=root; PASSWORD=sinio";
-            try
-            {
-                cnn = new MySqlConnection(connectionString);
-                cnn.Open();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            cnn.Close();
+            VModel.CurrentSubAction = ((ComboBox)e.Source).SelectedItem.ToString();
         }
     }
 }
