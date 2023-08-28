@@ -39,7 +39,7 @@ namespace WpfDBMusicLabel.ViewModel
         public TourVM(MusiclabeldbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbContext.Tours.Load();
+            /*_dbContext.Tours.Load();*/
             Tours = _dbContext.Tours.Local.ToObservableCollection();
         }
 

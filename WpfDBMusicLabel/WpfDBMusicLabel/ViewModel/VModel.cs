@@ -65,7 +65,7 @@ namespace WpfDBMusicLabel.ViewModel
 
         public VModel()
         {
-            _dbContext.ProgettoMusicales.Load();
+            /*_dbContext.ProgettoMusicales.Load();*/
             Progetti = _dbContext.ProgettoMusicales.Local.ToObservableCollection();
             TourViewModel = new(_dbContext);
         }
