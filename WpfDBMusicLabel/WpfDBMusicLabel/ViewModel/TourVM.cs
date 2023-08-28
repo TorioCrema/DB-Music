@@ -70,12 +70,15 @@ namespace WpfDBMusicLabel.ViewModel
             switch (e.PropertyName)
             {
                 case "CurrentSubAction":
-                    this.ExecuteSubAction();
+                    if (CurrentSelectedTour != null)
+                    {
+                        ExecuteSubAction();
+                    }
                     break;
                 case "CurrentSelectedTour":
                     if (CurrentSubAction != null)
                     {
-                        this.ExecuteSubAction();
+                        ExecuteSubAction();
                     }
                     break;
             }
