@@ -29,38 +29,18 @@ namespace WpfDBMusicLabel.ViewModel
         };
 
         [ObservableProperty]
-        private List<string> subActionList = new();
-
-        private readonly Dictionary<string, (ActionType, List<string>)> _actionMap = new()
-        {
-            {"Tour", (ActionType.Tour, new(){"Concerti"})},
-            {"Album", (ActionType.Album, new(){ })},
-            {"Firmatario", (ActionType.Firmatario, new(){ })},
-            {"Traccia", (ActionType.Traccia, new(){ })},
-            {"Merchandising", (ActionType.Merchandising, new(){ })},
-            {"Prodotto", (ActionType.Prodotto, new(){ })},
-            {"Progetto Musicale", (ActionType.ProgettoMusicale, new(){ })}
-        };
-
-        [ObservableProperty]
         private ActionType? currentAction = null;
 
         [ObservableProperty]
-        private string? currentSubAction = null;
-
-        [ObservableProperty]
-        private Tour? currentSelectedTour = null;
+        private ISubVM? currentVM = null;
 
         private readonly MusiclabeldbContext _dbContext = new();
 
         [ObservableProperty]
+        private TourVM? tourViewModel;
+
+        [ObservableProperty]
         private ObservableCollection<ProgettoMusicale>? progetti;
-
-        [ObservableProperty]
-        private ObservableCollection<Tour>? tours;
-
-        [ObservableProperty]
-        private ObservableCollection<Concerto>? concerti;
 
         [ObservableProperty]
         private string? error = null;
@@ -86,47 +66,20 @@ namespace WpfDBMusicLabel.ViewModel
         public VModel()
         {
             _dbContext.ProgettoMusicales.Load();
-            _dbContext.Tours.Load();
             Progetti = _dbContext.ProgettoMusicales.Local.ToObservableCollection();
-            Tours = _dbContext.Tours.Local.ToObservableCollection();
-        }
-
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
-            switch (e.PropertyName)
-            {
-                case "CurrentSubAction":
-                    this.ExecuteSubAction(CurrentSubAction);
-                    break;
-            }
+            TourViewModel = new(_dbContext);
         }
 
         public bool SetCurrentAction(string action)
         {
-            if (_actionMap.TryGetValue(action, out (ActionType, List<string>) newAction))
+            switch (action)
             {
-                CurrentAction = newAction.Item1;
-                ActionBtsEnabled = true;
-                SubActionList = newAction.Item2;
-                return true;
+                case "Tour":
+                    CurrentVM = TourViewModel;
+                    ActionBtsEnabled = true;
+                    return true;
             }
-            else
-            {
-                Error = "The selected action is not implemented";
-                return false;
-            }
-        }
-
-        private void ExecuteSubAction(string subAction)
-        {
-            switch (subAction)
-            {
-                case "Concerti":
-                    _dbContext.Concertos.Where(x => x.IdTour == CurrentSelectedTour.IdTour).Load();
-                    Concerti = _dbContext.Concertos.Local.ToObservableCollection();
-                    break;
-            }
+            return false;
         }
     }
 }

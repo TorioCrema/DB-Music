@@ -57,6 +57,7 @@
               Visibility="{Binding ViewGridVisibilty}"
               >
             <DataGrid Name="ViewLB" 
+                     DataContext="{Binding TourViewModel}"
                      ItemsSource="{Binding Tours}"
                      SelectedItem="{Binding CurrentSelectedTour, Mode=TwoWay}"
                      Margin="0,37,570,10" 
@@ -84,6 +85,7 @@
                    Width="133" 
                    FontSize="15"/>
             <ComboBox Name="ActionsCB" 
+                      DataContext="{Binding TourViewModel}"
                       HorizontalAlignment="Left" 
                       Margin="234,39,0,0" 
                       VerticalAlignment="Top" 
@@ -98,6 +100,7 @@
                     Width="133" 
                     Height="25"/>
             <DataGrid Name="ResultsDG" 
+                      DataContext="{Binding TourViewModel}"
                       HorizontalAlignment="Left" 
                       VerticalAlignment="Top" 
                       Margin="434,37,0,0"

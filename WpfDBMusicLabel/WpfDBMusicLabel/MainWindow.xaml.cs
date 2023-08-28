@@ -37,7 +37,7 @@ namespace WpfDBMusicLabel
 
         private void ActionsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            VModel.CurrentSubAction = ((ComboBox)e.Source).SelectedItem.ToString();
+            VModel.CurrentVM.SetCurrentSubAction(((ComboBox)e.Source).SelectedItem.ToString());
         }
     }
 }
