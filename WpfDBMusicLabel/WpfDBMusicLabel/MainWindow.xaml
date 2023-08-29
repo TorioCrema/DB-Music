@@ -10,6 +10,21 @@
     <Window.DataContext>
         <viewModels:VModel x:Name="VModel" />
     </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="ListBoxLuoghiTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock FontWeight="Bold" Text="Nome:" DockPanel.Dock="Left" Margin="5,0,10,0" />
+                    <TextBlock Text="" />
+                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock FontWeight="Bold" Text="Capienza:" DockPanel.Dock="Left" Margin="5,0,5,0" />
+                    <TextBlock Text="{Binding Capienza}" />
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid Name="Connection" 
           Visibility="Visible">
         <Label Name="ActionLbl" Content="Seleziona azione:"
@@ -43,6 +58,7 @@
                 VerticalAlignment="Top" 
                 Height="30" 
                 Width="153" 
+                Command="{Binding InsertSelectedCommand}"
                 IsEnabled="{Binding ActionBtsEnabled}" />
         <Button Name="DeleteBtn" 
                 Content="Elimina" 
@@ -54,9 +70,7 @@
                 IsEnabled="{Binding ActionBtsEnabled}" />
         <Grid Name="ViewGrid" 
               Margin="183,1,0,-1" 
-              Visibility="Hidden"
-              >
-            <!--Visibility="{Binding ViewGridVisibilty}"-->
+              Visibility="{Binding ViewGridVisibilty}">
             <DataGrid Name="ViewLB" 
                      DataContext="{Binding TourViewModel}"
                      ItemsSource="{Binding Tours}"
@@ -130,7 +144,7 @@
         </Grid>
         <Grid Name="InsertGrid" 
               Margin="183,0,0,0"
-              Visibility="Visible">
+              Visibility="{Binding InsertGridVisibility}">
             <Grid Name="MerchInsertGrid" 
                   Margin="0,1,240,0" 
                   Visibility="Collapsed">
@@ -329,8 +343,14 @@
                          Height="30"/>
             </Grid>
             <Grid Name="TourInsertGrid" 
+                  DataContext="{Binding TourViewModel}"
                   Margin="0,1,240,0" 
-                  Visibility="Collapsed">
+                  Visibility="{Binding TourInsertVisibilty}">
+                <DatePicker Name="InsertConcertoDP"
+                            SelectedDate="{Binding DataConcerto}" Margin="16,180,405,317"/>
+                <DataGrid Name="InsertConcertDG" Margin="10,224,10,10"
+                     ItemsSource="{Binding Tours}"
+                     SelectedItem="{Binding CurrentSelectedTour, Mode=TwoWay}"/>
                 <Label Name="TourProjectLabel" 
                        Content="Seleziona luoghi:" 
                        HorizontalAlignment="Left" 
@@ -338,8 +358,12 @@
                        VerticalAlignment="Top" 
                        FontSize="15"/>
                 <ListBox Name="TourLB" 
-                         d:ItemsSource="{d:SampleData ItemCount=5}" 
-                         Margin="137,10,125,10"/>
+                         ItemsSource="{Binding Luoghi}" 
+                         Margin="10,45,10,363"
+                         HorizontalContentAlignment="Stretch"
+                         SelectedIndex="0"
+                         SelectedItem="{Binding CurrentSelectedLuogo, Mode=TwoWay}"
+                         ItemTemplate="{StaticResource ListBoxLuoghiTemplate}"/>
             </Grid>
             <Grid Name="AlbumInsertGrid" 
                   Margin="0,1,240,0" 
@@ -504,7 +528,7 @@
             </Grid>
             <Grid Name="ContractInsertGrid" 
                   Margin="0,1,240,0" 
-                  Visibility="Visible">
+                  Visibility="Collapsed">
                 <Label Name="ContractNameLabel" 
                        Content="Nome:" 
                        HorizontalAlignment="Left" 
