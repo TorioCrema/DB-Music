@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
@@ -36,11 +38,25 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private string? error;
 
+        [ObservableProperty]
+        private List<Luogo>? luoghi;
+
+        [ObservableProperty]
+        private Luogo? currentSelectedLuogo = null;
+
+        [ObservableProperty]
+        private DateTime dataConcerto = DateTime.Now;
+
+        [ObservableProperty]
+        private Visibility tourInsertVisibilty = Visibility.Collapsed;
+
         public TourVM(MusiclabeldbContext dbContext)
         {
             _dbContext = dbContext;
-            /*_dbContext.Tours.Load();*/
+            _dbContext.Tours.Load();
+            _dbContext.Luogos.Load();
             Tours = _dbContext.Tours.Local.ToObservableCollection();
+            Luoghi = _dbContext.Luogos.Local.ToObservableCollection().ToList();
         }
 
         public bool ExecuteSubAction()
@@ -53,16 +69,27 @@ namespace WpfDBMusicLabel.ViewModel
                     _dbContext.Concertos.Local.Where(x => x.IdTour == CurrentSelectedTour.IdTour).ToList().ForEach(x => newConcerti.Add(x));
                     Concerti = newConcerti;
                     return true;
+
+                case "Inserisci":
+                    if (CurrentSelectedTour != null && CurrentSelectedLuogo != null)
+                    {
+                        Concerto concerto = new()
+                        {
+                            IdTour = CurrentSelectedTour.IdTour,
+                            IdLuogo = CurrentSelectedLuogo.IdLuogo,
+                            Data = DataConcerto
+                        };
+                        _dbContext.Concertos.Add(concerto);
+                    }
+                    return true;
+
                 default:
                     Error = "The selected sub action is not implemented.";
                     return false;
             }
         }
 
-        public void SetCurrentSubAction(string newSubAction)
-        {
-            CurrentSubAction = newSubAction;
-        }
+        public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
@@ -82,6 +109,12 @@ namespace WpfDBMusicLabel.ViewModel
                     }
                     break;
             }
+        }
+
+        public void InsertGridSelected()
+        {
+            TourInsertVisibilty = Visibility.Visible;
+            CurrentSubAction = "Inserisci";
         }
     }
 }

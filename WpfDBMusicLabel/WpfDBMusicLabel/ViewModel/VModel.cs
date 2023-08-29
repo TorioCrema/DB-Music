@@ -51,10 +51,14 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private Visibility viewGridVisibilty = Visibility.Collapsed;
 
+        [ObservableProperty]
+        private Visibility insertGridVisibility = Visibility.Collapsed;
+
         [RelayCommand]
         private void VisualizzaSelected()
         {
             ViewGridVisibilty = Visibility.Visible;
+            InsertGridVisibility = Visibility.Collapsed;
         }
 
         [RelayCommand]
@@ -63,9 +67,17 @@ namespace WpfDBMusicLabel.ViewModel
             _dbContext.SaveChanges();
         }
 
+        [RelayCommand]
+        private void InsertSelected()
+        {
+            CurrentVM?.InsertGridSelected();
+            InsertGridVisibility = Visibility.Visible;
+            ViewGridVisibilty = Visibility.Collapsed;
+        }
+
         public VModel()
         {
-            /*_dbContext.ProgettoMusicales.Load();*/
+            _dbContext.ProgettoMusicales.Load();
             Progetti = _dbContext.ProgettoMusicales.Local.ToObservableCollection();
             TourViewModel = new(_dbContext);
         }

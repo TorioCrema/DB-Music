@@ -11,5 +11,7 @@ namespace WpfDBMusicLabel.ViewModel
         public bool ExecuteSubAction();
 
         public void SetCurrentSubAction(string newSubAction);
+
+        public void InsertGridSelected();
     }
 }
