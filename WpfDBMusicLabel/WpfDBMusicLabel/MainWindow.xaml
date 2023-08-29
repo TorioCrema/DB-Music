@@ -24,6 +24,13 @@
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="ListBoxTourTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
     <Grid Name="Connection" 
           Visibility="Visible">
@@ -346,24 +353,26 @@
                   DataContext="{Binding TourViewModel}"
                   Margin="0,1,240,0" 
                   Visibility="{Binding TourInsertVisibilty}">
+                <Label Content="Seleziona Data:" Margin="12,0,0,81" Height="31" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="122"/>
                 <DatePicker Name="InsertConcertoDP"
-                            SelectedDate="{Binding DataConcerto}" Margin="16,180,405,317"/>
-                <DataGrid Name="InsertConcertDG" Margin="10,224,10,10"
-                     ItemsSource="{Binding Tours}"
-                     SelectedItem="{Binding CurrentSelectedTour, Mode=TwoWay}"/>
+                            SelectedDate="{Binding DataConcerto}" Height="25" VerticalAlignment="Bottom" Margin="139,0,229,84"/>
+                <ListBox Name="InsertConcertDG" Margin="10,10,10,381"
+                         ItemsSource="{Binding Tours}"
+                         SelectedItem="{Binding CurrentSelectedTour}"
+                         ItemTemplate="{StaticResource ListBoxTourTemplate}"/>
                 <Label Name="TourProjectLabel" 
                        Content="Seleziona luoghi:" 
                        HorizontalAlignment="Left" 
-                       Margin="10,10,0,0" 
+                       Margin="10,138,0,0" 
                        VerticalAlignment="Top" 
                        FontSize="15"/>
                 <ListBox Name="TourLB" 
                          ItemsSource="{Binding Luoghi}" 
-                         Margin="10,45,10,363"
+                         Margin="10,168,10,123"
                          HorizontalContentAlignment="Stretch"
                          SelectedIndex="0"
                          SelectedItem="{Binding CurrentSelectedLuogo, Mode=TwoWay}"
-                         ItemTemplate="{StaticResource ListBoxLuoghiTemplate}"/>
+                         ItemTemplate="{StaticResource ListBoxLuoghiTemplate}" Grid.ColumnSpan="2"/>
             </Grid>
             <Grid Name="AlbumInsertGrid" 
                   Margin="0,1,240,0" 

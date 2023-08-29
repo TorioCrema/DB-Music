@@ -80,8 +80,10 @@ namespace WpfDBMusicLabel.ViewModel
                             Data = DataConcerto
                         };
                         _dbContext.Concertos.Add(concerto);
+                        return true;
                     }
-                    return true;
+                    Error = "Informazioni necessarie all'inserimento non presenti.";
+                    return false;
 
                 default:
                     Error = "The selected sub action is not implemented.";
