@@ -30,13 +30,13 @@ namespace WpfDBMusicLabel.ViewModel
         private readonly MusiclabeldbContext _dbContext;
 
         [ObservableProperty]
-        private ObservableCollection<Tour>? tours;
+        private ObservableCollection<Tour> tours;
 
         [ObservableProperty]
         private ObservableCollection<Concerto>? concerti;
 
         [ObservableProperty]
-        private string? error;
+        private string? error = null;
 
         [ObservableProperty]
         private List<Luogo>? luoghi;
