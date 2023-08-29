@@ -1,5 +1,4 @@
 -- Visualizzazione della discografia di un progetto musicale
-
 select A.Nome, A.Durata, A.DataPubblicazione, P.Nome as Autore
     from Album A join Progetto_Musicale P on (A.ID_Progetto = P.ID_Progetto)
     where A.ID_Progetto = 1;
@@ -10,7 +9,7 @@ select T.Nome, T.DataPubblicazione, T.Durata
     where F.ID_Progetto = 1;
 
 -- Visualizzazione di tutto il merchandising di un progetto musicale
-select Codice, Descrizione, Prezzo/100 as Costo, QtaProdotta, CostFornituraUnitario/100 as CostoFornituraUnitario, ID_Produttore from Merchandising where ID_Progetto = 1;
+select Codice, Descrizione, Prezzo/100 as Costo, QtaProdotta, CostoFornituraUnitario/100 as CostoFornituraUnitario, ID_Produttore from Merchandising where ID_Progetto = 1;
 
 -- Visualizzazione dei biglietti disponibili per un concerto
 select Descrizione, Costo/100 as Prezzo, DispTot-NumVenduti as NumeroDisponibili from Biglietto B where NumVenduti < DispTot and ID_Concerto = 1;
@@ -20,7 +19,7 @@ select PA.Nome, PA.Descrizione, PA.Prezzo, PA.QtaProdotta, PA.CostoFornitura,
     PA.DataUscita, PA.Tipo, PA.Formato, PA.Album, PM.Nome as Autore
     from (select P.Nome, P.Descrizione, P.Prezzo/100 as Prezzo, P.QtaProdotta,
         P.CostoFornitura/100 as CostoFornitura, P.DataUscita, P.Tipo, P.Formato,
-        A.Nome as Album from Prodotto P join Album A on (P.ID_Album = A.ID_Album)
+        A.Nome as Album, A.ID_Progetto from Prodotto P join Album A on (P.ID_Album = A.ID_Album)
         where P.ID_Album = 1) PA 
     join Progetto_Musicale PM on (PA.ID_Progetto = PM.ID_Progetto);
 
@@ -33,3 +32,21 @@ select CB.Data, CB.NumeroVenduti, L.Nome as Venue from (select C.Data, ND.Numero
 select sum(Venduti) NumBigliettiVendutiTot
 	from (select sum(B.NumVenduti) as Venduti, C.ID_Concerto from Biglietto B join Concerto C on (B.ID_Concerto = C.ID_Concerto) group by C.ID_Concerto) TotVenduti
 	join Performance P on (TotVenduti.ID_Concerto = P.ID_Concerto) where P.ID_Progetto = 1;
+    
+START transaction;
+-- Cancellazione di un concerto --
+delete C
+	from Concerto C 
+    where ID_Concerto = 1;
+    
+-- Cancellazione di un album --
+delete A
+	from Album A 
+    where ID_Album = 1;
+    
+-- Cancellazione di una traccia --
+delete T
+	from Traccia T
+    where ID_Traccia = 1;
+
+rollback;
