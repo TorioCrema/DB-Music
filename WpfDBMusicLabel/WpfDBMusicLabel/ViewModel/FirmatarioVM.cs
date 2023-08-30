@@ -30,7 +30,8 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private List<string> subActionList = new()
         {
-            "Inserisci"
+            "Inserisci Firmatario",
+            "Inserisci Contratto"
         };
 
         [ObservableProperty]
@@ -45,6 +46,15 @@ namespace WpfDBMusicLabel.ViewModel
             Ruolo = "RUOLO"
         };
 
+        [ObservableProperty]
+        private DateTime contractStart = DateTime.Now;
+
+        [ObservableProperty]
+        private DateTime contractEnd = DateTime.Now;
+
+        [ObservableProperty]
+        private uint contractPay = 0;
+
         public FirmatarioVM(MusiclabeldbContext dbContext)
         {
             _dbContext = dbContext;
@@ -56,10 +66,25 @@ namespace WpfDBMusicLabel.ViewModel
         {
             switch (CurrentSubAction)
             {
-                case "Inserisci":
+                case "Inserisci Firmatario":
                     if (NewFirmatario != null && CheckFirmatario(NewFirmatario))
                     {
                         Firmatari.Add(NewFirmatario);
+                        return true;
+                    }
+                    return false;
+
+                case "Inserisci Contratto":
+                    if (NewFirmatario != null || ContractPay <= 0)
+                    {
+                        Contratto newContract = new()
+                        {
+                            DataInizio = ContractStart,
+                            DataFine = ContractEnd,
+                            Importo = ContractPay,
+                            // TODO get Id of new firmatario
+                        };
+                        return true;
                     }
                     return false;
 
