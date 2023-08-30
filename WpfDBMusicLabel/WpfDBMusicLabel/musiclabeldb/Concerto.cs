@@ -19,5 +19,5 @@ public partial class Concerto
 
     public virtual Tour IdTourNavigation { get; set; } = null!;
 
-    public virtual ICollection<ProgettoMusicale> IdProgettos { get; set; } = new List<ProgettoMusicale>();
+    public virtual ICollection<ProgettoMusicale> IdProgetti { get; set; } = new List<ProgettoMusicale>();
 }

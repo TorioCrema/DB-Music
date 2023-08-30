@@ -58,8 +58,8 @@ namespace WpfDBMusicLabel.ViewModel
         public FirmatarioVM(MusiclabeldbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbContext.Firmatarios.Load();
-            Firmatari = _dbContext.Firmatarios.Local.ToObservableCollection();
+            _dbContext.Firmatari.Load();
+            Firmatari = _dbContext.Firmatari.Local.ToObservableCollection();
         }
 
         public bool ExecuteSubAction()

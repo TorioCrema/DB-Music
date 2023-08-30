@@ -32,9 +32,9 @@ public partial class Firmatario
 
     public string? Ruolo { get; set; }
 
-    public virtual ICollection<Contratto> Contrattos { get; set; } = new List<Contratto>();
+    public virtual ICollection<Contratto> Contratti { get; set; } = new List<Contratto>();
 
-    public virtual ICollection<ProgettoMusicale> IdProgettos { get; set; } = new List<ProgettoMusicale>();
+    public virtual ICollection<ProgettoMusicale> IdProgetti { get; set; } = new List<ProgettoMusicale>();
 
     public virtual ICollection<Traccia> IdTraccia { get; set; } = new List<Traccia>();
 }

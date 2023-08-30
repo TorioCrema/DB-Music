@@ -24,7 +24,7 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private List<string> subActionList = new()
         {
-            "Concerti"
+            "Vedi concerti"
         };
 
         private readonly MusiclabeldbContext _dbContext;
@@ -54,19 +54,19 @@ namespace WpfDBMusicLabel.ViewModel
         {
             _dbContext = dbContext;
             _dbContext.Tours.Load();
-            _dbContext.Luogos.Load();
+            _dbContext.Luoghi.Load();
             Tours = _dbContext.Tours.Local.ToObservableCollection();
-            Luoghi = _dbContext.Luogos.Local.ToObservableCollection().ToList();
+            Luoghi = _dbContext.Luoghi.Local.ToObservableCollection().ToList();
         }
 
         public bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
             {
-                case "Concerti":
+                case "Vedi concerti":
                     ObservableCollection<Concerto> newConcerti = new();
-                    _dbContext.Concertos.Where(x => x.IdTour == CurrentSelectedTour.IdTour).Load();
-                    _dbContext.Concertos.Local.Where(x => x.IdTour == CurrentSelectedTour.IdTour).ToList().ForEach(x => newConcerti.Add(x));
+                    _dbContext.Concerti.Where(x => x.IdTour == CurrentSelectedTour.IdTour).Load();
+                    _dbContext.Concerti.Local.Where(x => x.IdTour == CurrentSelectedTour.IdTour).ToList().ForEach(x => newConcerti.Add(x));
                     Concerti = newConcerti;
                     return true;
 
@@ -79,7 +79,7 @@ namespace WpfDBMusicLabel.ViewModel
                             IdLuogo = CurrentSelectedLuogo.IdLuogo,
                             Data = DataConcerto
                         };
-                        _dbContext.Concertos.Add(concerto);
+                        _dbContext.Concerti.Add(concerto);
                         return true;
                     }
                     Error = "Informazioni necessarie all'inserimento non presenti.";

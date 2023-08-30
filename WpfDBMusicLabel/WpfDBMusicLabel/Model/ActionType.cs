@@ -11,7 +11,7 @@ namespace WpfDBMusicLabel.Model
     {
         public static ActionType Tour { get; } = new ActionType("Tour");
         public static ActionType Firmatario { get; } = new ActionType("Firmatario");
-        public static ActionType Traccia { get; } = new ActionType("Traccia");
+        public static ActionType Traccia { get; } = new ActionType("Tracce");
         public static ActionType Album { get; } = new ActionType("Album");
         public static ActionType Prodotto { get; } = new ActionType("Prodotto");
         public static ActionType Merchandising { get; } = new ActionType("Merchandising");

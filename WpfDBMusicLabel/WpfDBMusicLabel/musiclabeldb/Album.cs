@@ -17,7 +17,7 @@ public partial class Album
 
     public virtual ProgettoMusicale IdProgettoNavigation { get; set; } = null!;
 
-    public virtual ICollection<Prodotto> Prodottos { get; set; } = new List<Prodotto>();
+    public virtual ICollection<Prodotto> Prodotti { get; set; } = new List<Prodotto>();
 
     public virtual ICollection<Traccia> IdTraccia { get; set; } = new List<Traccia>();
 }

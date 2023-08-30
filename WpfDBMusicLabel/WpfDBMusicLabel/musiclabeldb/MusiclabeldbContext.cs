@@ -17,30 +17,30 @@ public partial class MusiclabeldbContext : DbContext
 
     public virtual DbSet<Album> Albums { get; set; }
 
-    public virtual DbSet<Biglietto> Bigliettos { get; set; }
+    public virtual DbSet<Biglietto> Biglietti { get; set; }
 
-    public virtual DbSet<Concerto> Concertos { get; set; }
+    public virtual DbSet<Concerto> Concerti { get; set; }
 
-    public virtual DbSet<Contratto> Contrattos { get; set; }
+    public virtual DbSet<Contratto> Contratti { get; set; }
 
-    public virtual DbSet<Firmatario> Firmatarios { get; set; }
+    public virtual DbSet<Firmatario> Firmatari { get; set; }
 
-    public virtual DbSet<Luogo> Luogos { get; set; }
+    public virtual DbSet<Luogo> Luoghi { get; set; }
 
     public virtual DbSet<Merchandising> Merchandisings { get; set; }
 
-    public virtual DbSet<Prodotto> Prodottos { get; set; }
+    public virtual DbSet<Prodotto> Prodotti { get; set; }
 
-    public virtual DbSet<Produttore> Produttores { get; set; }
+    public virtual DbSet<Produttore> Produttori { get; set; }
 
-    public virtual DbSet<ProgettoMusicale> ProgettoMusicales { get; set; }
+    public virtual DbSet<ProgettoMusicale> ProgettiMusicali { get; set; }
 
     public virtual DbSet<Tour> Tours { get; set; }
 
-    public virtual DbSet<Traccia> Traccia { get; set; }
+    public virtual DbSet<Traccia> Tracce { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySQL("SERVER=localhost; PORT=3306; DATABASE=musiclabeldb; UID=root; PASSWORD=73a6RV+(");
+        => optionsBuilder.UseMySQL("SERVER=localhost; PORT=3306; DATABASE=musiclabeldb; UID=root; PASSWORD=sinio");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -129,7 +129,7 @@ public partial class MusiclabeldbContext : DbContext
                 .HasForeignKey(d => d.IdTour)
                 .HasConstraintName("concerto_ibfk_2");
 
-            entity.HasMany(d => d.IdProgettos).WithMany(p => p.IdConcertos)
+            entity.HasMany(d => d.IdProgetti).WithMany(p => p.IdConcertos)
                 .UsingEntity<Dictionary<string, object>>(
                     "Performance",
                     r => r.HasOne<ProgettoMusicale>().WithMany()
@@ -163,7 +163,7 @@ public partial class MusiclabeldbContext : DbContext
             entity.Property(e => e.DataInizio).HasColumnType("date");
             entity.Property(e => e.IdFirmatario).HasColumnName("ID_Firmatario");
 
-            entity.HasOne(d => d.IdFirmatarioNavigation).WithMany(p => p.Contrattos)
+            entity.HasOne(d => d.IdFirmatarioNavigation).WithMany(p => p.Contratti)
                 .HasForeignKey(d => d.IdFirmatario)
                 .HasConstraintName("contratto_ibfk_1");
         });
@@ -253,7 +253,7 @@ public partial class MusiclabeldbContext : DbContext
             entity.Property(e => e.Nome).HasMaxLength(50);
             entity.Property(e => e.Tipo).HasMaxLength(10);
 
-            entity.HasOne(d => d.IdAlbumNavigation).WithMany(p => p.Prodottos)
+            entity.HasOne(d => d.IdAlbumNavigation).WithMany(p => p.Prodotti)
                 .HasForeignKey(d => d.IdAlbum)
                 .HasConstraintName("prodotto_ibfk_1");
 
@@ -303,7 +303,7 @@ public partial class MusiclabeldbContext : DbContext
             entity.Property(e => e.Nome).HasMaxLength(50);
             entity.Property(e => e.Tipo).HasMaxLength(50);
 
-            entity.HasMany(d => d.IdFirmatarios).WithMany(p => p.IdProgettos)
+            entity.HasMany(d => d.IdFirmatarios).WithMany(p => p.IdProgetti)
                 .UsingEntity<Dictionary<string, object>>(
                     "Partecipazione",
                     r => r.HasOne<Firmatario>().WithMany()

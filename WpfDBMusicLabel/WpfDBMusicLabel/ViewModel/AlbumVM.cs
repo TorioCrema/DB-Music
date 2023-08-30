@@ -36,7 +36,8 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private List<string> subActionList = new()
         {
-            "Edizioni Fisiche"
+            "Edizioni Fisiche",
+            "Vedi tracce"
         };
 
         public AlbumVM(MusiclabeldbContext dbContext)
@@ -53,8 +54,8 @@ namespace WpfDBMusicLabel.ViewModel
                 case "Edizioni Fisiche":
                     if (CurrentSelectedAlbum != null)
                     {
-                        _dbContext.Prodottos.Where(x => x.IdAlbum == CurrentSelectedAlbum.IdAlbum).Load();
-                        Prodotti = _dbContext.Prodottos.Local.ToObservableCollection();
+                        _dbContext.Prodotti.Where(x => x.IdAlbum == CurrentSelectedAlbum.IdAlbum).Load();
+                        Prodotti = _dbContext.Prodotti.Local.ToObservableCollection();
                         return true;
                     }
                     Error = "Album non selezionato";

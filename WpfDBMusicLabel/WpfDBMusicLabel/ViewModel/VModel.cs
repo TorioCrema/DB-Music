@@ -23,7 +23,7 @@ namespace WpfDBMusicLabel.ViewModel
             "Tour",
             "Album",
             "Firmatario",
-            "Traccia",
+            "Tracce",
             "Merchandising",
             "Prodotto",
             "Progetto Musicale"
@@ -81,8 +81,8 @@ namespace WpfDBMusicLabel.ViewModel
 
         public VModel()
         {
-            _dbContext.ProgettoMusicales.Load();
-            Progetti = _dbContext.ProgettoMusicales.Local.ToObservableCollection();
+            _dbContext.ProgettiMusicali.Load();
+            Progetti = _dbContext.ProgettiMusicali.Local.ToObservableCollection();
             TourViewModel = new(_dbContext);
             FirmatarioViewModel = new(_dbContext);
         }
