@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace WpfDBMusicLabel.ViewModel
         public void SetCurrentSubAction(string newSubAction);
 
         public void InsertGridSelected();
+
+        public void OtherVMSelected();
     }
 }

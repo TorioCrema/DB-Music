@@ -118,5 +118,7 @@ namespace WpfDBMusicLabel.ViewModel
             TourInsertVisibilty = Visibility.Visible;
             CurrentSubAction = "Inserisci";
         }
+
+        public void OtherVMSelected() => TourInsertVisibilty = Visibility.Collapsed;
     }
 }

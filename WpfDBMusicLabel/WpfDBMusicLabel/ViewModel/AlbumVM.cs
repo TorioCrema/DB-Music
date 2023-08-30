@@ -71,6 +71,8 @@ namespace WpfDBMusicLabel.ViewModel
             CurrentSubAction = "Inserisci";
         }
 
+        public void OtherVMSelected() => AlbumInsertVisibilty = Visibility.Collapsed;
+
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
     }
 }
