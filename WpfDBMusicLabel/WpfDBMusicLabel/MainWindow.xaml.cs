@@ -29,11 +29,6 @@ namespace WpfDBMusicLabel
         {
             InitializeComponent();
         }
-        
-        private void ActionsListCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            VModel.SetCurrentAction(((ComboBox)e.Source).SelectedItem.ToString());
-        }
 
         private void ActionsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

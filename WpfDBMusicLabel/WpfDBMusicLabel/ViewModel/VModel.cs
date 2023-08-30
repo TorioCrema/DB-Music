@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace WpfDBMusicLabel.ViewModel
         };
 
         [ObservableProperty]
-        private ActionType? currentAction = null;
+        private string? currentAction = null;
 
         [ObservableProperty]
         private ISubVM? currentVM = null;
@@ -37,7 +38,10 @@ namespace WpfDBMusicLabel.ViewModel
         private readonly MusiclabeldbContext _dbContext = new();
 
         [ObservableProperty]
-        private TourVM? tourViewModel;
+        private TourVM tourViewModel;
+
+        [ObservableProperty]
+        private FirmatarioVM firmatarioViewModel;
 
         [ObservableProperty]
         private ObservableCollection<ProgettoMusicale>? progetti;
@@ -80,18 +84,36 @@ namespace WpfDBMusicLabel.ViewModel
             _dbContext.ProgettoMusicales.Load();
             Progetti = _dbContext.ProgettoMusicales.Local.ToObservableCollection();
             TourViewModel = new(_dbContext);
+            FirmatarioViewModel = new(_dbContext);
         }
 
         public bool SetCurrentAction(string action)
         {
+            CurrentVM?.OtherVMSelected();
             switch (action)
             {
                 case "Tour":
                     CurrentVM = TourViewModel;
                     ActionBtsEnabled = true;
                     return true;
+
+                case "Firmatario":
+                    CurrentVM = FirmatarioViewModel;
+                    ActionBtsEnabled = true;
+                    return true;
             }
             return false;
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            switch (e.PropertyName)
+            {
+                case "CurrentAction":
+                    SetCurrentAction(CurrentAction);
+                    break;
+            }
         }
     }
 }

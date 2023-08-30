@@ -5,6 +5,17 @@ namespace WpfDBMusicLabel.musiclabeldb;
 
 public partial class Firmatario
 {
+    public static List<string> Ruoli
+    {
+        get => new()
+            {
+                "Producer",
+                "Musicista",
+                "Vocalist",
+                "Nessun Ruolo"
+            };
+    }
+
     public uint IdFirmatario { get; set; }
 
     public string Cf { get; set; } = null!;
