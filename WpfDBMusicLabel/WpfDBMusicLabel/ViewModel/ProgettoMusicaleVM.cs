@@ -22,16 +22,16 @@ namespace WpfDBMusicLabel.ViewModel
         private ProgettoMusicale? currentSelectedProject = null;
 
         [ObservableProperty]
-        private ObservableCollection<Album> albums;
+        private ObservableCollection<Album>? albums;
 
         [ObservableProperty]
-        private ObservableCollection<Traccia> tracce;
+        private ObservableCollection<Traccia>? tracce;
 
         [ObservableProperty]
-        private ObservableCollection<Firmatario> firmatari;
+        private ObservableCollection<Firmatario>? firmatari;
 
         [ObservableProperty]
-        private ObservableCollection<Concerto> concerti;
+        private ObservableCollection<Concerto>? concerti;
 
         [ObservableProperty]
         private string? currentSubAction = null;
@@ -60,7 +60,7 @@ namespace WpfDBMusicLabel.ViewModel
 
         public bool ExecuteSubAction()
         {
-            switch (currentSubAction)
+            switch (CurrentSubAction)
             {
                 case "Vedi album":
                     _dbContext.Albums.Where(album => album.IdProgetto == CurrentSelectedProject.IdProgetto).Load();
@@ -71,7 +71,7 @@ namespace WpfDBMusicLabel.ViewModel
                     Tracce = _dbContext.Tracce.Local.ToObservableCollection();
                     return true;
                 case "Vedi firmatari":
-                    _dbContext.Firmatari.Where(firmatario => firmatario.IdProgetti.Any(progetto => progetto.IdProgetto == CurrentSelectedProject.IdProgetto)).Load();
+                    _dbContext.Firmatari.Include(firmatari => firmatari.IdProgetti).Where(firmatario => firmatario.IdProgetti.Any(progetto => progetto.IdProgetto == CurrentSelectedProject.IdProgetto)).Load();
                     Firmatari = _dbContext.Firmatari.Local.ToObservableCollection();
                     return true;
                 case "Vedi concerti":
@@ -86,6 +86,6 @@ namespace WpfDBMusicLabel.ViewModel
 
         public void OtherVMSelected() => throw new NotImplementedException();
 
-        public void SetCurrentSubAction(string newSubAction) => currentSubAction = newSubAction;
+        public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
     }
 }

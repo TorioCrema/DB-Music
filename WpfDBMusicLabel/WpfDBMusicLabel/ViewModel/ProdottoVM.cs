@@ -16,7 +16,7 @@ namespace WpfDBMusicLabel.ViewModel
         private readonly MusiclabeldbContext _dbContext;
 
         [ObservableProperty]
-        private ObservableCollection<Prodotto>? products;
+        private ObservableCollection<Prodotto>? prodotti;
 
         [ObservableProperty]
         private Prodotto? currentSelectedProduct = null;
@@ -31,8 +31,7 @@ namespace WpfDBMusicLabel.ViewModel
         private Visibility productInsertVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
-        private string? error = null; //TODO: Capire se gestire così o con IsEnabled
-
+        private string? error = null;
         [ObservableProperty]
         private List<string> subActionsList = new()
         {
@@ -43,14 +42,13 @@ namespace WpfDBMusicLabel.ViewModel
         {
             this._dbContext = dbContext;
             this._dbContext.Prodotti.Load();
-            this.Products = this._dbContext.Prodotti.Local.ToObservableCollection();
+            this.Prodotti = this._dbContext.Prodotti.Local.ToObservableCollection();
         }
 
         public bool ExecuteSubAction()
         {
             if (CurrentSelectedProduct != null)
             {
-                //TODO: Controllare il corretto funzionamento di Any
                 _dbContext.Albums.Where(x => x.Prodotti.Any(y => y.Formato == CurrentSelectedProduct.Formato)).Load(); 
                 Albums = _dbContext.Albums.Local.ToObservableCollection();
                 return true;

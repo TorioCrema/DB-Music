@@ -43,6 +43,18 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private FirmatarioVM firmatarioViewModel;
 
+        /*[ObservableProperty]
+        private ProgettoMusicaleVM progettoViewModel;
+
+        [ObservableProperty]
+        private TracciaVM tracciaViewModel;
+
+        [ObservableProperty]
+        private ProdottoVM prodottoViewModel;
+
+        [ObservableProperty]
+        private AlbumVM albumViewModel;*/
+
         [ObservableProperty]
         private ObservableCollection<ProgettoMusicale>? progetti;
 

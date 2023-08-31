@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:a="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
         xmlns:viewModels="clr-namespace:WpfDBMusicLabel.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="540" Width="960"
@@ -54,6 +55,9 @@
                 Height="30" 
                 Width="153" 
                 IsEnabled="{Binding ActionBtsEnabled}" />
+        <Grid>
+            <a:AlbumViewGrid/>
+        </Grid>
         <Grid Name="ViewGrid" 
               Margin="183,1,0,-1" 
               Visibility="Visible"
