@@ -6,32 +6,45 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
              xmlns:vm="clr-namespace:WpfDBMusicLabel.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="655.537">
     <UserControl.Resources>
         <DataTemplate x:Key="ListBoxTourTemplate">
-			<StackPanel Margin="3">
-				<DockPanel>
-					<TextBlock Text="ID:" DockPanel.Dock="Left" Margin="5,0,10,0" />
-					<TextBlock FontWeight="Bold" Text="{Binding IdTour}" />
-				</DockPanel>
-				<DockPanel>
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock Text="ID:" DockPanel.Dock="Left" Margin="5,0,10,0" />
+                    <TextBlock FontWeight="Bold" Text="{Binding IdTour}" />
+                </DockPanel>
+                <DockPanel>
                     <TextBlock Text="Nome: " Margin="5,0,10,0"/>
                     <TextBlock Text="{Binding Nome}" FontWeight="Bold" />
-				</DockPanel>
-			</StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ListBoxConcertTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock Text="ID:" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock FontWeight="Bold" Text="{Binding IdConcerto}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Data:" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Data, StringFormat=d}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Luogo:" Margin="5,0,10,0"/>
+                    <TextBlock FontWeight="Bold" Text="{Binding IdLuogoNavigation.Nome}"/>
+                </DockPanel>
+            </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
     <Grid Name="TourGrid"
-          Margin="183,1,0,-1"
+          Margin="10,1,0,-1"
 		Visibility="{Binding TourViewVisibility}"
-		Background="White">
-        <Grid.DataContext>
-            <vm:TourVM x:Name="TourViewModel"/>
-        </Grid.DataContext>
+		Background="White" HorizontalAlignment="Left" Width="646">
         <ListBox Name="ViewLB"
 				ItemsSource="{Binding Tours}"
 				SelectedItem="{Binding CurrentSelectedTour, Mode=TwoWay}"
-				Margin="0,37,420,10" 
+				Margin="0,37,428,10" 
 				SelectionMode="Single"
                  ItemTemplate="{StaticResource ListBoxTourTemplate}"
                 Width="NaN">
@@ -56,19 +69,23 @@
 					Margin="234,39,0,0" 
 					VerticalAlignment="Top" 
 					Width="133"
-					ItemsSource="{Binding SubActionList}"/>
+					ItemsSource="{Binding SubActionList}"
+                  SelectedItem="{Binding CurrentSubAction}"/>
         <Button Name="ConfirmActionBtn" 
 				Content="Conferma Azione" 
 				HorizontalAlignment="Left" 
 				Margin="234,78,0,0" 
 				VerticalAlignment="Top" 
 				Width="133" 
-				Height="25"/>
-        <DataGrid Name="ResultsDG" 
-					HorizontalAlignment="Left" 
-					VerticalAlignment="Top" 
-					Margin="384,39,0,0"
-					ItemsSource="{Binding Concerti}" Height="401" Width="223"/>
+				Height="25"
+                Command="{Binding SubActionCommand}"/>
+        <ListBox Name="ResultsDG" 
+				 HorizontalAlignment="Left" 
+				 VerticalAlignment="Top" 
+				 Margin="384,39,0,0"
+				 ItemsSource="{Binding Concerti}"
+                 ItemTemplate="{StaticResource ListBoxConcertTemplate}"
+                 Height="401" Width="223"/>
         <Label Name="ResultsLabel" 
 				Content="Risultati trovati:" 
 				HorizontalAlignment="Left" 
@@ -89,6 +106,7 @@
 				Margin="234,370,0,0" 
 				VerticalAlignment="Top" 
 				Width="133" 
-				Height="25"/>
+				Height="25"
+                Command="{Binding SaveChangesCommand}"/>
     </Grid>
 </UserControl>
