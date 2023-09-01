@@ -73,6 +73,7 @@ namespace WpfDBMusicLabel.ViewModel
         [RelayCommand]
         private void VisualizzaSelected()
         {
+            CurrentVM?.ViewGridSelected();
             ViewGridVisibilty = Visibility.Visible;
             InsertGridVisibility = Visibility.Collapsed;
         }
@@ -93,8 +94,6 @@ namespace WpfDBMusicLabel.ViewModel
 
         public VModel()
         {
-            _dbContext.ProgettiMusicali.Load();
-            Progetti = _dbContext.ProgettiMusicali.Local.ToObservableCollection();
             TourViewModel = new();
             FirmatarioViewModel = new(_dbContext);
         }

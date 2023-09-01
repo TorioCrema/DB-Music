@@ -61,5 +61,10 @@ namespace WpfDBMusicLabel.ViewModel
         public void InsertGridSelected() => throw new NotImplementedException();
 
         public void OtherVMSelected() => throw new NotImplementedException();
+
+        public void ViewGridSelected()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace WpfDBMusicLabel.ViewModel
         private ObservableCollection<Tour> tours;
 
         [ObservableProperty]
-        private ObservableCollection<Concerto>? concerti;
+        private IEnumerable<Concerto>? concerti;
 
         [ObservableProperty]
         private string? error = null;
@@ -57,21 +57,29 @@ namespace WpfDBMusicLabel.ViewModel
         {
             _dbContext = new();
             _dbContext.Tours.Load();
-            _dbContext.Luoghi.Load();
             Tours = _dbContext.Tours.Local.ToObservableCollection();
-            Luoghi = _dbContext.Luoghi.Local.ToObservableCollection().ToList();
         }
+
+        [RelayCommand]
+        private void SubAction() => ExecuteSubAction();
 
         public bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
             {
                 case "Vedi concerti":
-                    ObservableCollection<Concerto> newConcerti = new();
-                    _dbContext.Concerti.Where(x => x.IdTour == CurrentSelectedTour.IdTour).Load();
-                    _dbContext.Concerti.Local.Where(x => x.IdTour == CurrentSelectedTour.IdTour).ToList().ForEach(x => newConcerti.Add(x));
-                    Concerti = newConcerti;
-                    return true;
+                    if (CurrentSelectedTour != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedTour).Collection(t => t.Concertos).Load();
+                        Concerti = CurrentSelectedTour.Concertos.ToList();
+                        foreach (var concerto in Concerti)
+                        {
+                            _dbContext.Entry(concerto).Reference(c => c.IdLuogoNavigation).Load();
+                        }
+
+                        return true;
+                    }
+                    return false;
 
                 case "Inserisci":
                     if (CurrentSelectedTour != null && CurrentSelectedLuogo != null)
@@ -82,7 +90,8 @@ namespace WpfDBMusicLabel.ViewModel
                             IdLuogo = CurrentSelectedLuogo.IdLuogo,
                             Data = DataConcerto
                         };
-                        _dbContext.Concerti.Add(concerto);
+                        _dbContext.Entry(CurrentSelectedTour).Collection(t => t.Concertos).Load();
+                        CurrentSelectedTour.Concertos.Add(concerto);
                         return true;
                     }
                     Error = "Informazioni necessarie all'inserimento non presenti.";
@@ -94,9 +103,16 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
+        [RelayCommand]
+        private void SaveChanges()
+        {
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
+
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        /*protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
             switch (e.PropertyName)
@@ -114,12 +130,20 @@ namespace WpfDBMusicLabel.ViewModel
                     }
                     break;
             }
-        }
+        }*/
 
         public void InsertGridSelected()
         {
             TourInsertVisibilty = Visibility.Visible;
+            TourViewVisibility = Visibility.Collapsed;
             CurrentSubAction = "Inserisci";
+        }
+
+        public void ViewGridSelected()
+        {
+            TourInsertVisibilty = Visibility.Collapsed;
+            TourViewVisibility = Visibility.Visible;
+            CurrentSubAction = null;
         }
 
         public void OtherVMSelected() => TourInsertVisibilty = Visibility.Collapsed;

@@ -87,5 +87,10 @@ namespace WpfDBMusicLabel.ViewModel
         public void OtherVMSelected() => throw new NotImplementedException();
 
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
+
+        public void ViewGridSelected()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

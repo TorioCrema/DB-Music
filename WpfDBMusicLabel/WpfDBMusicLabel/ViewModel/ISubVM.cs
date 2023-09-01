@@ -15,6 +15,8 @@ namespace WpfDBMusicLabel.ViewModel
 
         public void InsertGridSelected();
 
+        public void ViewGridSelected();
+
         public void OtherVMSelected();
     }
 }

@@ -112,5 +112,10 @@ namespace WpfDBMusicLabel.ViewModel
         }
 
         public void OtherVMSelected() => FirmatarioInsertVisibility = Visibility.Collapsed;
+
+        public void ViewGridSelected()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,7 +11,7 @@ using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
 {
-    partial class TracciaVM: ObservableRecipient, ISubVM
+    partial class TracciaVM : ObservableRecipient, ISubVM
     {
         private readonly MusiclabeldbContext _dbContext;
 
@@ -66,5 +66,10 @@ namespace WpfDBMusicLabel.ViewModel
         public void InsertGridSelected() => throw new NotImplementedException();
 
         public void OtherVMSelected() => throw new NotImplementedException();
+
+        public void ViewGridSelected()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
