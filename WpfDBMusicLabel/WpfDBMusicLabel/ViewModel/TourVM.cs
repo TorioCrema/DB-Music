@@ -13,7 +13,7 @@ using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
 {
-    internal partial class TourVM : ObservableRecipient, ISubVM
+    public partial class TourVM : ObservableRecipient, ISubVM
     {
         [ObservableProperty]
         private string? currentSubAction = null;
@@ -50,9 +50,12 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private Visibility tourInsertVisibilty = Visibility.Collapsed;
 
-        public TourVM(MusiclabeldbContext dbContext)
+        [ObservableProperty]
+        private Visibility tourViewVisibility = Visibility.Collapsed;
+
+        public TourVM()
         {
-            _dbContext = dbContext;
+            _dbContext = new();
             _dbContext.Tours.Load();
             _dbContext.Luoghi.Load();
             Tours = _dbContext.Tours.Local.ToObservableCollection();

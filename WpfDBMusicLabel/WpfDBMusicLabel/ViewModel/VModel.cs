@@ -43,7 +43,7 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private FirmatarioVM firmatarioViewModel;
 
-        /*[ObservableProperty]
+        [ObservableProperty]
         private ProgettoMusicaleVM progettoViewModel;
 
         [ObservableProperty]
@@ -53,7 +53,7 @@ namespace WpfDBMusicLabel.ViewModel
         private ProdottoVM prodottoViewModel;
 
         [ObservableProperty]
-        private AlbumVM albumViewModel;*/
+        private AlbumVM albumViewModel;
 
         [ObservableProperty]
         private ObservableCollection<ProgettoMusicale>? progetti;
@@ -95,7 +95,7 @@ namespace WpfDBMusicLabel.ViewModel
         {
             _dbContext.ProgettiMusicali.Load();
             Progetti = _dbContext.ProgettiMusicali.Local.ToObservableCollection();
-            TourViewModel = new(_dbContext);
+            TourViewModel = new();
             FirmatarioViewModel = new(_dbContext);
         }
 
