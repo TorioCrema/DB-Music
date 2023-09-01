@@ -261,19 +261,7 @@
                          Width="60" 
                          Height="30"/>
             </Grid>
-            <Grid Name="TourInsertGrid" 
-                  Margin="0,1,240,0" 
-                  Visibility="Collapsed">
-                <Label Name="TourProjectLabel" 
-                       Content="Seleziona luoghi:" 
-                       HorizontalAlignment="Left" 
-                       Margin="10,10,0,0" 
-                       VerticalAlignment="Top" 
-                       FontSize="15"/>
-                <ListBox Name="TourLB" 
-                         d:ItemsSource="{d:SampleData ItemCount=5}" 
-                         Margin="137,10,125,10"/>
-            </Grid>
+            <a:TourInsertGrid DataContext="{Binding TourViewModel}"/>
             <Grid Name="AlbumInsertGrid" 
                   Margin="0,1,240,0" 
                   Visibility="Collapsed">
