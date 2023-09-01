@@ -9,7 +9,8 @@
     <Grid Margin="183,1,0,-1"
 		DataContext="{Binding FirmatarioViewModel}" 
 		Visibility="{Binding FirmatarioViewGridVisibilty}"
-		>
+		Background="White"
+          >
         <DataGrid Name="ViewLB" 
 				DataContext="{Binding FirmatarioViewModel}"
 				ItemsSource="{Binding Firmatari}"
@@ -44,8 +45,7 @@
 					Margin="234,39,0,0" 
 					VerticalAlignment="Top" 
 					Width="133"
-					ItemsSource="{Binding SubActionList}"
-					SelectionChanged="ActionsCB_SelectionChanged"/>
+					ItemsSource="{Binding SubActionList}"/>
         <Button Name="ConfirmActionBtn" 
 				Content="Conferma Azione" 
 				HorizontalAlignment="Left" 

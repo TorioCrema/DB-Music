@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Name="TracciaViewGrid"
+    <Grid Name="TracciaGrid"
           Margin="183,1,0,-1"
 		DataContext="{Binding TracciaViewModel}" 
 		Visibility="{Binding TracciaViewGridVisibilty}"
-		>
+		Background="White"
+          >
         <DataGrid Name="ViewLB" 
 				DataContext="{Binding TracciaViewModel}"
 				ItemsSource="{Binding Tracce}"
@@ -45,8 +46,7 @@
 					Margin="234,39,0,0" 
 					VerticalAlignment="Top" 
 					Width="133"
-					ItemsSource="{Binding SubActionList}"
-					SelectionChanged="ActionsCB_SelectionChanged"/>
+					ItemsSource="{Binding SubActionList}"/>
         <Button Name="ConfirmActionBtn" 
 				Content="Conferma Azione" 
 				HorizontalAlignment="Left" 
