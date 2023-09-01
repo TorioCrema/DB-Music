@@ -4,29 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
+             xmlns:vm="clr-namespace:WpfDBMusicLabel.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Name="TourGrid"
           Margin="183,1,0,-1"
-		DataContext="{Binding AlbumViewModel}" 
-		Visibility="{Binding AlbumViewGridVisibilty}"
-		Background="White"
-          >
-        <DataGrid Name="ViewLB" 
-				DataContext="{Binding AlbumViewModel}"
-				ItemsSource="{Binding Albums}"
-				SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
+		Visibility="{Binding TourViewVisibility}"
+		Background="White">
+        <Grid.DataContext>
+            <vm:TourVM x:Name="TourViewModel"/>
+        </Grid.DataContext>
+        <DataGrid Name="ViewLB"
+				ItemsSource="{Binding Tours}"
+				SelectedItem="{Binding CurrentSelectedTour, Mode=TwoWay}"
 				Margin="0,37,420,10" 
 				SelectionMode="Single"
 				AutoGenerateColumns="False"
 				CanUserResizeColumns="False" Width="NaN">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding IdAlbum}"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding IdTour}"/>
                 <DataGridTextColumn Header="Nome" Binding="{Binding Nome}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Name="FoundLabel" 
-				Content="Tracce trovati" 
+				Content="Tour trovati" 
 				HorizontalAlignment="Left" 
 				Margin="0,4,0,0" 
 				VerticalAlignment="Top" 
@@ -41,7 +42,6 @@
 				Width="133" 
 				FontSize="15"/>
         <ComboBox Name="ActionsCB" 
-					DataContext="{Binding AlbumViewModel}"
 					HorizontalAlignment="Left" 
 					Margin="234,39,0,0" 
 					VerticalAlignment="Top" 
@@ -55,7 +55,6 @@
 				Width="133" 
 				Height="25"/>
         <DataGrid Name="ResultsDG" 
-					DataContext="{Binding AlbumViewModel}"
 					HorizontalAlignment="Left" 
 					VerticalAlignment="Top" 
 					Margin="384,39,0,0"
