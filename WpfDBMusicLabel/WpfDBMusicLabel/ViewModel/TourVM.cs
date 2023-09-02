@@ -39,7 +39,7 @@ namespace WpfDBMusicLabel.ViewModel
         private string? error = null;
 
         [ObservableProperty]
-        private List<Luogo>? luoghi;
+        private List<Luogo>? luoghi = new();
 
         [ObservableProperty]
         private Luogo? currentSelectedLuogo = null;
@@ -48,7 +48,15 @@ namespace WpfDBMusicLabel.ViewModel
         private DateTime dataConcerto = DateTime.Now;
 
         [ObservableProperty]
-        private Visibility tourInsertVisibilty = Visibility.Collapsed;
+        private string newTourName = "";
+
+        [ObservableProperty]
+        private List<Concerto> newConcerts = new();
+
+        private Tour _newTour = new();
+
+        [ObservableProperty]
+        private Visibility tourInsertVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
         private Visibility tourViewVisibility = Visibility.Collapsed;
@@ -63,6 +71,42 @@ namespace WpfDBMusicLabel.ViewModel
         [RelayCommand]
         private void SubAction() => ExecuteSubAction();
 
+        [RelayCommand]
+        private void AddConcerto()
+        {
+            if (CurrentSelectedLuogo != null)
+            {
+                List<Concerto> concerti = new();
+                NewConcerts.ForEach(c => concerti.Add(c));
+                concerti.Add(new Concerto()
+                { 
+                    IdLuogoNavigation = CurrentSelectedLuogo,
+                    Data = DataConcerto.Date
+                });
+                NewConcerts = concerti;
+            }
+            else
+            {
+                Error = "Selezionare un luogo per il concerto.";
+            }
+        }
+
+        [RelayCommand]
+        private void AddTour()
+        {
+            if (NewTourName != "")
+            {
+                _newTour.Nome = NewTourName;
+                _newTour.Concertos = NewConcerts;
+                _dbContext.Tours.Add(_newTour);
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                Error = "Inserire il nome del tour.";
+            }
+        }
+
         public bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
@@ -76,7 +120,6 @@ namespace WpfDBMusicLabel.ViewModel
                         {
                             _dbContext.Entry(concerto).Reference(c => c.IdLuogoNavigation).Load();
                         }
-
                         return true;
                     }
                     return false;
@@ -112,40 +155,25 @@ namespace WpfDBMusicLabel.ViewModel
 
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
-        /*protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
-            switch (e.PropertyName)
-            {
-                case "CurrentSubAction":
-                    if (CurrentSelectedTour != null)
-                    {
-                        ExecuteSubAction();
-                    }
-                    break;
-                case "CurrentSelectedTour":
-                    if (CurrentSubAction != null)
-                    {
-                        ExecuteSubAction();
-                    }
-                    break;
-            }
-        }*/
-
         public void InsertGridSelected()
         {
-            TourInsertVisibilty = Visibility.Visible;
+            TourInsertVisibility = Visibility.Visible;
             TourViewVisibility = Visibility.Collapsed;
-            CurrentSubAction = "Inserisci";
+            _dbContext.Luoghi.Load();
+            Luoghi = _dbContext.Luoghi.Local.ToList();
         }
 
         public void ViewGridSelected()
         {
-            TourInsertVisibilty = Visibility.Collapsed;
+            TourInsertVisibility = Visibility.Collapsed;
             TourViewVisibility = Visibility.Visible;
             CurrentSubAction = null;
         }
 
-        public void OtherVMSelected() => TourInsertVisibilty = Visibility.Collapsed;
+        public void OtherVMSelected()
+        {
+            TourInsertVisibility = Visibility.Collapsed;
+            TourViewVisibility = Visibility.Collapsed;
+        }
     }
 }
