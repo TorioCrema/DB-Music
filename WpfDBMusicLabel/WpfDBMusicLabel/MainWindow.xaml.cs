@@ -34,11 +34,6 @@ namespace WpfDBMusicLabel
             InitializeComponent();
         }
 
-        private void ActionsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            VModel.CurrentVM.SetCurrentSubAction(((ComboBox)e.Source).SelectedItem.ToString());
-        }
-
         private void IntegerInputCheck(object sender, TextCompositionEventArgs e) => e.Handled = !IsTextAllowed(e.Text, _intRegex);
     }
 }

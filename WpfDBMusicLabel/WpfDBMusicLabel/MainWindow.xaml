@@ -24,7 +24,7 @@
         <ComboBox Name="ActionsListCB" 
                   ItemsSource="{Binding ActionsList}"
                   SelectedIndex="0"
-                  SelectedItem="{Binding CurrentAction}"
+                  SelectedItem="{Binding CurrentAction, Mode=TwoWay}"
                   FontSize="15" 
                   Margin="10,39,0,0"
                   VerticalAlignment="Top" 
@@ -66,8 +66,6 @@
               Margin="183,0,0,0"
               Visibility="{Binding InsertGridVisibility}">
             <!-- TODO: MerchVM -->
-            <it:MerchInsertGrid DataContext="{Binding MerchViewModel}" />
-            <it:ProdInsertGrid DataContext="{Binding ProdottoViewModel}" />
             <it:TourInsertGrid DataContext="{Binding TourViewModel}" />
             <it:AlbumInsertGrid DataContext="{Binding AlbumViewModel}" />
             <it:TrackInsertGrid DataContext="{Binding TracciaViewModel}" />
