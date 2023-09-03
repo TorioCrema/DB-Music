@@ -6,24 +6,26 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ListBoxFirmTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock Text="{Binding IdFirmatario}" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Cf}" DockPanel.Dock="Right"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Margin="183,1,0,-1"
-		DataContext="{Binding FirmatarioViewModel}" 
-		Visibility="{Binding FirmatarioViewGridVisibilty}"
-		Background="White"
-          >
-        <DataGrid Name="ViewLB" 
-				DataContext="{Binding FirmatarioViewModel}"
+		Visibility="{Binding FirmatarioViewVisibility}"
+		Background="White">
+        <ListBox Name="ViewLB" 
+                 ItemTemplate="{StaticResource ListBoxFirmTemplate}"
 				ItemsSource="{Binding Firmatari}"
 				SelectedItem="{Binding CurrentSelectedFirmatario, Mode=TwoWay}"
 				Margin="0,37,420,10" 
-				SelectionMode="Single"
-				AutoGenerateColumns="False"
-				CanUserResizeColumns="False" Width="NaN">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding IdFirmatario}"/>
-                <DataGridTextColumn Header="Nome" Binding="{Binding Nome}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+				SelectionMode="Single">
+        </ListBox>
         <Label Name="FoundLabel" 
 				Content="Firmatari trovati" 
 				HorizontalAlignment="Left" 
@@ -40,12 +42,12 @@
 				Width="133" 
 				FontSize="15"/>
         <ComboBox Name="ActionsCB" 
-					DataContext="{Binding FirmatarioViewModel}"
 					HorizontalAlignment="Left" 
 					Margin="234,39,0,0" 
 					VerticalAlignment="Top" 
 					Width="133"
-					ItemsSource="{Binding SubActionList}"/>
+					ItemsSource="{Binding SubActionList}"
+                  SelectedItem="{Binding CurrentSubAction, Mode=TwoWay}"/>
         <Button Name="ConfirmActionBtn" 
 				Content="Conferma Azione" 
 				HorizontalAlignment="Left" 
@@ -54,11 +56,10 @@
 				Width="133" 
 				Height="25"/>
         <DataGrid Name="ResultsDG" 
-					DataContext="{Binding FirmatarioViewModel}"
 					HorizontalAlignment="Left" 
 					VerticalAlignment="Top" 
 					Margin="384,39,0,0"
-					ItemsSource="{Binding Concerti}" Height="401" Width="223"/>
+					Height="401" Width="223"/>
         <Label Name="ResultsLabel" 
 				Content="Risultati trovati:" 
 				HorizontalAlignment="Left" 

@@ -28,6 +28,9 @@ namespace WpfDBMusicLabel.ViewModel
         private string? error = null;
 
         [ObservableProperty]
+        private Firmatario? currentSelectedFirmatario = null;
+
+        [ObservableProperty]
         private ObservableCollection<Firmatario> firmatari;
 
         [ObservableProperty]
@@ -100,6 +103,7 @@ namespace WpfDBMusicLabel.ViewModel
         public void InsertGridSelected()
         {
             FirmatarioInsertVisibility = Visibility.Visible;
+            FirmatarioViewVisibility = Visibility.Visible;
             CurrentSubAction = "Inserisci";
         }
 
