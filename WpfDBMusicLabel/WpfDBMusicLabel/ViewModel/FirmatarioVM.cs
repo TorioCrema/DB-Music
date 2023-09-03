@@ -22,6 +22,9 @@ namespace WpfDBMusicLabel.ViewModel
         private Visibility firmatarioInsertVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
+        private Visibility firmatarioViewVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
         private string? error = null;
 
         [ObservableProperty]
@@ -111,11 +114,15 @@ namespace WpfDBMusicLabel.ViewModel
             return true;
         }
 
-        public void OtherVMSelected() => FirmatarioInsertVisibility = Visibility.Collapsed;
-
+        public void OtherVMSelected()
+        {
+            FirmatarioInsertVisibility = Visibility.Collapsed;
+            FirmatarioViewVisibility = Visibility.Collapsed;
+        }
         public void ViewGridSelected()
         {
-            throw new NotImplementedException();
+            FirmatarioInsertVisibility = Visibility.Collapsed;
+            FirmatarioViewVisibility = Visibility.Visible;
         }
     }
 }
