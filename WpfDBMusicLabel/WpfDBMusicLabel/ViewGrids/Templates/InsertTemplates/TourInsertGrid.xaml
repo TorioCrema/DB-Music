@@ -3,20 +3,70 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Name="TourInsert" 
-        Margin="0,1,240,0" 
-        Visibility="Collapsed">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ListBoxLuoghiTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock Text="ID:" DockPanel.Dock="Left" Margin="5,0,10,0" />
+                    <TextBlock FontWeight="Bold" Text="{Binding IdLuogo}" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Nome: " Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" />
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ListBoxConcertTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock Text="Data:" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Data, StringFormat=d}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Luogo:" Margin="5,0,10,0"/>
+                    <TextBlock FontWeight="Bold" Text="{Binding IdLuogoNavigation.Nome}"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Name="TourInsert"
+        Margin="0,1,240,0"
+          Visibility="{Binding TourInsertVisibility}"
+          Background="White">
         <Label Name="TourProjectLabel" 
-            Content="Seleziona luoghi:" 
-            HorizontalAlignment="Left" 
-            Margin="10,10,0,0" 
-            VerticalAlignment="Top" 
-            FontSize="15"/>
-        <ListBox Name="TourLB" 
-            d:ItemsSource="{d:SampleData ItemCount=5}" 
-            Margin="137,10,125,10"/>
-        </Grid>
+           Content="Seleziona luoghi:" 
+           HorizontalAlignment="Left" 
+           Margin="10,89,0,0" 
+           VerticalAlignment="Top" 
+           FontSize="15" Height="30" Width="122"/>
+        <ListBox Name="TourLB"
+                 ItemsSource="{Binding Luoghi}"
+                 ItemTemplate="{StaticResource ListBoxLuoghiTemplate}"
+                 SelectedItem="{Binding CurrentSelectedLuogo, Mode=TwoWay}"
+                 Margin="10,124,0,0" Grid.RowSpan="3" HorizontalAlignment="Left" Width="205" Height="257" VerticalAlignment="Top"/>
+        <Button Content="Aggiungi Concerto"
+                Margin="137,397,0,0"
+                VerticalAlignment="Top" Height="28"
+                Command="{Binding AddConcertoCommand}" HorizontalAlignment="Left" Width="118"/>
+        <DatePicker 
+                    Margin="14,399,0,0" VerticalAlignment="Top"
+                    SelectedDate="{Binding DataConcerto}" Height="24" HorizontalAlignment="Left" Width="118"/>
+        <TextBox
+                 Margin="112,20,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding NewTourName}" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
+        <Label x:Name="TourName" 
+            Content="Nome Tour:" 
+            Margin="14,17,0,0" 
+            FontSize="15" HorizontalAlignment="Left" Width="88" Height="30" VerticalAlignment="Top"/>
+        <ListBox ItemsSource="{Binding NewConcerts}"
+                 Margin="339,124,0,0"
+                 ItemTemplate="{StaticResource ListBoxConcertTemplate}" HorizontalAlignment="Left" Width="162" Height="257" VerticalAlignment="Top"/>
+        <Button Content="Aggiungi Tour" HorizontalAlignment="Left" Margin="580,146,0,0" VerticalAlignment="Top" Width="104" Height="28"
+                Command="{Binding AddTourCommand}"/>
+        <Button Content="Aggiungi Tour" Margin="339,397,59,0" VerticalAlignment="Top" Height="28"
+                Command="{Binding AddTourCommand}"/>
+    </Grid>
 </UserControl>
