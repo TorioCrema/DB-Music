@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,16 +23,16 @@ namespace WpfDBMusicLabel.ViewModel
         private ProgettoMusicale? currentSelectedProject = null;
 
         [ObservableProperty]
-        private ObservableCollection<Album>? albums;
+        private List<Album> albums = new();
 
         [ObservableProperty]
-        private ObservableCollection<Traccia>? tracce;
+        private List<Traccia> tracce = new();
 
         [ObservableProperty]
-        private ObservableCollection<Firmatario>? firmatari;
+        private List<Firmatario> firmatari = new();
 
         [ObservableProperty]
-        private ObservableCollection<Concerto>? concerti;
+        private List<Concerto> concerti = new();
 
         [ObservableProperty]
         private string? currentSubAction = null;
@@ -40,10 +41,13 @@ namespace WpfDBMusicLabel.ViewModel
         private Visibility projectInsertVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
+        private Visibility projectViewVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
         private string? error = null;
 
         [ObservableProperty]
-        private ObservableCollection<string> subActionsList = new()
+        private List<string> subActionsList = new()
         {
             "Vedi album",
             "Vedi tracce",
@@ -51,46 +55,83 @@ namespace WpfDBMusicLabel.ViewModel
             "Vedi concerti"
         };
 
-        public ProgettoMusicaleVM(MusiclabeldbContext dbContext)
+        [ObservableProperty]
+        private Dictionary<string, Visibility> resultVisibility = new()
         {
-            this._dbContext = dbContext;
-            this._dbContext.ProgettiMusicali.Load();
-            ProgettiMusicali = this._dbContext.ProgettiMusicali.Local.ToObservableCollection();
+            { "Albums", Visibility.Collapsed },
+            { "Tracks", Visibility.Collapsed },
+            { "Firmatari", Visibility.Collapsed },
+            { "Concerts", Visibility.Collapsed }
+        };
+
+        public ProgettoMusicaleVM()
+        {
+            _dbContext = new();
+            _dbContext.ProgettiMusicali.Load();
+            ProgettiMusicali = _dbContext.ProgettiMusicali.Local.ToObservableCollection();
         }
 
         public bool ExecuteSubAction()
         {
+            if (CurrentSelectedProject == null)
+            {
+                Error = "Selezionare un progetto";
+                return false;
+            }
             switch (CurrentSubAction)
             {
                 case "Vedi album":
-                    _dbContext.Albums.Where(album => album.IdProgetto == CurrentSelectedProject.IdProgetto).Load();
-                    Albums = _dbContext.Albums.Local.ToObservableCollection();
+                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Albums).Load();
+                    Albums = CurrentSelectedProject.Albums.ToList();
+                    UpdateResults("Albums");
                     return true;
                 case "Vedi tracce":
-                    _dbContext.Tracce.Where(traccia => traccia.IdProgetto == CurrentSelectedProject.IdProgetto).Load();
-                    Tracce = _dbContext.Tracce.Local.ToObservableCollection();
+                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Traccia).Load();
+                    Tracce = CurrentSelectedProject.Traccia.ToList();
+                    UpdateResults("Tracks");
                     return true;
                 case "Vedi firmatari":
-                    _dbContext.Firmatari.Include(firmatari => firmatari.IdProgetti).Where(firmatario => firmatario.IdProgetti.Any(progetto => progetto.IdProgetto == CurrentSelectedProject.IdProgetto)).Load();
-                    Firmatari = _dbContext.Firmatari.Local.ToObservableCollection();
+                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdFirmatarios).Load();
+                    Firmatari = CurrentSelectedProject.IdFirmatarios.ToList();
+                    UpdateResults("Firmatari");
                     return true;
                 case "Vedi concerti":
-                    _dbContext.Concerti.Where(concerto => concerto.IdProgetti.Any(progetto => progetto.IdProgetto == CurrentSelectedProject.IdProgetto));
-                    Concerti = _dbContext.Concerti.Local.ToObservableCollection();
+                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdConcertos).Load();
+                    Concerti = CurrentSelectedProject.IdConcertos.ToList();
+                    UpdateResults("Concerts");
                     return true;
                 default: return false;
             }
         }
 
-        public void InsertGridSelected() => throw new NotImplementedException();
+        [RelayCommand]
+        private void ConfirmAction() => ExecuteSubAction();
 
-        public void OtherVMSelected() => throw new NotImplementedException();
+        private void UpdateResults(string key)
+        {
+            Dictionary<string, Visibility> newResults = new(ResultVisibility);
+            newResults.Keys.ToList().ForEach(k => newResults[k] = Visibility.Collapsed);
+            newResults[key] = Visibility.Visible;
+            ResultVisibility = newResults;
+        }
 
+        public void InsertGridSelected()
+        {
+            ProjectInsertVisibility = Visibility.Visible;
+            ProjectViewVisibility = Visibility.Collapsed;
+        }
+
+        public void OtherVMSelected()
+        {
+            ProjectInsertVisibility = Visibility.Collapsed;
+            ProjectViewVisibility = Visibility.Collapsed;
+        }
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
         public void ViewGridSelected()
         {
-            throw new NotImplementedException();
+            ProjectInsertVisibility = Visibility.Collapsed;
+            ProjectViewVisibility = Visibility.Visible;
         }
     }
 }
