@@ -35,6 +35,9 @@ namespace WpfDBMusicLabel.ViewModel
         private List<Concerto> concerti = new();
 
         [ObservableProperty]
+        private List<Traccia> features = new();
+
+        [ObservableProperty]
         private string? currentSubAction = null;
 
         [ObservableProperty]
@@ -52,7 +55,8 @@ namespace WpfDBMusicLabel.ViewModel
             "Vedi album",
             "Vedi tracce",
             "Vedi firmatari",
-            "Vedi concerti"
+            "Vedi concerti",
+            "Vedi features"
         };
 
         [ObservableProperty]
@@ -61,7 +65,8 @@ namespace WpfDBMusicLabel.ViewModel
             { "Albums", Visibility.Collapsed },
             { "Tracks", Visibility.Collapsed },
             { "Firmatari", Visibility.Collapsed },
-            { "Concerts", Visibility.Collapsed }
+            { "Concerts", Visibility.Collapsed },
+            { "Features", Visibility.Collapsed }
         };
 
         public ProgettoMusicaleVM()
@@ -99,6 +104,12 @@ namespace WpfDBMusicLabel.ViewModel
                     _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdConcertos).Load();
                     Concerti = CurrentSelectedProject.IdConcertos.ToList();
                     UpdateResults("Concerts");
+                    return true;
+                case "Vedi features":
+                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdTraccia).Load();
+                    Features = CurrentSelectedProject.IdTraccia.ToList();
+                    Features.ForEach(f => _dbContext.Entry(f).Reference(x => x.IdProgettoNavigation).Load());
+                    UpdateResults("Features");
                     return true;
                 default: return false;
             }
