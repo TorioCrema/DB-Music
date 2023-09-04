@@ -49,12 +49,15 @@ namespace WpfDBMusicLabel.ViewModel
 
         [ObservableProperty]
         private string? currentSubAction = null;
+        
+        [ObservableProperty]
+        private Visibility projectViewVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
         private Visibility projectInsertVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
-        private Visibility projectViewVisibility = Visibility.Collapsed;
+        private Visibility projectDeleteVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
         private string? error = null;
@@ -172,24 +175,8 @@ namespace WpfDBMusicLabel.ViewModel
             ResultVisibility = newResults;
         }
 
-        public void InsertGridSelected()
-        {
-            ProjectInsertVisibility = Visibility.Visible;
-            ProjectViewVisibility = Visibility.Collapsed;
-        }
-
-        public void OtherVMSelected()
-        {
-            ProjectInsertVisibility = Visibility.Collapsed;
-            ProjectViewVisibility = Visibility.Collapsed;
-        }
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
-        public void ViewGridSelected()
-        {
-            ProjectInsertVisibility = Visibility.Collapsed;
-            ProjectViewVisibility = Visibility.Visible;
-        }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
@@ -203,6 +190,34 @@ namespace WpfDBMusicLabel.ViewModel
                     }
                     break;
             }
+        }
+
+        public void ViewGridSelected()
+        {
+            ProjectViewVisibility = Visibility.Visible;
+            ProjectInsertVisibility = Visibility.Collapsed;
+            ProjectDeleteVisibility = Visibility.Collapsed;
+        }
+
+        public void InsertGridSelected()
+        {
+            ProjectInsertVisibility = Visibility.Visible;
+            ProjectViewVisibility = Visibility.Collapsed;
+            ProjectDeleteVisibility = Visibility.Collapsed;
+        }
+
+        public void DeleteGridSelected()
+        {
+            ProjectDeleteVisibility = Visibility.Visible;
+            ProjectViewVisibility = Visibility.Collapsed;
+            ProjectInsertVisibility = Visibility.Collapsed;
+        }
+
+        public void OtherVMSelected()
+        {
+            ProjectInsertVisibility = Visibility.Collapsed;
+            ProjectViewVisibility = Visibility.Collapsed;
+            ProjectDeleteVisibility = Visibility.Collapsed;
         }
     }
 }

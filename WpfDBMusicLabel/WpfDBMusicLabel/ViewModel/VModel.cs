@@ -70,12 +70,16 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private Visibility insertGridVisibility = Visibility.Collapsed;
 
+        [ObservableProperty]
+        private Visibility deleteGridVisibility = Visibility.Collapsed;
+
         [RelayCommand]
         private void VisualizzaSelected()
         {
             CurrentVM?.ViewGridSelected();
             ViewGridVisibilty = Visibility.Visible;
             InsertGridVisibility = Visibility.Collapsed;
+            DeleteGridVisibility = Visibility.Collapsed;
         }
 
         [RelayCommand]
@@ -89,6 +93,16 @@ namespace WpfDBMusicLabel.ViewModel
         {
             CurrentVM?.InsertGridSelected();
             InsertGridVisibility = Visibility.Visible;
+            ViewGridVisibilty = Visibility.Collapsed;
+            DeleteGridVisibility = Visibility.Collapsed;
+        }
+
+        [RelayCommand]
+        private void DeleteSelected()
+        {
+            CurrentVM?.DeleteGridSelected();
+            DeleteGridVisibility = Visibility.Visible;
+            InsertGridVisibility = Visibility.Collapsed;
             ViewGridVisibilty = Visibility.Collapsed;
         }
 

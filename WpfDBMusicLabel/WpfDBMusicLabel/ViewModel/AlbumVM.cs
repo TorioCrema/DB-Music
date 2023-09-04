@@ -31,6 +31,12 @@ namespace WpfDBMusicLabel.ViewModel
         private Visibility albumInsertVisibilty = Visibility.Collapsed;
 
         [ObservableProperty]
+        private Visibility albumViewVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private Visibility albumDeleteVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
         private string? error = null;
 
         [ObservableProperty]
@@ -46,6 +52,7 @@ namespace WpfDBMusicLabel.ViewModel
             _dbContext.Albums.Load();
             Albums = _dbContext.Albums.Local.ToObservableCollection();
         }
+
 
         public bool ExecuteSubAction()
         {
@@ -66,19 +73,35 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
-        public void InsertGridSelected()
-        {
-            AlbumInsertVisibilty = Visibility.Visible;
-            CurrentSubAction = "Inserisci";
-        }
-
-        public void OtherVMSelected() => AlbumInsertVisibilty = Visibility.Collapsed;
-
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
         public void ViewGridSelected()
         {
-            throw new NotImplementedException();
+            AlbumViewVisibility = Visibility.Visible;
+            AlbumInsertVisibilty = Visibility.Collapsed;
+            AlbumDeleteVisibility = Visibility.Collapsed;
+        }
+
+        public void InsertGridSelected()
+        {
+            AlbumInsertVisibilty = Visibility.Visible;
+            AlbumViewVisibility = Visibility.Collapsed;
+            AlbumDeleteVisibility = Visibility.Collapsed;
+            CurrentSubAction = "Inserisci";
+        }
+
+        public void DeleteGridSelected()
+        {
+            AlbumDeleteVisibility = Visibility.Visible;
+            AlbumViewVisibility = Visibility.Collapsed;
+            AlbumInsertVisibilty = Visibility.Collapsed;
+        }
+
+        public void OtherVMSelected()
+        {
+            AlbumInsertVisibilty = Visibility.Collapsed;
+            AlbumViewVisibility = Visibility.Collapsed;
+            AlbumInsertVisibilty = Visibility.Collapsed;
         }
     }
 }

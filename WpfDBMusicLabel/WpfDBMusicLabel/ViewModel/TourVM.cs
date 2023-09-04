@@ -56,10 +56,13 @@ namespace WpfDBMusicLabel.ViewModel
         private Tour _newTour = new();
 
         [ObservableProperty]
+        private Visibility tourViewVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
         private Visibility tourInsertVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
-        private Visibility tourViewVisibility = Visibility.Collapsed;
+        private Visibility tourDeleteVisibility = Visibility.Collapsed;
 
         public TourVM()
         {
@@ -155,25 +158,35 @@ namespace WpfDBMusicLabel.ViewModel
 
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
+        public void ViewGridSelected()
+        {
+            TourViewVisibility = Visibility.Visible;
+            TourInsertVisibility = Visibility.Collapsed;
+            TourDeleteVisibility = Visibility.Collapsed;
+            CurrentSubAction = null;
+        }
+
         public void InsertGridSelected()
         {
             TourInsertVisibility = Visibility.Visible;
             TourViewVisibility = Visibility.Collapsed;
+            TourDeleteVisibility = Visibility.Collapsed;
             _dbContext.Luoghi.Load();
             Luoghi = _dbContext.Luoghi.Local.ToList();
         }
 
-        public void ViewGridSelected()
+        public void DeleteGridSelected()
         {
+            TourDeleteVisibility = Visibility.Visible;
+            TourViewVisibility = Visibility.Collapsed;
             TourInsertVisibility = Visibility.Collapsed;
-            TourViewVisibility = Visibility.Visible;
-            CurrentSubAction = null;
         }
 
         public void OtherVMSelected()
         {
-            TourInsertVisibility = Visibility.Collapsed;
             TourViewVisibility = Visibility.Collapsed;
+            TourInsertVisibility = Visibility.Collapsed;
+            TourDeleteVisibility = Visibility.Collapsed;
         }
     }
 }

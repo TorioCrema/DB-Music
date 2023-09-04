@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:a="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
         xmlns:it="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates"
+        xmlns:dt="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.DeleteTemplates"
         xmlns:viewModels="clr-namespace:WpfDBMusicLabel.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="540" Width="960"
@@ -88,6 +89,16 @@
                     Height="37" 
                     Width="126" 
                     Margin="578,268,0,0"/>
+        </Grid>
+        <Grid Name="DeleteGrid"
+              Margin="183,1,0,0" 
+              Visibility="{Binding DeleteGridVisibilty}">
+            <dt:AlbumDeleteView DataContext="{Binding AlbumViewModel}" />
+            <dt:FirmatarioDeleteView DataContext="{Binding FirmatarioViewModel}" />
+            <dt:ProdottoDeleteView DataContext="{Binding ProdottoViewModel}" />
+            <dt:ProgettoDeleteView DataContext="{Binding ProgettoViewModel}" />
+            <dt:TourDeleteView DataContext="{Binding TourViewModel}" />
+            <dt:TracciaDeleteView DataContext="{Binding TracciaViewModel}" />
         </Grid>
     </Grid>
 </Window>

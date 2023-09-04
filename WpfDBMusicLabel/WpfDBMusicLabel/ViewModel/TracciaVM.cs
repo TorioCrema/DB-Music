@@ -28,7 +28,13 @@ namespace WpfDBMusicLabel.ViewModel
         private string? currentSubAction = null;
 
         [ObservableProperty]
+        private Visibility trackViewVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
         private Visibility trackInsertVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private Visibility trackDeleteVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
         private string? error = null;
@@ -63,13 +69,32 @@ namespace WpfDBMusicLabel.ViewModel
 
         public void SetCurrentSubAction(string newSubAction) => currentSubAction = newSubAction;
 
-        public void InsertGridSelected() => throw new NotImplementedException();
-
-        public void OtherVMSelected() => throw new NotImplementedException();
-
         public void ViewGridSelected()
         {
-            throw new NotImplementedException();
+            TrackViewVisibility = Visibility.Visible;
+            TrackInsertVisibility = Visibility.Collapsed;
+            TrackDeleteVisibility = Visibility.Collapsed;
+        }
+
+        public void InsertGridSelected()
+        {
+            TrackInsertVisibility = Visibility.Visible;
+            TrackViewVisibility = Visibility.Collapsed;
+            TrackDeleteVisibility = Visibility.Collapsed;
+        }
+
+        public void DeleteGridSelected()
+        {
+            TrackDeleteVisibility = Visibility.Visible;
+            TrackViewVisibility = Visibility.Collapsed;
+            TrackInsertVisibility = Visibility.Collapsed;
+        }
+
+        public void OtherVMSelected()
+        {
+            TrackViewVisibility = Visibility.Collapsed;
+            TrackInsertVisibility = Visibility.Collapsed;
+            TrackDeleteVisibility = Visibility.Collapsed;
         }
     }
 }

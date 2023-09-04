@@ -17,6 +17,8 @@ namespace WpfDBMusicLabel.ViewModel
 
         public void ViewGridSelected();
 
+        public void DeleteGridSelected();
+
         public void OtherVMSelected();
     }
 }

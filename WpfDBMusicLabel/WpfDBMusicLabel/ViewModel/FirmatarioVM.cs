@@ -25,6 +25,9 @@ namespace WpfDBMusicLabel.ViewModel
         private Visibility firmatarioViewVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
+        private Visibility firmatarioDeleteVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
         private string? error = null;
 
         [ObservableProperty]
@@ -100,13 +103,6 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
-        public void InsertGridSelected()
-        {
-            FirmatarioInsertVisibility = Visibility.Visible;
-            FirmatarioViewVisibility = Visibility.Visible;
-            CurrentSubAction = "Inserisci";
-        }
-
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
         private bool CheckFirmatario(Firmatario firmatario)
@@ -118,15 +114,33 @@ namespace WpfDBMusicLabel.ViewModel
             return true;
         }
 
-        public void OtherVMSelected()
-        {
-            FirmatarioInsertVisibility = Visibility.Collapsed;
-            FirmatarioViewVisibility = Visibility.Collapsed;
-        }
         public void ViewGridSelected()
         {
-            FirmatarioInsertVisibility = Visibility.Collapsed;
             FirmatarioViewVisibility = Visibility.Visible;
+            FirmatarioInsertVisibility = Visibility.Collapsed;
+            FirmatarioDeleteVisibility = Visibility.Collapsed;
+        }
+
+        public void InsertGridSelected()
+        {
+            FirmatarioInsertVisibility = Visibility.Visible;
+            FirmatarioViewVisibility = Visibility.Collapsed;
+            FirmatarioDeleteVisibility = Visibility.Collapsed;
+            CurrentSubAction = "Inserisci";
+        }
+
+        public void DeleteGridSelected()
+        {
+            FirmatarioDeleteVisibility = Visibility.Visible;
+            FirmatarioViewVisibility = Visibility.Collapsed;
+            FirmatarioInsertVisibility = Visibility.Collapsed;
+        }
+
+        public void OtherVMSelected()
+        {
+            FirmatarioViewVisibility = Visibility.Collapsed;
+            FirmatarioInsertVisibility = Visibility.Collapsed;
+            FirmatarioDeleteVisibility = Visibility.Collapsed;
         }
     }
 }
