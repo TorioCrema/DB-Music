@@ -6,9 +6,18 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="FirmTemplate">
+            <DockPanel>
+                <TextBlock Text="{Binding Nome}" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                <TextBlock Text="{Binding Cognome}" />
+            </DockPanel>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Name="ProjectInsert" 
         Margin="0,1,240,0" 
-        Visibility="Collapsed">
+        Visibility="{Binding ProjectInsertVisibility}"
+          Background="White">
         <Label Name="ProjectNameLabel" 
             Content="Nome:" 
             HorizontalAlignment="Left" 
@@ -24,70 +33,79 @@
             Width="149" 
             Height="30" 
             FontSize="16"/>
-        <Label x:Name="ProjectNMembersLabel" 
-            Content="Numero membri:" 
-            HorizontalAlignment="Left" 
-            Margin="10,45,0,0" 
-            VerticalAlignment="Top" 
-            FontSize="15" 
-            Width="133"/>
-        <TextBox Name="ProjectNMembersTB" 
-            HorizontalAlignment="Left" 
-            Margin="158,45,0,0" 
-            TextWrapping="Wrap" 
-            Text="" 
-            VerticalAlignment="Top" 
-            Width="149" 
-            Height="30" 
-            FontSize="16"/>
         <Label x:Name="ProjectFoundDateLabel" 
             Content="Data formazione:" 
             HorizontalAlignment="Left" 
-            Margin="10,80,0,0" 
+            Margin="10,51,0,0" 
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="133"/>
         <DatePicker Name="ProjectFoundDatePicker" 
             HorizontalAlignment="Left" 
-            Margin="158,80,0,0" 
+            Margin="158,51,0,0" 
             VerticalAlignment="Top" 
             Height="30" 
             Width="149"/>
         <Label x:Name="ProjectDisbandDateLabel" 
             Content="Data scioglimento: *" 
             HorizontalAlignment="Left" 
-            Margin="10,115,0,0" 
+            Margin="10,86,0,0" 
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="148"/>
         <DatePicker Name="ProjectDisbandDatePicker" 
             HorizontalAlignment="Left" 
-            Margin="158,115,0,0" 
+            Margin="158,86,0,0" 
             VerticalAlignment="Top" 
             Height="30" 
             Width="149"/>
         <Label x:Name="ProjectTypeLabel" 
             Content="Tipo:" 
             HorizontalAlignment="Left" 
-            Margin="10,150,0,0" 
+            Margin="10,132,0,0" 
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="133"/>
         <ComboBox Name="ProjectTypeCB" 
-            HorizontalAlignment="Left" 
-            Margin="158,149,0,0" 
-            VerticalAlignment="Top" 
-            Width="149" 
-            Height="31"/>
+                  HorizontalAlignment="Left" 
+                  Margin="158,131,0,0" 
+                  VerticalAlignment="Top" 
+                  Width="149" 
+                  Height="31"
+                  ItemsSource="{Binding TypeList}"
+                  SelectedItem="{Binding SelectedType, Mode=TwoWay}"/>
         <Label x:Name="ProjectMembersLabel" 
-            Content="Membri:" 
-            HorizontalAlignment="Left" 
-            Margin="10,185,0,0" 
-            VerticalAlignment="Top" 
-            FontSize="15" 
-            Width="133"/>
+               Content="Membri:" 
+               HorizontalAlignment="Left" 
+               Margin="10,175,0,0" 
+               VerticalAlignment="Top" 
+               FontSize="15" 
+               Width="133"/>
         <ListBox Name="ProjectMembersLB" 
-            d:ItemsSource="{d:SampleData ItemCount=5}" 
-            Margin="158,185,230,165"/>
+                 ItemsSource="{Binding Firmatari}"
+                 SelectedItem="{Binding SelectedFirmatario, Mode=TwoWay}"
+                 Margin="158,175,122,175"
+                 SelectionMode="Single"
+                 ItemTemplate="{StaticResource FirmTemplate}"/>
+        <ListBox ItemsSource="{Binding FirmatarioList}"
+                 Margin="158,328,122,22"
+                 ItemTemplate="{StaticResource FirmTemplate}"
+                 SelectedItem="{Binding ToRemove, Mode=TwoWay}"/>
+        <Label Content="Membri Selezionati:" 
+               HorizontalAlignment="Left" 
+               Margin="10,328,0,0" 
+               VerticalAlignment="Top" 
+               FontSize="15" 
+               Width="143"/>
+        <Button Content="Aggiungi"
+                Margin="0,175,46,0"
+                VerticalAlignment="Top"
+                Command="{Binding AddFirmatarioCommand}"
+                HorizontalAlignment="Right" Width="59" Height="30"/>
+        <Button Content="Rimuovi"
+            Margin="0,329,46,0"
+            VerticalAlignment="Top"
+            Command="{Binding RemoveFirmatarioCommand}"
+            HorizontalAlignment="Right" Width="59" Height="30"/>
     </Grid>
 </UserControl>

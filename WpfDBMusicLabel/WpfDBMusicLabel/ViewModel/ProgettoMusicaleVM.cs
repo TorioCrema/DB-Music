@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,15 @@ namespace WpfDBMusicLabel.ViewModel
 
         [ObservableProperty]
         private ProgettoMusicale? currentSelectedProject = null;
+
+        [ObservableProperty]
+        private Firmatario? selectedFirmatario = null;
+
+        [ObservableProperty]
+        private List<Firmatario> firmatarioList = new();
+
+        [ObservableProperty]
+        private Firmatario? toRemove = null;
 
         [ObservableProperty]
         private List<Album> albums = new();
@@ -60,6 +70,16 @@ namespace WpfDBMusicLabel.ViewModel
         };
 
         [ObservableProperty]
+        private List<string> typeList = new()
+        {
+            "Band",
+            "Solista"
+        };
+
+        [ObservableProperty]
+        private string? selectedType = null;
+
+        [ObservableProperty]
         private Dictionary<string, Visibility> resultVisibility = new()
         {
             { "Albums", Visibility.Collapsed },
@@ -73,6 +93,8 @@ namespace WpfDBMusicLabel.ViewModel
         {
             _dbContext = new();
             _dbContext.ProgettiMusicali.Load();
+            _dbContext.Firmatari.Load();
+            Firmatari = _dbContext.Firmatari.Local.ToList();
             ProgettiMusicali = _dbContext.ProgettiMusicali.Local.ToObservableCollection();
         }
 
@@ -118,6 +140,30 @@ namespace WpfDBMusicLabel.ViewModel
         [RelayCommand]
         private void ConfirmAction() => ExecuteSubAction();
 
+        [RelayCommand]
+        private void AddFirmatario()
+        {
+            if (SelectedFirmatario != null
+                && !FirmatarioList.Contains(SelectedFirmatario)
+                && (SelectedType != "Solista" || FirmatarioList.Count == 0))
+            {
+                List<Firmatario> newFirmatariList = new(FirmatarioList);
+                newFirmatariList.Add(SelectedFirmatario);
+                FirmatarioList = newFirmatariList;
+            }
+        }
+
+        [RelayCommand]
+        private void RemoveFirmatario()
+        {
+            if (ToRemove != null)
+            {
+                List<Firmatario> newFirmatariList = new(FirmatarioList);
+                newFirmatariList.Remove(ToRemove);
+                FirmatarioList = newFirmatariList;
+            }
+        }
+
         private void UpdateResults(string key)
         {
             Dictionary<string, Visibility> newResults = new(ResultVisibility);
@@ -143,6 +189,20 @@ namespace WpfDBMusicLabel.ViewModel
         {
             ProjectInsertVisibility = Visibility.Collapsed;
             ProjectViewVisibility = Visibility.Visible;
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            switch (e.PropertyName)
+            {
+                case "SelectedType":
+                    if (SelectedType == "Solista" && FirmatarioList.Count >= 2)
+                    {
+                        FirmatarioList = new();
+                    }
+                    break;
+            }
         }
     }
 }
