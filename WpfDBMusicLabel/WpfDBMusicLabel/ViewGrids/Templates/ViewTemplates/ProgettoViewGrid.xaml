@@ -66,6 +66,18 @@
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="MerchTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock Text="Codice:" DockPanel.Dock="Left" FontWeight="Bold" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Codice}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Descrizione}" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Prezzo}" Margin="5,0,10,0"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
         <CollectionViewSource x:Key="ProjectViewSource" Source="{Binding ProgettiMusicali}"/>
     </UserControl.Resources>
     <Grid Name="ProgettoGrid"
@@ -149,6 +161,14 @@
                  Visibility="{Binding ResultVisibility[Features]}"
                  ItemsSource="{Binding Features}"
                  ItemTemplate="{StaticResource FeatureTemplate}"/>
+        <ListBox Name="MerchList" 
+                 HorizontalAlignment="Left" 
+                 VerticalAlignment="Top" 
+                 Margin="384,39,0,0"
+                 Height="401" Width="223"
+                 Visibility="{Binding ResultVisibility[Merch]}"
+                 ItemsSource="{Binding Merch}"
+                 ItemTemplate="{StaticResource MerchTemplate}"/>
         <Label Name="ResultsLabel" 
 				Content="Risultati trovati:" 
 				HorizontalAlignment="Left" 

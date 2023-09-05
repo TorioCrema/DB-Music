@@ -51,6 +51,9 @@ namespace WpfDBMusicLabel.ViewModel
         private List<Traccia> features = new();
 
         [ObservableProperty]
+        private List<Merchandising> merch = new();
+
+        [ObservableProperty]
         private string? currentSubAction = null;
         
         [ObservableProperty]
@@ -72,7 +75,8 @@ namespace WpfDBMusicLabel.ViewModel
             "Vedi tracce",
             "Vedi firmatari",
             "Vedi concerti",
-            "Vedi features"
+            "Vedi features",
+            "Vedi merch"
         };
 
         [ObservableProperty]
@@ -92,7 +96,8 @@ namespace WpfDBMusicLabel.ViewModel
             { "Tracks", Visibility.Collapsed },
             { "Firmatari", Visibility.Collapsed },
             { "Concerts", Visibility.Collapsed },
-            { "Features", Visibility.Collapsed }
+            { "Features", Visibility.Collapsed },
+            { "Merch", Visibility.Collapsed }
         };
 
         public ProgettoMusicaleVM()
@@ -138,6 +143,11 @@ namespace WpfDBMusicLabel.ViewModel
                     Features = CurrentSelectedProject.IdTraccia.ToList();
                     Features.ForEach(f => _dbContext.Entry(f).Reference(x => x.IdProgettoNavigation).Load());
                     UpdateResults("Features");
+                    return true;
+                case "Vedi merch":
+                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Merchandisings).Load();
+                    Merch = CurrentSelectedProject.Merchandisings.ToList();
+                    UpdateResults("Merch");
                     return true;
                 case "Inserisci":
                     if (CheckProject())
