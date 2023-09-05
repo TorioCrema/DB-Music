@@ -36,6 +36,26 @@
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="BigliettiTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="Desc:" Margin="5,0,10,0" DockPanel.Dock="Left"/>
+                    <TextBlock FontWeight="Bold" Text="{Binding Descrizione}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Disp Tot:" Margin="5,0,10,0" DockPanel.Dock="Left"/>
+                    <TextBlock Text="{Binding DispTot}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Venduti:" Margin="5,0,10,0" DockPanel.Dock="Left"/>
+                    <TextBlock Text="{Binding NumVenduti}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Costo:" Margin="5,0,10,0" DockPanel.Dock="Left"/>
+                    <TextBlock Text="{Binding CostoEur}"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
         <CollectionViewSource x:Key="ToursViewSource" Source="{Binding Tours}"/>
     </UserControl.Resources>
     <Grid Name="TourGrid"
@@ -86,13 +106,22 @@
 				 Margin="384,39,0,0"
 				 ItemsSource="{Binding Concerti}"
                  ItemTemplate="{StaticResource ListBoxConcertTemplate}"
+                 SelectedItem="{Binding CurrentSelectedConcert, Mode=TwoWay}"
                  Height="401" Width="223"/>
         <Label Name="ResultsLabel" 
-				Content="Risultati trovati:" 
-				HorizontalAlignment="Left" 
-				Margin="446,4,0,0" 
-				VerticalAlignment="Top" 
-				Width="132" 
-				FontSize="15"/>
+		       Content="Risultati trovati:" 
+			   HorizontalAlignment="Left" 
+			   Margin="446,4,0,0" 
+			   VerticalAlignment="Top" 
+			   Width="132" 
+			   FontSize="15"/>
+        <ListBox x:Name="ChoiseLB" 
+                 ItemTemplate="{StaticResource BigliettiTemplate}"
+                 ItemsSource="{Binding Biglietti}" 
+                 Margin="233,234,0,0" 
+                 HorizontalAlignment="Left" 
+                 VerticalAlignment="Top" 
+                 Width="134" 
+                 Height="206"/>
     </Grid>
 </UserControl>

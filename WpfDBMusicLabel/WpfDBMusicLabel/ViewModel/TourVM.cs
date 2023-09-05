@@ -23,6 +23,12 @@ namespace WpfDBMusicLabel.ViewModel
         private Tour? currentSelectedTour = null;
 
         [ObservableProperty]
+        private Concerto? currentSelectedConcert = null;
+
+        [ObservableProperty]
+        private List<Biglietto> biglietti = new();
+
+        [ObservableProperty]
         private List<string> subActionList = new()
         {
             "Vedi concerti"
@@ -111,6 +117,20 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            switch (e.PropertyName)
+            {
+                case "CurrentSelectedConcert":
+                    if (CurrentSelectedConcert != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedConcert).Collection(c => c.Bigliettos).Load();
+                        Biglietti = CurrentSelectedConcert.Bigliettos.ToList();
+                    }
+                    break;
+            }
+        }
         public bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
