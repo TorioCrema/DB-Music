@@ -7,24 +7,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
+    <UserControl.Resources>
+        <DataTemplate x:Key="AlbumTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding DataPubblicazione, StringFormat=d}" DockPanel.Dock="Right"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <CollectionViewSource x:Key="AlbumViewSource" Source="{Binding Albums}"/>
+    </UserControl.Resources>
     <Grid Name="AlbumGrid" 
-		Margin="183,1,0,-1"
-		DataContext="{Binding AlbumViewModel}" 
-		Visibility="{Binding AlbumViewGridVisibilty}"
+		Margin="10,1,0,-1"
+		Visibility="{Binding AlbumViewVisibility}"
 		>
-        <DataGrid Name="ViewLB" 
-				DataContext="{Binding AlbumViewModel}"
-				ItemsSource="{Binding Albums}"
-				SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
-				Margin="0,37,420,10" 
-				SelectionMode="Single"
-				AutoGenerateColumns="False"
-				CanUserResizeColumns="False" Width="NaN">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding IdAlbum}"/>
-                <DataGridTextColumn Header="Nome" Binding="{Binding Nome}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListBox Name="ViewLB" 
+                 ItemTemplate="{StaticResource AlbumTemplate}"
+				 ItemsSource="{Binding Source={StaticResource AlbumViewSource}}"
+				 SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
+				 Margin="0,37,485,10" 
+				 SelectionMode="Single">
+        </ListBox>
         <Label Name="FoundLabel" 
 				Content="Album trovati" 
 				HorizontalAlignment="Left" 
@@ -35,51 +39,56 @@
 				HorizontalContentAlignment="Center" />
         <Label Name="ActionsLabel" 
 				Content="Azioni disponibili:" 
-				HorizontalAlignment="Left" 
-				Margin="234,4,0,0" 
+				HorizontalAlignment="Center" 
+				Margin="0,38,0,0" 
 				VerticalAlignment="Top" 
-				Width="133" 
+				Width="134" 
 				FontSize="15"/>
         <ComboBox Name="ActionsCB" 
-					DataContext="{Binding AlbumViewModel}"
-					HorizontalAlignment="Left" 
-					Margin="234,39,0,0" 
+					HorizontalAlignment="Center" 
+					Margin="0,73,0,0" 
 					VerticalAlignment="Top" 
-					Width="133"
-					ItemsSource="{Binding SubActionList}"/>
+					Width="134"
+					ItemsSource="{Binding SubActionList}"
+                  SelectedItem="{Binding CurrentSubAction, Mode=TwoWay}"/>
         <Button Name="ConfirmActionBtn" 
 				Content="Conferma Azione" 
-				HorizontalAlignment="Left" 
-				Margin="234,78,0,0" 
+				HorizontalAlignment="Center" 
+				Margin="0,112,0,0" 
 				VerticalAlignment="Top" 
-				Width="133" 
-				Height="25"/>
-        <DataGrid Name="ResultsDG" 
-					DataContext="{Binding AlbumViewModel}"
-					HorizontalAlignment="Left" 
-					VerticalAlignment="Top" 
-					Margin="384,39,0,0"
-					ItemsSource="{Binding Concerti}" Height="401" Width="223"/>
+				Width="134" 
+				Height="25"
+                Command="{Binding ConfirmCommand}"/>
+        <ListBox Name="ProdottiLB" 
+				 VerticalAlignment="Top" 
+				 Margin="512,39,56,0"
+                 Visibility="{Binding ResultVisibility[Prodotti]}"
+					ItemsSource="{Binding Prodotti}" Height="401"/>
+        <ListBox Name="TracceLB" 
+			VerticalAlignment="Top" 
+			Margin="512,39,56,0"
+                 Visibility="{Binding ResultVisibility[Tracce]}"
+			ItemsSource="{Binding CurrentSelectedAlbum.IdTraccia}" Height="401"/>
         <Label Name="ResultsLabel" 
 				Content="Risultati trovati:" 
 				HorizontalAlignment="Left" 
-				Margin="446,4,0,0" 
+				Margin="557,4,0,0" 
 				VerticalAlignment="Top" 
 				Width="132" 
 				FontSize="15"/>
         <ListBox Name="ChoiseLB" 
 				d:ItemsSource="{d:SampleData ItemCount=5}" 
-				Margin="234,0,0,0" 
-				HorizontalAlignment="Left" 
-				VerticalAlignment="Center" 
-				Width="133" 
+				Margin="0,156,0,0" 
+				HorizontalAlignment="Center" 
+				VerticalAlignment="Top" 
+				Width="134" 
 				Height="206"/>
         <Button Name="ConfirmChoiseBtn" 
 				Content="Conferma Scelta" 
-				HorizontalAlignment="Left" 
-				Margin="234,370,0,0" 
+				HorizontalAlignment="Center" 
+				Margin="0,404,0,0" 
 				VerticalAlignment="Top" 
-				Width="133" 
+				Width="134" 
 				Height="25"/>
     </Grid>
 </UserControl>

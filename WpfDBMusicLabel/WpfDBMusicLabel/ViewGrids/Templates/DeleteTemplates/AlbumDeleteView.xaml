@@ -9,11 +9,9 @@
              Background="White">
     <Grid Name="AlbumGrid" 
 		Margin="183,1,0,-1"
-		DataContext="{Binding AlbumViewModel}" 
-		Visibility="{Binding AlbumViewGridVisibilty}"
+		Visibility="{Binding AlbumViewVisibility}"
 		>
         <DataGrid Name="ViewLB" 
-				DataContext="{Binding AlbumViewModel}"
 				ItemsSource="{Binding Albums}"
 				SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
 				Margin="112,39,308,8" 

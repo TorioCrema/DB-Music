@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,7 @@ namespace WpfDBMusicLabel.ViewModel
 {
     partial class AlbumVM : ObservableRecipient, ISubVM
     {
-        private readonly MusiclabeldbContext _dbContext;
+        private readonly MusiclabeldbContext _dbContext = new();
 
         [ObservableProperty]
         private ObservableCollection<Album> albums;
@@ -28,7 +29,14 @@ namespace WpfDBMusicLabel.ViewModel
         private string? currentSubAction = null;
 
         [ObservableProperty]
-        private Visibility albumInsertVisibilty = Visibility.Collapsed;
+        private Dictionary<string, Visibility> resultVisibility = new()
+        {
+            { "Prodotti", Visibility.Collapsed },
+            { "Tracce", Visibility.Collapsed }
+        };
+
+        [ObservableProperty]
+        private Visibility albumInsertVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
         private Visibility albumViewVisibility = Visibility.Collapsed;
@@ -46,13 +54,22 @@ namespace WpfDBMusicLabel.ViewModel
             "Vedi tracce"
         };
 
-        public AlbumVM(MusiclabeldbContext dbContext)
+        public AlbumVM()
         {
-            _dbContext = dbContext;
             _dbContext.Albums.Load();
             Albums = _dbContext.Albums.Local.ToObservableCollection();
         }
 
+        private void UpdateResults(string key)
+        {
+            Dictionary<string, Visibility> newResults = new(ResultVisibility);
+            newResults.Keys.ToList().ForEach(k => newResults[k] = Visibility.Collapsed);
+            newResults[key] = Visibility.Visible;
+            ResultVisibility = newResults;
+        }
+
+        [RelayCommand]
+        private void Confirm() => ExecuteSubAction();
 
         public bool ExecuteSubAction()
         {
@@ -63,7 +80,17 @@ namespace WpfDBMusicLabel.ViewModel
                     {
                         _dbContext.Prodotti.Where(x => x.IdAlbum == CurrentSelectedAlbum.IdAlbum).Load();
                         Prodotti = _dbContext.Prodotti.Local.ToObservableCollection();
+                        UpdateResults("Prodotti");
                         return true;
+                    }
+                    Error = "Album non selezionato";
+                    return false;
+                case "Vedi tracce":
+                    if (CurrentSelectedAlbum != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedAlbum).Collection(a => a.IdTraccia).Load();
+                        UpdateResults("Tracce");
+                    return true;
                     }
                     Error = "Album non selezionato";
                     return false;
@@ -78,13 +105,13 @@ namespace WpfDBMusicLabel.ViewModel
         public void ViewGridSelected()
         {
             AlbumViewVisibility = Visibility.Visible;
-            AlbumInsertVisibilty = Visibility.Collapsed;
+            AlbumInsertVisibility = Visibility.Collapsed;
             AlbumDeleteVisibility = Visibility.Collapsed;
         }
 
         public void InsertGridSelected()
         {
-            AlbumInsertVisibilty = Visibility.Visible;
+            AlbumInsertVisibility = Visibility.Visible;
             AlbumViewVisibility = Visibility.Collapsed;
             AlbumDeleteVisibility = Visibility.Collapsed;
             CurrentSubAction = "Inserisci";
@@ -94,14 +121,14 @@ namespace WpfDBMusicLabel.ViewModel
         {
             AlbumDeleteVisibility = Visibility.Visible;
             AlbumViewVisibility = Visibility.Collapsed;
-            AlbumInsertVisibilty = Visibility.Collapsed;
+            AlbumInsertVisibility = Visibility.Collapsed;
         }
 
         public void OtherVMSelected()
         {
-            AlbumInsertVisibilty = Visibility.Collapsed;
+            AlbumInsertVisibility = Visibility.Collapsed;
             AlbumViewVisibility = Visibility.Collapsed;
-            AlbumInsertVisibilty = Visibility.Collapsed;
+            AlbumInsertVisibility = Visibility.Collapsed;
         }
 
         public void SaveChanges()
