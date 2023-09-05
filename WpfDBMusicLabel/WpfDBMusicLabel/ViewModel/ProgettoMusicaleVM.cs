@@ -24,6 +24,9 @@ namespace WpfDBMusicLabel.ViewModel
         private ProgettoMusicale? currentSelectedProject = null;
 
         [ObservableProperty]
+        private ProgettoMusicale newProject = new();
+
+        [ObservableProperty]
         private Firmatario? selectedFirmatario = null;
 
         [ObservableProperty]
@@ -136,6 +139,13 @@ namespace WpfDBMusicLabel.ViewModel
                     Features.ForEach(f => _dbContext.Entry(f).Reference(x => x.IdProgettoNavigation).Load());
                     UpdateResults("Features");
                     return true;
+                case "Inserisci":
+                    if (CheckProject())
+                    {
+                        _dbContext.ProgettiMusicali.Local.Add(NewProject);
+                        _dbContext.SaveChanges();
+                    }
+                    return true;
                 default: return false;
             }
         }
@@ -175,6 +185,17 @@ namespace WpfDBMusicLabel.ViewModel
             ResultVisibility = newResults;
         }
 
+        private bool CheckProject()
+        {
+            if (NewProject.Nome != null && NewProject.Nome.Length > 0
+                && (NewProject.DataScioglimento == null || NewProject.DataScioglimento > NewProject.DataFormazione)
+                && (NewProject.Tipo == "Band" || NewProject.Tipo == "Solista"))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
 
@@ -204,6 +225,7 @@ namespace WpfDBMusicLabel.ViewModel
             ProjectInsertVisibility = Visibility.Visible;
             ProjectViewVisibility = Visibility.Collapsed;
             ProjectDeleteVisibility = Visibility.Collapsed;
+            SetCurrentSubAction("Inserisci");
         }
 
         public void DeleteGridSelected()
@@ -218,6 +240,12 @@ namespace WpfDBMusicLabel.ViewModel
             ProjectInsertVisibility = Visibility.Collapsed;
             ProjectViewVisibility = Visibility.Collapsed;
             ProjectDeleteVisibility = Visibility.Collapsed;
+        }
+
+        public void SaveChanges()
+        {
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

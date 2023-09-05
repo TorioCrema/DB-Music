@@ -28,7 +28,7 @@
             HorizontalAlignment="Left" 
             Margin="158,10,0,0" 
             TextWrapping="Wrap" 
-            Text="" 
+            Text="{Binding NewProject.Nome, Mode=TwoWay}" 
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
@@ -45,7 +45,8 @@
             Margin="158,51,0,0" 
             VerticalAlignment="Top" 
             Height="30" 
-            Width="149"/>
+            Width="149"
+                    SelectedDate="{Binding NewProject.DataFormazione, Mode=TwoWay}"/>
         <Label x:Name="ProjectDisbandDateLabel" 
             Content="Data scioglimento: *" 
             HorizontalAlignment="Left" 
@@ -58,7 +59,8 @@
             Margin="158,86,0,0" 
             VerticalAlignment="Top" 
             Height="30" 
-            Width="149"/>
+            Width="149"
+                    SelectedDate="{Binding NewProject.DataScioglimento, Mode=TwoWay}"/>
         <Label x:Name="ProjectTypeLabel" 
             Content="Tipo:" 
             HorizontalAlignment="Left" 

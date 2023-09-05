@@ -96,5 +96,11 @@ namespace WpfDBMusicLabel.ViewModel
             TrackInsertVisibility = Visibility.Collapsed;
             TrackDeleteVisibility = Visibility.Collapsed;
         }
+
+        public void SaveChanges()
+        {
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
     }
 }

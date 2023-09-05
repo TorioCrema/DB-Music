@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -150,11 +151,7 @@ namespace WpfDBMusicLabel.ViewModel
         }
 
         [RelayCommand]
-        private void SaveChanges()
-        {
-            _dbContext.ChangeTracker.DetectChanges();
-            _dbContext.SaveChanges();
-        }
+        private void Save() => SaveChanges();
 
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
@@ -171,6 +168,9 @@ namespace WpfDBMusicLabel.ViewModel
             TourInsertVisibility = Visibility.Visible;
             TourViewVisibility = Visibility.Collapsed;
             TourDeleteVisibility = Visibility.Collapsed;
+            NewTourName = "";
+            NewConcerts = new();
+            DataConcerto = DateTime.Now;
             _dbContext.Luoghi.Load();
             Luoghi = _dbContext.Luoghi.Local.ToList();
         }
@@ -187,6 +187,12 @@ namespace WpfDBMusicLabel.ViewModel
             TourViewVisibility = Visibility.Collapsed;
             TourInsertVisibility = Visibility.Collapsed;
             TourDeleteVisibility = Visibility.Collapsed;
+        }
+
+        public void SaveChanges()
+        {
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

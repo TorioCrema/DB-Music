@@ -142,5 +142,11 @@ namespace WpfDBMusicLabel.ViewModel
             FirmatarioInsertVisibility = Visibility.Collapsed;
             FirmatarioDeleteVisibility = Visibility.Collapsed;
         }
+
+        public void SaveChanges()
+        {
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
     }
 }

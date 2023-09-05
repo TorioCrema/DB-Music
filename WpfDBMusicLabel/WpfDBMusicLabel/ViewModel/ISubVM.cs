@@ -20,5 +20,7 @@ namespace WpfDBMusicLabel.ViewModel
         public void DeleteGridSelected();
 
         public void OtherVMSelected();
+
+        public void SaveChanges();
     }
 }

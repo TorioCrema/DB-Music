@@ -92,5 +92,10 @@ namespace WpfDBMusicLabel.ViewModel
             ProdottoInsertVisibility = Visibility.Collapsed;
         }
 
+        public void SaveChanges()
+        {
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
     }
 }

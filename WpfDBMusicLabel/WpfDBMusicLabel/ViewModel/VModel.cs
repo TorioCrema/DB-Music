@@ -83,10 +83,7 @@ namespace WpfDBMusicLabel.ViewModel
         }
 
         [RelayCommand]
-        private void SaveChanges()
-        {
-            _dbContext.SaveChanges();
-        }
+        private void SaveChanges() => CurrentVM?.SaveChanges();
 
         [RelayCommand]
         private void InsertSelected()

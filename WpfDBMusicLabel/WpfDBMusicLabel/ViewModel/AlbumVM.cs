@@ -103,5 +103,11 @@ namespace WpfDBMusicLabel.ViewModel
             AlbumViewVisibility = Visibility.Collapsed;
             AlbumInsertVisibilty = Visibility.Collapsed;
         }
+
+        public void SaveChanges()
+        {
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
     }
 }
