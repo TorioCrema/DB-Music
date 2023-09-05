@@ -33,6 +33,13 @@
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="TracceTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" Margin="5,0,10,0"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
         <CollectionViewSource x:Key="AlbumViewSource" Source="{Binding Albums}"/>
     </UserControl.Resources>
     <Grid Name="AlbumGrid" 
@@ -85,6 +92,7 @@
         <ListBox Name="TracceLB" 
 			VerticalAlignment="Top" 
 			Margin="512,39,10,0"
+                 ItemTemplate="{StaticResource TracceTemplate}"
                  Visibility="{Binding ResultVisibility[Tracce]}"
 			ItemsSource="{Binding CurrentSelectedAlbum.IdTraccia}" Height="401"/>
         <Label Name="ResultsLabel" 
