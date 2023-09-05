@@ -169,6 +169,7 @@ namespace WpfDBMusicLabel.ViewModel
             TourViewVisibility = Visibility.Collapsed;
             TourDeleteVisibility = Visibility.Collapsed;
             NewTourName = "";
+            _newTour = new();
             NewConcerts = new();
             DataConcerto = DateTime.Now;
             _dbContext.Luoghi.Load();
