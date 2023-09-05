@@ -16,6 +16,23 @@
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="ProdottiTempate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="Codice:" FontWeight="Bold" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Codice}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Descrizione}" DockPanel.Dock="Left"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Tipo: " FontWeight="Bold" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Tipo}"/>
+                    <TextBlock Text="{Binding Formato}" Margin="10,0,0,0"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
         <CollectionViewSource x:Key="AlbumViewSource" Source="{Binding Albums}"/>
     </UserControl.Resources>
     <Grid Name="AlbumGrid" 
@@ -61,12 +78,13 @@
                 Command="{Binding ConfirmCommand}"/>
         <ListBox Name="ProdottiLB" 
 				 VerticalAlignment="Top" 
-				 Margin="512,39,56,0"
+				 Margin="512,39,10,0"
                  Visibility="{Binding ResultVisibility[Prodotti]}"
-					ItemsSource="{Binding Prodotti}" Height="401"/>
+					ItemsSource="{Binding Prodotti}" Height="401"
+                 ItemTemplate="{StaticResource ProdottiTempate}"/>
         <ListBox Name="TracceLB" 
 			VerticalAlignment="Top" 
-			Margin="512,39,56,0"
+			Margin="512,39,10,0"
                  Visibility="{Binding ResultVisibility[Tracce]}"
 			ItemsSource="{Binding CurrentSelectedAlbum.IdTraccia}" Height="401"/>
         <Label Name="ResultsLabel" 
