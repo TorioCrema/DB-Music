@@ -66,13 +66,14 @@
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
+        <CollectionViewSource x:Key="ProjectViewSource" Source="{Binding ProgettiMusicali}"/>
     </UserControl.Resources>
     <Grid Name="ProgettoGrid"
           Margin="183,1,0,-1"
 		  Visibility="{Binding ProjectViewVisibility}"
           Background="White">
         <ListBox Name="ViewLB" 
-				ItemsSource="{Binding ProgettiMusicali}"
+				ItemsSource="{Binding Source={StaticResource ProjectViewSource}}"
 				SelectedItem="{Binding CurrentSelectedProject, Mode=TwoWay}"
                  ItemTemplate="{StaticResource ProgettoTemplate}"
 				Margin="0,37,420,10" 
