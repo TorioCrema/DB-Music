@@ -61,6 +61,7 @@
               Margin="183,1,0,-1" 
               Visibility="{Binding ViewGridVisibilty}"
               >
+            <a:AlbumViewGrid DataContext="{Binding AlbumViewModel}"/>
             <a:ProgettoViewGrid DataContext="{Binding ProgettoViewModel}"/>
             <a:TourViewGrid DataContext="{Binding TourViewModel}"/>
             <a:FirmatarioGridView DataContext="{Binding FirmatarioViewModel}"/>
