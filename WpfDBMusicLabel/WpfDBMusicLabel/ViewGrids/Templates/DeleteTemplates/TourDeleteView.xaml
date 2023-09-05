@@ -9,13 +9,11 @@
              Background="White">
     <Grid  Name="TourGrid" 
 		Margin="183,1,0,-1"
-		DataContext="{Binding TourViewModel}" 
-		Visibility="{Binding TourViewGridVisibilty}"
+		Visibility="{Binding TourDeleteVisibility}"
 		>
         <DataGrid Name="ViewLB" 
-				DataContext="{Binding TourViewModel}"
 				ItemsSource="{Binding Tours}"
-				SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
+				SelectedItem="{Binding CurrentSelectedTour, Mode=TwoWay}"
 				Margin="112,39,308,8" 
 				SelectionMode="Single"
 				AutoGenerateColumns="False"

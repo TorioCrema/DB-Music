@@ -92,7 +92,7 @@
         </Grid>
         <Grid Name="DeleteGrid"
               Margin="183,1,0,0" 
-              Visibility="{Binding DeleteGridVisibilty}">
+              Visibility="{Binding DeleteGridVisibility}">
             <dt:AlbumDeleteView DataContext="{Binding AlbumViewModel}" />
             <dt:FirmatarioDeleteView DataContext="{Binding FirmatarioViewModel}" />
             <dt:ProdottoDeleteView DataContext="{Binding ProdottoViewModel}" />

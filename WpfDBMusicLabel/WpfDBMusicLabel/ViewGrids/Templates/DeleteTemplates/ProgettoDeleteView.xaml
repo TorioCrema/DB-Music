@@ -9,13 +9,11 @@
              Background="White">
     <Grid Name="ProgettoGrid" 
 		Margin="183,1,0,-1"
-		DataContext="{Binding ProgettoViewModel}" 
-		Visibility="{Binding ProgettoViewGridVisibilty}"
+		Visibility="{Binding ProjectDeleteVisibility}"
 		>
         <DataGrid Name="ViewLB" 
-				DataContext="{Binding ProgettoViewModel}"
 				ItemsSource="{Binding ProgettiMusicali}"
-				SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
+				SelectedItem="{Binding CurrentSelectedProject, Mode=TwoWay}"
 				Margin="112,39,308,8" 
 				SelectionMode="Single"
 				AutoGenerateColumns="False"

@@ -9,13 +9,11 @@
              Background="White">
     <Grid Name="FirmatarioGrid" 
 		Margin="183,1,0,-1"
-		DataContext="{Binding FirmatarioViewModel}" 
-		Visibility="{Binding FirmatarioViewGridVisibilty}"
+		Visibility="{Binding FirmatarioDeleteVisibility}"
 		>
         <DataGrid Name="ViewLB" 
-				DataContext="{Binding FirmatarioViewModel}"
 				ItemsSource="{Binding Firmatari}"
-				SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
+				SelectedItem="{Binding CurrentSelectedFirmatario, Mode=TwoWay}"
 				Margin="112,39,308,8" 
 				SelectionMode="Single"
 				AutoGenerateColumns="False"
