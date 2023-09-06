@@ -56,7 +56,8 @@
                 VerticalAlignment="Top" 
                 Height="30" 
                 Width="153" 
-                IsEnabled="{Binding ActionBtsEnabled}" />
+                IsEnabled="{Binding ActionBtsEnabled}"
+                Command="{Binding DeleteSelectedCommand}"/>
         <Grid Name="ViewGrid" 
               Margin="183,1,0,-1" 
               Visibility="{Binding ViewGridVisibilty}"
@@ -65,6 +66,7 @@
             <a:ProgettoViewGrid DataContext="{Binding ProgettoViewModel}"/>
             <a:TourViewGrid DataContext="{Binding TourViewModel}"/>
             <a:FirmatarioGridView DataContext="{Binding FirmatarioViewModel}"/>
+            <a:ProdottoViewGrid DataContext="{Binding ProdottoViewModel}"/>
         </Grid>
         <Grid Name="InsertGrid" 
               Margin="183,0,0,0"
@@ -75,6 +77,7 @@
             <it:TrackInsertGrid DataContext="{Binding TracciaViewModel}" />
             <it:FirmInsertGrid DataContext="{Binding FirmatarioViewModel}" />
             <it:ProjectInsertView DataContext="{Binding ProgettoViewModel}" />
+            <it:ProdInsertGrid DataContext="{Binding ProdottoViewModel}"/>
             <Button Name="ConfirmBtn" 
                     Content="Conferma dati" 
                     HorizontalAlignment="Left" 

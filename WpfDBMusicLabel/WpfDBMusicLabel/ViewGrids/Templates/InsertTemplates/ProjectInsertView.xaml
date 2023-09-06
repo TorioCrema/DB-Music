@@ -16,7 +16,7 @@
     </UserControl.Resources>
     <Grid Name="ProjectInsert" 
         Margin="0,1,240,0" 
-        Visibility="{Binding ProjectInsertVisibility}"
+        Visibility="{Binding VisibilityDict[Insert]}"
           Background="White">
         <Label Name="ProjectNameLabel" 
             Content="Nome:" 

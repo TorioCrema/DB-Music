@@ -9,7 +9,7 @@
              Background="White">
     <Grid Name="ProgettoGrid" 
 		Margin="183,1,0,-1"
-		Visibility="{Binding ProjectDeleteVisibility}"
+		Visibility="{Binding VisibilityDict[Delete]}"
 		>
         <DataGrid Name="ViewLB" 
 				ItemsSource="{Binding ProgettiMusicali}"

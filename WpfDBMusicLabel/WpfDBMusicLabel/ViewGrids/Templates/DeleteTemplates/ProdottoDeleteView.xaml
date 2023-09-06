@@ -9,13 +9,11 @@
              Background="White">
     <Grid Name="ProdottoGrid" 
 		Margin="183,1,0,-1"
-		DataContext="{Binding ProdottoViewModel}" 
-		Visibility="{Binding ProdottoViewGridVisibilty}"
+		Visibility="{Binding VisibilityDict[Delete]}"
 		>
         <DataGrid Name="ViewLB" 
-				DataContext="{Binding ProdottoViewModel}"
 				ItemsSource="{Binding Prodotti}"
-				SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
+				SelectedItem="{Binding CurrentSelectedProduct, Mode=TwoWay}"
 				Margin="112,39,308,8" 
 				SelectionMode="Single"
 				AutoGenerateColumns="False"

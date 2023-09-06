@@ -8,20 +8,18 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Name="ProdottoGrid"
           Margin="183,1,0,-1"
-		DataContext="{Binding ProdottoViewModel}" 
-		Visibility="{Binding ProdottoViewGridVisibilty}"
+		Visibility="{Binding VisibilityDict[View]}"
 		Background="White"
           >
         <DataGrid Name="ViewLB" 
-				DataContext="{Binding ProdottoViewModel}"
-				ItemsSource="{Binding Prodotto}"
-				SelectedItem="{Binding CurrentSelectedProdotto, Mode=TwoWay}"
+				ItemsSource="{Binding Prodotti}"
+				SelectedItem="{Binding CurrentSelectedProduct, Mode=TwoWay}"
 				Margin="0,37,420,10" 
 				SelectionMode="Single"
 				AutoGenerateColumns="False"
 				CanUserResizeColumns="False" Width="NaN">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding IdProdotto}"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Codice}"/>
                 <DataGridTextColumn Header="Nome" Binding="{Binding Nome}"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -41,12 +39,11 @@
 				Width="133" 
 				FontSize="15"/>
         <ComboBox Name="ActionsCB" 
-					DataContext="{Binding ProdottoViewModel}"
 					HorizontalAlignment="Left" 
 					Margin="234,39,0,0" 
 					VerticalAlignment="Top" 
 					Width="133"
-					ItemsSource="{Binding SubActionList}"/>
+					ItemsSource="{Binding SubActionsList}"/>
         <Button Name="ConfirmActionBtn" 
 				Content="Conferma Azione" 
 				HorizontalAlignment="Left" 
@@ -55,11 +52,10 @@
 				Width="133" 
 				Height="25"/>
         <DataGrid Name="ResultsDG" 
-					DataContext="{Binding ProdottoViewModel}"
 					HorizontalAlignment="Left" 
 					VerticalAlignment="Top" 
 					Margin="384,39,0,0"
-					ItemsSource="{Binding Concerti}" Height="401" Width="223"/>
+					ItemsSource="{Binding Albums}" Height="401" Width="223"/>
         <Label Name="ResultsLabel" 
 				Content="Risultati trovati:" 
 				HorizontalAlignment="Left" 

@@ -17,7 +17,7 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid Margin="183,1,0,-1"
-		Visibility="{Binding FirmatarioViewVisibility}"
+		Visibility="{Binding VisibilityDict[View]}"
 		Background="White">
         <ListBox Name="ViewLB" 
                  ItemTemplate="{StaticResource ListBoxFirmTemplate}"

@@ -33,7 +33,7 @@
     </UserControl.Resources>
     <Grid Name="TourInsert"
         Margin="0,1,240,0"
-          Visibility="{Binding TourInsertVisibility}"
+          Visibility="{Binding VisibilityDict[Insert]}"
           Background="White">
         <Label Name="TourProjectLabel" 
            Content="Seleziona luoghi:" 

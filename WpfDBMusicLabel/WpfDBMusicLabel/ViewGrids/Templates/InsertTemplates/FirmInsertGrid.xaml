@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Name="FirmInsert" 
         Margin="0,1,240,0"
-        Visibility="{Binding FirmatarioInsertVisibility}">
+        Visibility="{Binding VisibilityDict[Insert]}">
         <Label Name="ContractNameLabel" 
             Content="Nome:" 
             HorizontalAlignment="Left" 
