@@ -55,6 +55,9 @@ namespace WpfDBMusicLabel.ViewModel
         private List<Merchandising> merch = new();
 
         [ObservableProperty]
+        private uint totBiglietti = 0;
+
+        [ObservableProperty]
         private List<string> subActionsList = new()
         {
             "Vedi album",
@@ -62,7 +65,8 @@ namespace WpfDBMusicLabel.ViewModel
             "Vedi firmatari",
             "Vedi concerti",
             "Vedi features",
-            "Vedi merch"
+            "Vedi merch",
+            "Totale biglietti venduti"
         };
 
         [ObservableProperty]
@@ -83,7 +87,8 @@ namespace WpfDBMusicLabel.ViewModel
             { "Firmatari", Visibility.Collapsed },
             { "Concerts", Visibility.Collapsed },
             { "Features", Visibility.Collapsed },
-            { "Merch", Visibility.Collapsed }
+            { "Merch", Visibility.Collapsed },
+            { "Biglietti", Visibility.Collapsed }
         };
 
         public ProgettoMusicaleVM()
@@ -133,6 +138,15 @@ namespace WpfDBMusicLabel.ViewModel
                     _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Merchandisings).Load();
                     Merch = CurrentSelectedProject.Merchandisings.ToList();
                     UpdateResults("Merch");
+                    return true;
+                case "Totale biglietti venduti":
+                    TotBiglietti = 0;
+                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdConcertos).Load();
+                    CurrentSelectedProject.IdConcertos.ToList()
+                        .ForEach(x => _dbContext.Entry(x).Collection(c => c.Bigliettos).Load());
+                    CurrentSelectedProject.IdConcertos.ToList()
+                        .ForEach(c => c.Bigliettos.ToList().ForEach(b => TotBiglietti += b.NumVenduti));
+                    UpdateResults("Biglietti");
                     return true;
                 case "Inserisci":
                     if (CheckProject())
