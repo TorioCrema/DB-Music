@@ -21,7 +21,7 @@ namespace WpfDBMusicLabel.ViewModel
         private Album? currentSelectedAlbum = null;
 
         [ObservableProperty]
-        private ObservableCollection<Prodotto>? prodotti;
+        private List<Prodotto>? prodotti;
 
         [ObservableProperty]
         private Dictionary<string, Visibility> resultVisibility = new()
@@ -61,8 +61,8 @@ namespace WpfDBMusicLabel.ViewModel
                 case "Edizioni Fisiche":
                     if (CurrentSelectedAlbum != null)
                     {
-                        _dbContext.Prodotti.Where(x => x.IdAlbum == CurrentSelectedAlbum.IdAlbum).Load();
-                        Prodotti = _dbContext.Prodotti.Local.ToObservableCollection();
+                        _dbContext.Entry(CurrentSelectedAlbum).Collection(a => a.Prodotti).Load();
+                        Prodotti = CurrentSelectedAlbum.Prodotti.ToList();
                         UpdateResults("Prodotti");
                         return true;
                     }
