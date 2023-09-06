@@ -13,10 +13,8 @@ using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
 {
-    partial class ProgettoMusicaleVM : ObservableRecipient, ISubVM
+    partial class ProgettoMusicaleVM : AbstractVM
     {
-        private readonly MusiclabeldbContext _dbContext;
-
         [ObservableProperty]
         private ObservableCollection<ProgettoMusicale> progettiMusicali;
 
@@ -24,7 +22,10 @@ namespace WpfDBMusicLabel.ViewModel
         private ProgettoMusicale? currentSelectedProject = null;
 
         [ObservableProperty]
-        private ProgettoMusicale newProject = new();
+        private ProgettoMusicale newProject = new()
+        {
+            DataFormazione = DateTime.Now,
+        };
 
         [ObservableProperty]
         private Firmatario? selectedFirmatario = null;
@@ -52,21 +53,6 @@ namespace WpfDBMusicLabel.ViewModel
 
         [ObservableProperty]
         private List<Merchandising> merch = new();
-
-        [ObservableProperty]
-        private string? currentSubAction = null;
-        
-        [ObservableProperty]
-        private Visibility projectViewVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility projectInsertVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility projectDeleteVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private string? error = null;
 
         [ObservableProperty]
         private List<string> subActionsList = new()
@@ -102,14 +88,13 @@ namespace WpfDBMusicLabel.ViewModel
 
         public ProgettoMusicaleVM()
         {
-            _dbContext = new();
             _dbContext.ProgettiMusicali.Load();
             _dbContext.Firmatari.Load();
             Firmatari = _dbContext.Firmatari.Local.ToList();
             ProgettiMusicali = _dbContext.ProgettiMusicali.Local.ToObservableCollection();
         }
 
-        public bool ExecuteSubAction()
+        public override bool ExecuteSubAction()
         {
             if (CurrentSelectedProject == null)
             {
@@ -206,9 +191,6 @@ namespace WpfDBMusicLabel.ViewModel
             return false;
         }
 
-        public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
-
-
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
@@ -223,39 +205,19 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
-        public void ViewGridSelected()
+        public new void InsertGridSelected()
         {
-            ProjectViewVisibility = Visibility.Visible;
-            ProjectInsertVisibility = Visibility.Collapsed;
-            ProjectDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void InsertGridSelected()
-        {
-            ProjectInsertVisibility = Visibility.Visible;
-            ProjectViewVisibility = Visibility.Collapsed;
-            ProjectDeleteVisibility = Visibility.Collapsed;
+            base.InsertGridSelected();
             SetCurrentSubAction("Inserisci");
         }
 
-        public void DeleteGridSelected()
+        protected override void ResetInsert()
         {
-            ProjectDeleteVisibility = Visibility.Visible;
-            ProjectViewVisibility = Visibility.Collapsed;
-            ProjectInsertVisibility = Visibility.Collapsed;
-        }
-
-        public void OtherVMSelected()
-        {
-            ProjectInsertVisibility = Visibility.Collapsed;
-            ProjectViewVisibility = Visibility.Collapsed;
-            ProjectDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void SaveChanges()
-        {
-            _dbContext.ChangeTracker.DetectChanges();
-            _dbContext.SaveChanges();
+            NewProject = new()
+            {
+                DataFormazione = DateTime.Now,
+            };
+            FirmatarioList = new();
         }
     }
 }

@@ -11,25 +11,8 @@ using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
 {
-    internal partial class FirmatarioVM : ObservableRecipient, ISubVM
+    internal partial class FirmatarioVM : AbstractVM
     {
-        private readonly MusiclabeldbContext _dbContext;
-
-        [ObservableProperty]
-        private string? currentSubAction = null;
-
-        [ObservableProperty]
-        private Visibility firmatarioInsertVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility firmatarioViewVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility firmatarioDeleteVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private string? error = null;
-
         [ObservableProperty]
         private Firmatario? currentSelectedFirmatario = null;
 
@@ -64,19 +47,19 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private uint contractPay = 0;
 
-        public FirmatarioVM(MusiclabeldbContext dbContext)
+        public FirmatarioVM()
         {
-            _dbContext = dbContext;
+            _dbContext = new();
             _dbContext.Firmatari.Load();
             Firmatari = _dbContext.Firmatari.Local.ToObservableCollection();
         }
 
-        public bool ExecuteSubAction()
+        override public bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
             {
                 case "Inserisci Firmatario":
-                    if (NewFirmatario != null && CheckFirmatario(NewFirmatario))
+                    if (NewFirmatario != null && CheckFirmatario())
                     {
                         Firmatari.Add(NewFirmatario);
                         return true;
@@ -103,50 +86,36 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
-        public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
-
-        private bool CheckFirmatario(Firmatario firmatario)
+        private bool CheckFirmatario()
         {
-            if (firmatario.Cf.Length != 16 || firmatario.Ruolo == "RUOLO")
+            if (NewFirmatario.Cf.Length != 16 || NewFirmatario.Ruolo == "RUOLO")
             {
                 return false;
             }
             return true;
         }
 
-        public void ViewGridSelected()
+        new public void InsertGridSelected()
         {
-            FirmatarioViewVisibility = Visibility.Visible;
-            FirmatarioInsertVisibility = Visibility.Collapsed;
-            FirmatarioDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void InsertGridSelected()
-        {
-            FirmatarioInsertVisibility = Visibility.Visible;
-            FirmatarioViewVisibility = Visibility.Collapsed;
-            FirmatarioDeleteVisibility = Visibility.Collapsed;
+            base.InsertGridSelected();
             CurrentSubAction = "Inserisci";
         }
 
-        public void DeleteGridSelected()
+        protected override void ResetInsert()
         {
-            FirmatarioDeleteVisibility = Visibility.Visible;
-            FirmatarioViewVisibility = Visibility.Collapsed;
-            FirmatarioInsertVisibility = Visibility.Collapsed;
-        }
-
-        public void OtherVMSelected()
-        {
-            FirmatarioViewVisibility = Visibility.Collapsed;
-            FirmatarioInsertVisibility = Visibility.Collapsed;
-            FirmatarioDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void SaveChanges()
-        {
-            _dbContext.ChangeTracker.DetectChanges();
-            _dbContext.SaveChanges();
+            NewFirmatario = new()
+            {
+                Cf = "CODICE FISCALE",
+                Nome = "NOME",
+                Cognome = "COGNOME",
+                IndVia = "VIA",
+                IndNumCivico = 0,
+                IndCitta = "CITTA",
+                Ruolo = "RUOLO"
+            };
+            ContractEnd = DateTime.Now;
+            ContractStart = DateTime.Now;
+            ContractPay = 0;
         }
     }
 }

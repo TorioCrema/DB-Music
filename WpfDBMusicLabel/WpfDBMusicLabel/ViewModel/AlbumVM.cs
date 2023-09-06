@@ -12,10 +12,8 @@ using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
 {
-    partial class AlbumVM : ObservableRecipient, ISubVM
+    partial class AlbumVM : AbstractVM
     {
-        private readonly MusiclabeldbContext _dbContext = new();
-
         [ObservableProperty]
         private ObservableCollection<Album> albums;
 
@@ -26,26 +24,11 @@ namespace WpfDBMusicLabel.ViewModel
         private ObservableCollection<Prodotto>? prodotti;
 
         [ObservableProperty]
-        private string? currentSubAction = null;
-
-        [ObservableProperty]
         private Dictionary<string, Visibility> resultVisibility = new()
         {
             { "Prodotti", Visibility.Collapsed },
             { "Tracce", Visibility.Collapsed }
         };
-
-        [ObservableProperty]
-        private Visibility albumInsertVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility albumViewVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility albumDeleteVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private string? error = null;
 
         [ObservableProperty]
         private List<string> subActionList = new()
@@ -71,7 +54,7 @@ namespace WpfDBMusicLabel.ViewModel
         [RelayCommand]
         private void Confirm() => ExecuteSubAction();
 
-        public bool ExecuteSubAction()
+        public override bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
             {
@@ -100,41 +83,9 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
-        public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
-
-        public void ViewGridSelected()
+        protected override void ResetInsert()
         {
-            AlbumViewVisibility = Visibility.Visible;
-            AlbumInsertVisibility = Visibility.Collapsed;
-            AlbumDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void InsertGridSelected()
-        {
-            AlbumInsertVisibility = Visibility.Visible;
-            AlbumViewVisibility = Visibility.Collapsed;
-            AlbumDeleteVisibility = Visibility.Collapsed;
-            CurrentSubAction = "Inserisci";
-        }
-
-        public void DeleteGridSelected()
-        {
-            AlbumDeleteVisibility = Visibility.Visible;
-            AlbumViewVisibility = Visibility.Collapsed;
-            AlbumInsertVisibility = Visibility.Collapsed;
-        }
-
-        public void OtherVMSelected()
-        {
-            AlbumInsertVisibility = Visibility.Collapsed;
-            AlbumViewVisibility = Visibility.Collapsed;
-            AlbumInsertVisibility = Visibility.Collapsed;
-        }
-
-        public void SaveChanges()
-        {
-            _dbContext.ChangeTracker.DetectChanges();
-            _dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,11 +14,8 @@ using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
 {
-    public partial class TourVM : ObservableRecipient, ISubVM
+    partial class TourVM : AbstractVM
     {
-        [ObservableProperty]
-        private string? currentSubAction = null;
-
         [ObservableProperty]
         private Tour? currentSelectedTour = null;
 
@@ -34,16 +31,11 @@ namespace WpfDBMusicLabel.ViewModel
             "Vedi concerti"
         };
 
-        private readonly MusiclabeldbContext _dbContext;
-
         [ObservableProperty]
         private ObservableCollection<Tour> tours;
 
         [ObservableProperty]
         private IEnumerable<Concerto>? concerti;
-
-        [ObservableProperty]
-        private string? error = null;
 
         [ObservableProperty]
         private List<Luogo>? luoghi = new();
@@ -61,15 +53,6 @@ namespace WpfDBMusicLabel.ViewModel
         private List<Concerto> newConcerts = new();
 
         private Tour _newTour = new();
-
-        [ObservableProperty]
-        private Visibility tourViewVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility tourInsertVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility tourDeleteVisibility = Visibility.Collapsed;
 
         public TourVM()
         {
@@ -131,7 +114,7 @@ namespace WpfDBMusicLabel.ViewModel
                     break;
             }
         }
-        public bool ExecuteSubAction()
+        override public bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
             {
@@ -171,49 +154,22 @@ namespace WpfDBMusicLabel.ViewModel
         }
 
         [RelayCommand]
-        private void Save() => SaveChanges();
+        private void Save() => base.SaveChanges();
 
-        public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
-
-        public void ViewGridSelected()
+        new public void ViewGridSelected()
         {
-            TourViewVisibility = Visibility.Visible;
-            TourInsertVisibility = Visibility.Collapsed;
-            TourDeleteVisibility = Visibility.Collapsed;
+            base.ViewGridSelected();
             CurrentSubAction = null;
         }
 
-        public void InsertGridSelected()
+        protected override void ResetInsert()
         {
-            TourInsertVisibility = Visibility.Visible;
-            TourViewVisibility = Visibility.Collapsed;
-            TourDeleteVisibility = Visibility.Collapsed;
             NewTourName = "";
             _newTour = new();
             NewConcerts = new();
             DataConcerto = DateTime.Now;
             _dbContext.Luoghi.Load();
             Luoghi = _dbContext.Luoghi.Local.ToList();
-        }
-
-        public void DeleteGridSelected()
-        {
-            TourDeleteVisibility = Visibility.Visible;
-            TourViewVisibility = Visibility.Collapsed;
-            TourInsertVisibility = Visibility.Collapsed;
-        }
-
-        public void OtherVMSelected()
-        {
-            TourViewVisibility = Visibility.Collapsed;
-            TourInsertVisibility = Visibility.Collapsed;
-            TourDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void SaveChanges()
-        {
-            _dbContext.ChangeTracker.DetectChanges();
-            _dbContext.SaveChanges();
         }
     }
 }

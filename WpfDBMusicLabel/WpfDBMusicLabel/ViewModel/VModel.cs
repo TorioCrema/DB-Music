@@ -106,9 +106,10 @@ namespace WpfDBMusicLabel.ViewModel
         public VModel()
         {
             TourViewModel = new();
-            FirmatarioViewModel = new(_dbContext);
+            FirmatarioViewModel = new();
             ProgettoViewModel = new();
             AlbumViewModel = new();
+            ProdottoViewModel = new();
         }
 
         public bool SetCurrentAction(string action)
@@ -132,6 +133,10 @@ namespace WpfDBMusicLabel.ViewModel
                     return true;
                 case "Album":
                     CurrentVM = AlbumViewModel;
+                    ActionBtsEnabled = true;
+                    return true;
+                case "Prodotto":
+                    CurrentVM = ProdottoViewModel;
                     ActionBtsEnabled = true;
                     return true;
             }

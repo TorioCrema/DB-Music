@@ -11,10 +11,8 @@ using System.Data.Entity;
 
 namespace WpfDBMusicLabel.ViewModel
 {
-    partial class ProdottoVM : ObservableRecipient, ISubVM
+    partial class ProdottoVM : AbstractVM
     {
-        private readonly MusiclabeldbContext _dbContext;
-
         [ObservableProperty]
         private ObservableCollection<Prodotto>? prodotti;
 
@@ -25,33 +23,19 @@ namespace WpfDBMusicLabel.ViewModel
         private ObservableCollection<Album> albums;
 
         [ObservableProperty]
-        private string? currentSubAction = null;
-
-        [ObservableProperty]
-        private Visibility prodottoViewVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility prodottoInsertVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility prodottoDeleteVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private string? error = null;
-        [ObservableProperty]
         private List<string> subActionsList = new()
         {
             "Vedi album"
         };
 
-        public ProdottoVM(MusiclabeldbContext dbContext)
+        public ProdottoVM()
         {
-            this._dbContext = dbContext;
-            this._dbContext.Prodotti.Load();
-            this.Prodotti = this._dbContext.Prodotti.Local.ToObservableCollection();
+            _dbContext = new();
+            _dbContext.Prodotti.Load();
+            Prodotti = _dbContext.Prodotti.Local.ToObservableCollection();
         }
 
-        public bool ExecuteSubAction()
+        override public bool ExecuteSubAction()
         {
             if (CurrentSelectedProduct != null)
             {
@@ -62,40 +46,9 @@ namespace WpfDBMusicLabel.ViewModel
             return false;
         }
 
-        public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
-
-        public void ViewGridSelected()
+        protected override void ResetInsert()
         {
-            ProdottoViewVisibility = Visibility.Visible;
-            ProdottoInsertVisibility = Visibility.Collapsed;
-            ProdottoDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void InsertGridSelected()
-        {
-            ProdottoInsertVisibility = Visibility.Visible;
-            ProdottoViewVisibility = Visibility.Collapsed;
-            ProdottoDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void DeleteGridSelected()
-        {
-            ProdottoDeleteVisibility = Visibility.Visible;
-            ProdottoViewVisibility = Visibility.Collapsed;
-            ProdottoInsertVisibility = Visibility.Collapsed;
-        }
-
-        public void OtherVMSelected()
-        {
-            ProdottoDeleteVisibility = Visibility.Collapsed;
-            ProdottoViewVisibility = Visibility.Collapsed;
-            ProdottoInsertVisibility = Visibility.Collapsed;
-        }
-
-        public void SaveChanges()
-        {
-            _dbContext.ChangeTracker.DetectChanges();
-            _dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }

@@ -11,9 +11,8 @@ using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
 {
-    partial class TracciaVM : ObservableRecipient, ISubVM
+    partial class TracciaVM : AbstractVM
     {
-        private readonly MusiclabeldbContext _dbContext;
 
         [ObservableProperty]
         private ObservableCollection<Traccia>? tracce;
@@ -25,39 +24,24 @@ namespace WpfDBMusicLabel.ViewModel
         private ObservableCollection<Firmatario>? firmatari;
 
         [ObservableProperty]
-        private string? currentSubAction = null;
-
-        [ObservableProperty]
-        private Visibility trackViewVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility trackInsertVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility trackDeleteVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private string? error = null;
-
-        [ObservableProperty]
         private List<string> subActionsList = new()
         {
             "Vedi dati"
         };
 
-        public TracciaVM(MusiclabeldbContext dbContext)
+        public TracciaVM()
         {
-            this._dbContext = dbContext;
-            this._dbContext.Tracce.Load();
-            Tracce = this._dbContext.Tracce.Local.ToObservableCollection();
+            _dbContext = new();
+            _dbContext.Tracce.Load();
+            Tracce = _dbContext.Tracce.Local.ToObservableCollection();
         }
 
-        public bool ExecuteSubAction()
+        override public bool ExecuteSubAction()
         {
             if (CurrentSelectedTrack != null)
             {
                 //Per avere solo i firmatari, trovare un modo per caricare tutti i dati
-                this._dbContext.Firmatari.Where(firmatario => firmatario.IdTraccia.Any(traccia => traccia.IdTraccia == CurrentSelectedTrack.IdTraccia)).Load();
+                _dbContext.Firmatari.Where(firmatario => firmatario.IdTraccia.Any(traccia => traccia.IdTraccia == CurrentSelectedTrack.IdTraccia)).Load();
                 Firmatari = _dbContext.Firmatari.Local.ToObservableCollection();
                 return true;
             }
@@ -67,40 +51,9 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
-        public void SetCurrentSubAction(string newSubAction) => currentSubAction = newSubAction;
-
-        public void ViewGridSelected()
+        protected override void ResetInsert()
         {
-            TrackViewVisibility = Visibility.Visible;
-            TrackInsertVisibility = Visibility.Collapsed;
-            TrackDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void InsertGridSelected()
-        {
-            TrackInsertVisibility = Visibility.Visible;
-            TrackViewVisibility = Visibility.Collapsed;
-            TrackDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void DeleteGridSelected()
-        {
-            TrackDeleteVisibility = Visibility.Visible;
-            TrackViewVisibility = Visibility.Collapsed;
-            TrackInsertVisibility = Visibility.Collapsed;
-        }
-
-        public void OtherVMSelected()
-        {
-            TrackViewVisibility = Visibility.Collapsed;
-            TrackInsertVisibility = Visibility.Collapsed;
-            TrackDeleteVisibility = Visibility.Collapsed;
-        }
-
-        public void SaveChanges()
-        {
-            _dbContext.ChangeTracker.DetectChanges();
-            _dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }
