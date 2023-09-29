@@ -6,8 +6,19 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="AlbumCBTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" Margin="2,0,10,0" DockPanel.Dock="Left"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <CollectionViewSource x:Key="AlbumsViewSource" Source="{Binding Albums}"/>
+    </UserControl.Resources>
     <Grid Name="ProdInsert" 
         Margin="0,1,240,0" 
+          Background="White"
         Visibility="{Binding VisibilityDict[Insert]}">
         <Label Name="ProdAlbumLabel" 
             Content="Album:" 
@@ -16,11 +27,14 @@
             VerticalAlignment="Top" 
             FontSize="15"/>
         <ComboBox Name="ProdAlbumsCB" 
-            HorizontalAlignment="Left" 
-            Margin="148,10,0,0" 
-            VerticalAlignment="Top" 
-            Width="149" 
-            Height="30"/>
+                  HorizontalAlignment="Left" 
+                  Margin="148,10,0,0" 
+                  VerticalAlignment="Top" 
+                  Width="220" 
+                  Height="30"
+                  ItemTemplate="{StaticResource AlbumCBTemplate}"
+                  ItemsSource="{Binding Source={StaticResource AlbumsViewSource}}"
+                  SelectedItem="{Binding SelectedAlbum, Mode=TwoWay}"/>
         <Label Name="ProdDescLabel" 
             Content="Descrizione:" 
             HorizontalAlignment="Left" 
@@ -34,7 +48,7 @@
             FontSize="15">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text=""/>
+                    <Run Text="{Binding NewProd.Descrizione, Mode=TwoWay}"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
@@ -53,7 +67,8 @@
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
-            FontSize="16"/>
+            FontSize="16"
+            PreviewTextInput="IntegerInputCheck"/>
         <Label x:Name="QuantityLabel" 
             Content="Quantità:" 
             HorizontalAlignment="Left" 
@@ -65,7 +80,8 @@
             HorizontalAlignment="Left" 
             Margin="148,80,0,0" 
             TextWrapping="Wrap" 
-            Text="" 
+            Text="{Binding Qty, Mode=TwoWay}" 
+            PreviewTextInput="IntegerInputCheck"
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
@@ -84,7 +100,7 @@
             Width="149" 
             Height="30"
             FontSize="15"
-            Text=""/>
+            SelectedDate="{Binding NewProd.DataUscita, Mode=TwoWay}"/>
         <Label x:Name="ProdType" 
             Content="Tipo:" 
             HorizontalAlignment="Left" 
@@ -92,38 +108,51 @@
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="133"/>
-        <CheckBox Name="ProdCDChB" 
+        <RadioButton Name="ProdCDChB" 
             Content="CD" 
             HorizontalAlignment="Left" 
             Margin="148,159,0,0" 
-            VerticalAlignment="Top"/>
-        <CheckBox Name="ProdVinylChB" 
+            VerticalAlignment="Top"
+            GroupName="Tipo"
+            IsChecked="{Binding Cd, Mode=TwoWay}"/>
+        <RadioButton Name="ProdVinylChB" 
             Content="Vinile" 
             HorizontalAlignment="Center" 
             Margin="0,159,0,0" 
-            VerticalAlignment="Top"/>
-        <CheckBox Name="ProdCassetteChB" 
+            VerticalAlignment="Top"
+            GroupName="Tipo"
+            IsChecked="{Binding Vinyl, Mode=TwoWay}"/>
+        <RadioButton Name="ProdCassetteChB" 
             Content="Cassetta" 
             HorizontalAlignment="Left" 
             Margin="323,159,0,0" 
-            VerticalAlignment="Top"/>
+            VerticalAlignment="Top"
+            GroupName="Tipo"
+            IsChecked="{Binding Cassette, Mode=TwoWay}"/>
         <Label x:Name="ProdVinylFormatLabel" 
             Content="Formato vinili:" 
             HorizontalAlignment="Left" 
             Margin="10,185,0,0" 
             VerticalAlignment="Top" 
             FontSize="15" 
-            Width="133"/>
+            Width="133"
+            Visibility="{Binding FormatoVis}"/>
         <RadioButton Name="Prod33Vinyl" 
             Content="33 giri" 
             HorizontalAlignment="Left" 
             Margin="148,194,0,0" 
-            VerticalAlignment="Top"/>
+            VerticalAlignment="Top"
+            GroupName="Formato"
+            Visibility="{Binding FormatoVis}"
+            IsChecked="{Binding Giri33, Mode=TwoWay}"/>
         <RadioButton x:Name="Prod45Vinyl" 
             Content="45 giri" 
             HorizontalAlignment="Left" 
             Margin="245,194,0,0" 
-            VerticalAlignment="Top"/>
+            VerticalAlignment="Top"
+            GroupName="Formato"
+            Visibility="{Binding FormatoVis}"
+            IsChecked="{Binding Giri45, Mode=TwoWay}"/>
         <Label x:Name="ProdTotalPriceLabel" 
             Content="Costo totale:" 
             HorizontalAlignment="Left" 
@@ -134,9 +163,10 @@
         <TextBox HorizontalAlignment="Left" 
             Margin="416,80,0,0" 
             TextWrapping="Wrap" 
-            Text="" 
             VerticalAlignment="Top" 
             Width="60" 
-            Height="30"/>
+            Height="30"
+                 Text="{Binding NewProd.CostoFornitura, Mode=TwoWay}"
+            PreviewTextInput="IntegerInputCheck"/>
     </Grid>
 </UserControl>
