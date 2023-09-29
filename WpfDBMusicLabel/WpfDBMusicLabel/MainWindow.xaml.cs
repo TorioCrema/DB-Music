@@ -26,14 +26,13 @@ namespace WpfDBMusicLabel
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly Regex _intRegex = new("[^0-9]+");
-        private static bool IsTextAllowed(string text, Regex regex) => !regex.IsMatch(text);
+        private readonly InputChecker _checker = InputCheckerGenerator.IntChecker();
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void IntegerInputCheck(object sender, TextCompositionEventArgs e) => e.Handled = !IsTextAllowed(e.Text, _intRegex);
+        private void IntegerInputCheck(object sender, TextCompositionEventArgs e) => _checker.Check(sender, e);
     }
 }
