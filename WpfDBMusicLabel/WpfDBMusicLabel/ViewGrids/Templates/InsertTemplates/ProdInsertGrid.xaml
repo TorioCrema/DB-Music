@@ -15,6 +15,14 @@
             </StackPanel>
         </DataTemplate>
         <CollectionViewSource x:Key="AlbumsViewSource" Source="{Binding Albums}"/>
+        <DataTemplate x:Key="ProduttoreCBTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" Margin="2,0,10,0" DockPanel.Dock="Left"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <CollectionViewSource x:Key="ProduttoriViewSource" Source="{Binding Producers}"/>
     </UserControl.Resources>
     <Grid Name="ProdInsert" 
         Margin="0,1,240,0" 
@@ -38,12 +46,12 @@
         <Label Name="ProdDescLabel" 
             Content="Descrizione:" 
             HorizontalAlignment="Left" 
-            Margin="10,220,0,0" 
+            Margin="10,329,0,0" 
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="95" RenderTransformOrigin="0.495,8.95"/>
         <RichTextBox HorizontalAlignment="Left" 
-            Margin="148,220,0,10" 
+            Margin="148,329,0,10" 
             Width="350" 
             FontSize="15">
             <FlowDocument>
@@ -62,13 +70,13 @@
         <TextBox Name="PriceTB" 
             HorizontalAlignment="Left" 
             Margin="148,45,0,0" 
-            TextWrapping="Wrap" 
-            Text="" 
+            TextWrapping="Wrap"
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
             FontSize="16"
-            PreviewTextInput="IntegerInputCheck"/>
+            PreviewTextInput="IntegerInputCheck"
+                 Text="{Binding NewProd.Prezzo, Mode=TwoWay}"/>
         <Label x:Name="QuantityLabel" 
             Content="Quantità:" 
             HorizontalAlignment="Left" 
@@ -80,7 +88,7 @@
             HorizontalAlignment="Left" 
             Margin="148,80,0,0" 
             TextWrapping="Wrap" 
-            Text="{Binding Qty, Mode=TwoWay}" 
+            Text="{Binding NewProd.QtaProdotta, Mode=TwoWay}" 
             PreviewTextInput="IntegerInputCheck"
             VerticalAlignment="Top" 
             Width="149" 
@@ -168,5 +176,36 @@
             Height="30"
                  Text="{Binding NewProd.CostoFornitura, Mode=TwoWay}"
             PreviewTextInput="IntegerInputCheck"/>
+        <Label x:Name="ProdAlbumLabel_Copy" 
+            Content="Produttore:" 
+            HorizontalAlignment="Left" 
+            Margin="10,224,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="15"/>
+        <ComboBox x:Name="ProdAlbumsCB_Copy" 
+            HorizontalAlignment="Left" 
+            Margin="148,224,0,0" 
+            VerticalAlignment="Top" 
+            Width="220" 
+            Height="30"
+            ItemTemplate="{StaticResource ProduttoreCBTemplate}"
+            ItemsSource="{Binding Source={StaticResource ProduttoriViewSource}}"
+            SelectedItem="{Binding SelectedProducer, Mode=TwoWay}"/>
+        <Label x:Name="ProdNameLabel" 
+            Content="Nome:" 
+            HorizontalAlignment="Left" 
+            Margin="17,278,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="15" 
+            Width="133"/>
+        <TextBox x:Name="NameTB" 
+            HorizontalAlignment="Left" 
+            Margin="150,278,0,0" 
+            TextWrapping="Wrap"
+            VerticalAlignment="Top" 
+            Width="218" 
+            Height="30" 
+            FontSize="16"
+            Text="{Binding NewProd.Nome, Mode=TwoWay}"/>
     </Grid>
 </UserControl>
