@@ -6,6 +6,16 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ArtistsTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" Margin="2,0,10,0" DockPanel.Dock="Left"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <CollectionViewSource x:Key="ArtistsViewSource" Source="{Binding Artists}"/>
+    </UserControl.Resources>
     <Grid Name="AlbumInsert" 
         Margin="0,1,240,0" 
         Visibility="{Binding VisibilityDict[Insert]}">
@@ -15,7 +25,10 @@
             Margin="10,10,0,0" 
             VerticalAlignment="Top" 
             FontSize="15"/>
-        <ComboBox Name="AlbumProjectsCB" 
+        <ComboBox Name="AlbumProjectsCB"
+            ItemTemplate="{StaticResource ArtistsTemplate}"
+            ItemsSource="{Binding Source={StaticResource ArtistsViewSource}}" 
+            SelectedItem="{Binding SelectedArtist, Mode=TwoWay}"
             HorizontalAlignment="Left" 
             Margin="148,10,0,0" 
             VerticalAlignment="Top" 
@@ -44,25 +57,9 @@
             Width="149" 
             Height="30" 
             FontSize="16"/>
-        <Label x:Name="AlbumDurationLabel" 
-            Content="Durata totale:" 
-            HorizontalAlignment="Left" 
-            Margin="10,80,0,0" 
-            VerticalAlignment="Top" 
-            FontSize="15" 
-            Width="133"/>
-        <TextBox Name="AlbumDurationTB" 
-            HorizontalAlignment="Left" 
-            Margin="148,80,0,0" 
-            TextWrapping="Wrap" 
-            Text="" 
-            VerticalAlignment="Top" 
-            Width="149" 
-            Height="30" 
-            FontSize="16"
-            IsEnabled="False"/>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" 
-            Margin="148,150,35,10"/>
+        <DataGrid
+            Margin="148,150,35,10"
+            ItemsSource="{Binding ArtistTracks}"/>
         <Label x:Name="AlbumDateLabel" 
             Content="Data di uscita:" 
             HorizontalAlignment="Left" 

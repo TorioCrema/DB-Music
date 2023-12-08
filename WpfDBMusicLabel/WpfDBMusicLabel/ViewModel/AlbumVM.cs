@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,15 @@ namespace WpfDBMusicLabel.ViewModel
         private List<Prodotto>? prodotti;
 
         [ObservableProperty]
+        private List<ProgettoMusicale>? artists = null;
+
+        [ObservableProperty]
+        private ProgettoMusicale? selectedArtist = null;
+
+        [ObservableProperty]
+        private ObservableCollection<Traccia>? artistTracks = null;
+
+        [ObservableProperty]
         private Dictionary<string, Visibility> resultVisibility = new()
         {
             { "Prodotti", Visibility.Collapsed },
@@ -40,6 +50,8 @@ namespace WpfDBMusicLabel.ViewModel
         public AlbumVM()
         {
             _dbContext.Albums.Load();
+            _dbContext.ProgettiMusicali.Load();
+            Artists = _dbContext.ProgettiMusicali.Local.ToList();
             Albums = _dbContext.Albums.Local.ToObservableCollection();
         }
 
@@ -83,9 +95,36 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            switch (e.PropertyName)
+            {
+                case nameof(SelectedArtist):
+                    ArtistTracks = new();
+                    if (SelectedArtist != null)
+                    {
+                        _dbContext.Entry(SelectedArtist).Collection(x => x.Traccia).Load();
+                        foreach (var traccia in _dbContext.Tracce.Local)
+                        {
+                            if (traccia.IdProgettoNavigation.Equals(SelectedArtist))
+                            {
+                                ArtistTracks.Add(traccia);
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+
         protected override void ResetInsert()
         {
-            throw new NotImplementedException();
+            SelectedArtist = null;
+            ArtistTracks = null;
+            _dbContext.Albums.Load();
+            _dbContext.ProgettiMusicali.Load();
+            Artists = _dbContext.ProgettiMusicali.Local.ToList();
+            Albums = _dbContext.Albums.Local.ToObservableCollection();
         }
     }
 }
