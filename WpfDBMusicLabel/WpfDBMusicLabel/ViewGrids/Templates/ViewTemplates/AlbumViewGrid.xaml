@@ -84,17 +84,15 @@
 				Height="25"
                 Command="{Binding ConfirmCommand}"/>
         <ListBox Name="ProdottiLB" 
-				 VerticalAlignment="Top" 
-				 Margin="512,39,10,0"
+				 Margin="489,39,33,10"
                  Visibility="{Binding ResultVisibility[Prodotti]}"
-					ItemsSource="{Binding Prodotti}" Height="401"
+			     ItemsSource="{Binding Prodotti}"
                  ItemTemplate="{StaticResource ProdottiTempate}"/>
         <ListBox Name="TracceLB" 
-			VerticalAlignment="Top" 
-			Margin="512,39,10,0"
+			Margin="489,39,33,10"
                  ItemTemplate="{StaticResource TracceTemplate}"
                  Visibility="{Binding ResultVisibility[Tracce]}"
-			ItemsSource="{Binding CurrentSelectedAlbum.IdTraccia}" Height="401"/>
+			ItemsSource="{Binding CurrentSelectedAlbum.IdTraccia}"/>
         <Label Name="ResultsLabel" 
 				Content="Risultati trovati:" 
 				HorizontalAlignment="Left" 
