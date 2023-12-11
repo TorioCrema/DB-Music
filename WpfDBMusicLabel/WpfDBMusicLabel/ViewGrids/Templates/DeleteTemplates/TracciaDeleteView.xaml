@@ -9,13 +9,11 @@
              Background="White">
     <Grid  Name="TracciaGrid" 
 		Margin="183,1,0,-1"
-		DataContext="{Binding TracciaViewModel}" 
-		Visibility="{Binding TracciaViewGridVisibilty}"
+		Visibility="{Binding VisibilityDict[Delete]}"
 		>
         <DataGrid Name="ViewLB" 
-				DataContext="{Binding TracciaViewModel}"
 				ItemsSource="{Binding Tracce}"
-				SelectedItem="{Binding CurrentSelectedAlbum, Mode=TwoWay}"
+				SelectedItem="{Binding CurrentSelectedTrack, Mode=TwoWay}"
 				Margin="112,39,308,8" 
 				SelectionMode="Single"
 				AutoGenerateColumns="False"

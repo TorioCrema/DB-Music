@@ -29,6 +29,8 @@ namespace WpfDBMusicLabel.ViewModel
             "Progetto Musicale"
         };
 
+        private Dictionary<string, ISubVM> _vmDict = new();
+
         [ObservableProperty]
         private string? currentAction = null;
 
@@ -106,39 +108,29 @@ namespace WpfDBMusicLabel.ViewModel
         public VModel()
         {
             TourViewModel = new();
+            _vmDict.Add("Tour", TourViewModel);
             FirmatarioViewModel = new();
+            _vmDict.Add("Firmatario", FirmatarioViewModel);
             ProgettoViewModel = new();
+            _vmDict.Add("Progetto Musicale", ProgettoViewModel);
             AlbumViewModel = new();
+            _vmDict.Add("Album", AlbumViewModel);
             ProdottoViewModel = new();
+            _vmDict.Add("Prodotto", ProdottoViewModel);
+            TracciaViewModel = new();
+            _vmDict.Add("Traccie", TracciaViewModel);
+
         }
 
         public bool SetCurrentAction(string action)
         {
             CurrentVM?.OtherVMSelected();
-            switch (action)
+            _vmDict.TryGetValue(action, out ISubVM? subVM);
+            CurrentVM = subVM;
+            if (CurrentVM != null)
             {
-                case "Tour":
-                    CurrentVM = TourViewModel;
-                    ActionBtsEnabled = true;
-                    return true;
-
-                case "Firmatario":
-                    CurrentVM = FirmatarioViewModel;
-                    ActionBtsEnabled = true;
-                    return true;
-
-                case "Progetto Musicale":
-                    CurrentVM = ProgettoViewModel;
-                    ActionBtsEnabled = true;
-                    return true;
-                case "Album":
-                    CurrentVM = AlbumViewModel;
-                    ActionBtsEnabled = true;
-                    return true;
-                case "Prodotto":
-                    CurrentVM = ProdottoViewModel;
-                    ActionBtsEnabled = true;
-                    return true;
+                ActionBtsEnabled = true;
+                return true;
             }
             return false;
         }
