@@ -36,7 +36,8 @@
         <DataTemplate x:Key="TracceTemplate">
             <StackPanel>
                 <DockPanel>
-                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" Margin="5,0,10,0" DockPanel.Dock="Left"/>
+                    <TextBlock Text="{Binding DurataStr}"/>
                 </DockPanel>
             </StackPanel>
         </DataTemplate>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WpfDBMusicLabel.musiclabeldb;
 
@@ -14,6 +15,8 @@ public partial class Traccia
     public DateTime DataPubblicazione { get; set; }
 
     public uint Durata { get; set; }
+
+    public string DurataStr { get => (Durata / 60).ToString() + ":" + ((Durata % 60).ToString().Length < 2 ? "0" + (Durata % 60).ToString() : (Durata % 60).ToString()); }
 
     public string? Testo { get; set; }
 

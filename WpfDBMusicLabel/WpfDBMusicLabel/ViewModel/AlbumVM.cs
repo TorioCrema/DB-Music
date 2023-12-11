@@ -114,6 +114,9 @@ namespace WpfDBMusicLabel.ViewModel
                         }
                     }
                     break;
+                case nameof(CurrentSelectedAlbum):
+                    ExecuteSubAction();
+                    break;
             }
         }
 
