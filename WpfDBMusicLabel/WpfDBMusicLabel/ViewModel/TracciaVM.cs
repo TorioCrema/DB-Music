@@ -21,7 +21,10 @@ namespace WpfDBMusicLabel.ViewModel
         private Traccia? currentSelectedTrack = null;
 
         [ObservableProperty]
-        private ObservableCollection<Firmatario>? firmatari;
+        private List<Firmatario>? firmatari;
+
+        [ObservableProperty]
+        private List<ProgettoMusicale>? progetti;
 
         [ObservableProperty]
         private List<string> subActionsList = new()
@@ -40,20 +43,25 @@ namespace WpfDBMusicLabel.ViewModel
         {
             if (CurrentSelectedTrack != null)
             {
-                //Per avere solo i firmatari, trovare un modo per caricare tutti i dati
-                _dbContext.Firmatari.Where(firmatario => firmatario.IdTraccia.Any(traccia => traccia.IdTraccia == CurrentSelectedTrack.IdTraccia)).Load();
-                Firmatari = _dbContext.Firmatari.Local.ToObservableCollection();
+                switch (CurrentSubAction)
+                {
+                    case "Vedi dati":
+                        _dbContext.Entry(CurrentSelectedTrack).Collection(t => t.IdProgettos).Load();
+                        _dbContext.Entry(CurrentSelectedTrack).Collection(t => t.IdFirmatarios).Load();
+                        Firmatari = CurrentSelectedTrack.IdFirmatarios.ToList();
+                        Progetti = CurrentSelectedTrack.IdProgettos.ToList();
+                        break;
+                    default:
+                        return false;
+                }
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         protected override void ResetInsert()
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
     }
 }

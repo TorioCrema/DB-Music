@@ -118,7 +118,7 @@ namespace WpfDBMusicLabel.ViewModel
             ProdottoViewModel = new();
             _vmDict.Add("Prodotto", ProdottoViewModel);
             TracciaViewModel = new();
-            _vmDict.Add("Traccie", TracciaViewModel);
+            _vmDict.Add("Tracce", TracciaViewModel);
 
         }
 
@@ -140,7 +140,7 @@ namespace WpfDBMusicLabel.ViewModel
             base.OnPropertyChanged(e);
             switch (e.PropertyName)
             {
-                case "CurrentAction":
+                case nameof(CurrentAction):
                     SetCurrentAction(CurrentAction);
                     break;
             }

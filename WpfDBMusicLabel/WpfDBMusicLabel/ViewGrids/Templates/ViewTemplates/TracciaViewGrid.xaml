@@ -6,23 +6,29 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="TracceTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" Margin="5,0,10,0" DockPanel.Dock="Left"/>
+                    <TextBlock Text="{Binding DurataStr}"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <CollectionViewSource x:Key="TracceTemplateSource" Source="{Binding Tracce}"/>
+    </UserControl.Resources>
     <Grid Name="TracciaGrid"
           Margin="183,1,0,-1"
 		Visibility="{Binding VisibilityDict[View]}"
 		Background="White"
           >
-        <DataGrid Name="ViewLB" 
-				ItemsSource="{Binding Tracce}"
+        <ListBox Name="ViewLB" 
+				ItemsSource="{Binding Source={StaticResource TracceTemplateSource}}"
 				SelectedItem="{Binding CurrentSelectedTrack, Mode=TwoWay}"
 				Margin="0,37,420,10" 
 				SelectionMode="Single"
-				AutoGenerateColumns="False"
-				CanUserResizeColumns="False" Width="NaN">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding IdTraccia}"/>
-                <DataGridTextColumn Header="Nome" Binding="{Binding Nome}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                ItemTemplate="{StaticResource TracceTemplate}">
+        </ListBox>
         <Label Name="FoundLabel" 
 				Content="Tracce trovate" 
 				HorizontalAlignment="Left" 
