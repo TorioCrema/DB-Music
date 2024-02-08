@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfDBMusicLabel.Model;
 
 namespace WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates
 {
@@ -20,9 +21,13 @@ namespace WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates
     /// </summary>
     public partial class FirmInsertGrid : UserControl
     {
+        private readonly InputChecker _checker = InputCheckerGenerator.IntChecker();
+
         public FirmInsertGrid()
         {
             InitializeComponent();
         }
+
+        private void IntegerInputCheck(object sender, TextCompositionEventArgs e) => _checker.Check(sender, e);
     }
 }

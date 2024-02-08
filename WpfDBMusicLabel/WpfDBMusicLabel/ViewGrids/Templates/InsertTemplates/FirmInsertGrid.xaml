@@ -150,8 +150,8 @@
             VerticalAlignment="Top"
             Width="149" 
             Height="30" 
-            FontSize="16" />
-            <!-- PreviewTextInput="IntegerInputCheck" -->
+            FontSize="16"
+            PreviewTextInput="IntegerInputCheck" />
         <Label x:Name="ContractCFLabel" 
             Content="CF:" 
             HorizontalAlignment="Left" 

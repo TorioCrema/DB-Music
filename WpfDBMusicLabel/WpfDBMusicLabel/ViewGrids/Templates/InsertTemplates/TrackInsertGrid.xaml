@@ -6,9 +6,18 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ProgettiTemplate">
+            <TextBlock Text="{Binding Nome}"/>
+        </DataTemplate>
+        <CollectionViewSource x:Key="ProgettiTemplateSource" Source="{Binding Progetti}"/>
+        <CollectionViewSource x:Key="ProjFeaturesTemplateSource" Source="{Binding Progetti}"/>
+        <CollectionViewSource x:Key="FeaturesTemplateSource" Source="{Binding Features}"/>
+    </UserControl.Resources>
     <Grid Name="TrackInsert" 
         Margin="0,1,240,0" 
-        Visibility="Collapsed">
+        Visibility="{Binding VisibilityDict[Insert]}"
+          Background="White">
         <Label Name="TrackProjectLabel" 
             Content="Progetto Musicale:" 
             HorizontalAlignment="Left" 
@@ -20,7 +29,10 @@
             Margin="148,10,0,0" 
             VerticalAlignment="Top" 
             Width="149" 
-            Height="30"/>
+            Height="30"
+            ItemTemplate="{StaticResource ProgettiTemplate}"
+            ItemsSource="{Binding Source={StaticResource ProgettiTemplateSource}}"
+            SelectedItem="{Binding NewTrack.IdProgettoNavigation, Mode=TwoWay}"/>
         <Label x:Name="TrackNameLabel" 
             Content="Nome:" 
             HorizontalAlignment="Left" 
@@ -32,7 +44,7 @@
             HorizontalAlignment="Left" 
             Margin="148,45,0,0" 
             TextWrapping="Wrap" 
-            Text="" 
+            Text="{Binding NewTrack.Nome, Mode=TwoWay}" 
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
@@ -48,12 +60,12 @@
             HorizontalAlignment="Left" 
             Margin="148,80,0,0" 
             TextWrapping="Wrap" 
-            Text="" 
+            Text="{Binding NewTrack.Durata, Mode=TwoWay}" 
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
             FontSize="16"
-            IsEnabled="False"/>
+            PreviewTextInput="IntegerInputCheck"/>
         <Label x:Name="TrackDateLabel" 
             Content="Data di uscita:" 
             HorizontalAlignment="Left" 
@@ -68,7 +80,7 @@
             Width="149" 
             Height="30"
             FontSize="15"
-            Text=""/>
+            SelectedDate="{Binding NewTrack.DataPubblicazione}"/>
         <Label x:Name="TrackFeatLabel" 
             Content="Featuring: *" 
             HorizontalAlignment="Left" 
@@ -77,8 +89,10 @@
             FontSize="15" 
             Width="133"/>
         <ListBox Name="TrackFeatLB" 
-            d:ItemsSource="{d:SampleData ItemCount=5}" 
-            Margin="148,150,240,240"/>
+            ItemTemplate="{StaticResource ProgettiTemplate}"
+            ItemsSource="{Binding Source={StaticResource ProjFeaturesTemplateSource}}" 
+            Margin="148,150,240,240"
+            SelectedItem="{Binding SelectedFeature, Mode=TwoWay}"/>
         <Label x:Name="TrackTextLabel" 
             Content="Testo: *" 
             HorizontalAlignment="Left" 
@@ -86,15 +100,19 @@
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="133"/>
-        <RichTextBox HorizontalAlignment="Left" 
+        <TextBox 
+            HorizontalAlignment="Left" 
             Margin="148,288,0,10" 
             Width="350" 
-            FontSize="15">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text=""/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+            FontSize="15"
+            TextWrapping="Wrap"
+            AcceptsReturn="True"
+            Text="{Binding NewTrack.Testo}"/>
+        <ListBox x:Name="TrackFeatLB_Added" 
+            ItemsSource="{Binding Source={StaticResource FeaturesTemplateSource}}"
+            ItemTemplate="{StaticResource ProgettiTemplate}"
+            Margin="395,150,10,240"/>
+        <Button Content="Aggiungi" HorizontalAlignment="Left" Margin="325,170,0,0" VerticalAlignment="Top" Width="65"
+                Command="{Binding AddFeatureCommand}"/>
     </Grid>
 </UserControl>

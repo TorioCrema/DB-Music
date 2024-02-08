@@ -1,18 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using WpfDBMusicLabel.musiclabeldb;
 
 namespace WpfDBMusicLabel.ViewModel
 {
     partial class TracciaVM : AbstractVM
     {
+        static readonly string NEW_NAME = "Inserire Nome";
+        static readonly string NEW_TEXT = "Inserire Testo";
 
         [ObservableProperty]
         private ObservableCollection<Traccia>? tracce;
@@ -27,6 +32,31 @@ namespace WpfDBMusicLabel.ViewModel
         private List<ProgettoMusicale>? progetti;
 
         [ObservableProperty]
+        private ProgettoMusicale? selectedFeature = null;
+
+        [ObservableProperty]
+        private ObservableCollection<ProgettoMusicale> features = new();
+
+        [RelayCommand]
+        private void AddFeature()
+        {
+            if (SelectedFeature != null 
+                && Features.All(x => x.IdProgetto != SelectedFeature.IdProgetto))
+            {
+                Features.Add(SelectedFeature);
+            }
+        }
+
+        [ObservableProperty]
+        private Traccia newTrack = new()
+        {
+            Nome = NEW_NAME,
+            Durata = 0,
+            DataPubblicazione = DateTime.Now,
+            Testo = NEW_TEXT
+        };
+
+        [ObservableProperty]
         private List<string> subActionsList = new()
         {
             "Vedi dati"
@@ -37,31 +67,54 @@ namespace WpfDBMusicLabel.ViewModel
             _dbContext = new();
             _dbContext.Tracce.Load();
             Tracce = _dbContext.Tracce.Local.ToObservableCollection();
+            _dbContext.ProgettiMusicali.Load();
+            Progetti = _dbContext.ProgettiMusicali.Local.ToList();
         }
 
         override public bool ExecuteSubAction()
         {
-            if (CurrentSelectedTrack != null)
+            switch (CurrentSubAction)
             {
-                switch (CurrentSubAction)
-                {
-                    case "Vedi dati":
+                case "Vedi dati":
+                    if (CurrentSelectedTrack != null)
+                    {
                         _dbContext.Entry(CurrentSelectedTrack).Collection(t => t.IdProgettos).Load();
                         _dbContext.Entry(CurrentSelectedTrack).Collection(t => t.IdFirmatarios).Load();
                         Firmatari = CurrentSelectedTrack.IdFirmatarios.ToList();
                         Progetti = CurrentSelectedTrack.IdProgettos.ToList();
-                        break;
-                    default:
-                        return false;
-                }
-                return true;
+                    }
+                    break;
+                case "Inserisci":
+                    if (checkTrack())
+                    {
+                        NewTrack.IdProgettos = Features.ToList();
+                        _dbContext.Tracce.Local.Add(NewTrack);
+                        SaveChanges();
+                        return true;
+                    }
+                    return false;
+                default:
+                    return false;
             }
-            return false;
+            return true;
         }
 
         protected override void ResetInsert()
         {
-            // throw new NotImplementedException();
+            NewTrack = new();
+            SelectedFeature = null;
+            Features = new();
+        }
+
+        private bool checkTrack()
+        {
+            if (NewTrack.IdProgettoNavigation == null
+                || NewTrack.Nome == NEW_NAME
+                || NewTrack.Durata == 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
