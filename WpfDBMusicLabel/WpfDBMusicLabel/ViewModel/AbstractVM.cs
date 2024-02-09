@@ -68,5 +68,18 @@ namespace WpfDBMusicLabel.ViewModel
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
         public void ViewGridSelected() => UpdateVisiblitity("View");
+
+        public MessageBoxResult ShowError()
+        {
+            if (Error == null)
+            {
+                return MessageBoxResult.OK;
+            }
+            string message = Error;
+            Error = null;
+            return MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        public MessageBoxResult ShowSuccess() => MessageBox.Show("Inserimento avvenuto con successo", "OK", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 }

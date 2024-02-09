@@ -153,8 +153,13 @@ namespace WpfDBMusicLabel.ViewModel
                     {
                         _dbContext.ProgettiMusicali.Local.Add(NewProject);
                         _dbContext.SaveChanges();
+                        ResetInsert();
+                        ShowSuccess();
+                        return true;
                     }
-                    return true;
+                    Error = "Dati invalidi.";
+                    ShowError();
+                    return false;
                 default: return false;
             }
         }

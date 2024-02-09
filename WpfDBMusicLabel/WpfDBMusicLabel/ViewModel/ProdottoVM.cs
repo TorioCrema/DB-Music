@@ -105,9 +105,11 @@ namespace WpfDBMusicLabel.ViewModel
                         _dbContext.Prodotti.Local.Add(NewProd);
                         SaveChanges();
                         ResetInsert();
+                        ShowSuccess();
                         return true;
                     }
-                    Error = "InsertCheck failed";
+                    Error = "Dati invalidi.";
+                    ShowError();
                     return false;
             }
             return false;

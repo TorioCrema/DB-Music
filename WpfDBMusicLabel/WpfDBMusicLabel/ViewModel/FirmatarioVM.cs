@@ -58,26 +58,28 @@ namespace WpfDBMusicLabel.ViewModel
         {
             switch (CurrentSubAction)
             {
-                case "Inserisci Firmatario":
-                    if (NewFirmatario != null && CheckFirmatario())
-                    {
-                        Firmatari.Add(NewFirmatario);
-                        return true;
-                    }
-                    return false;
-
-                case "Inserisci Contratto":
-                    if (NewFirmatario != null || ContractPay <= 0)
+                case "Inserisci":
+                    if (NewFirmatario != null && ContractPay > 0
+                        && DateTime.Compare(ContractStart, ContractEnd) < 0
+                        && CheckFirmatario())
                     {
                         Contratto newContract = new()
                         {
                             DataInizio = ContractStart,
                             DataFine = ContractEnd,
                             Importo = ContractPay,
-                            // TODO get Id of new firmatario
                         };
+                        if (NewFirmatario.Ruolo == "Nessun Ruolo")
+                        {
+                            NewFirmatario.Ruolo = null;
+                        }
+                        NewFirmatario.Contratti.Add(newContract);
+                        _dbContext.Firmatari.Local.Add(NewFirmatario);
+                        SaveChanges();
+                        ResetInsert();
                         return true;
                     }
+                    Error = "Dati non validi.";
                     return false;
 
                 default:
@@ -88,17 +90,14 @@ namespace WpfDBMusicLabel.ViewModel
 
         private bool CheckFirmatario()
         {
-            if (NewFirmatario.Cf.Length != 16 || NewFirmatario.Ruolo == "RUOLO")
+            if (NewFirmatario.Cf.Length != 16 || NewFirmatario.Ruolo == "RUOLO"
+                || NewFirmatario.Nome == "NOME" || NewFirmatario.Cognome == "COGNOME"
+                || NewFirmatario.IndVia == "VIA" || NewFirmatario.IndCitta == "CITTA"
+                || NewFirmatario.Ruolo == "RUOLO")
             {
                 return false;
             }
             return true;
-        }
-
-        new public void InsertGridSelected()
-        {
-            base.InsertGridSelected();
-            CurrentSubAction = "Inserisci";
         }
 
         protected override void ResetInsert()

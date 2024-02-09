@@ -142,13 +142,17 @@ namespace WpfDBMusicLabel.ViewModel
                         };
                         _dbContext.Entry(CurrentSelectedTour).Collection(t => t.Concertos).Load();
                         CurrentSelectedTour.Concertos.Add(concerto);
+                        ResetInsert();
+                        ShowSuccess();
                         return true;
                     }
                     Error = "Informazioni necessarie all'inserimento non presenti.";
+                    ShowError();
                     return false;
 
                 default:
                     Error = "The selected sub action is not implemented.";
+                    ShowError();
                     return false;
             }
         }

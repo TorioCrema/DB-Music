@@ -80,7 +80,7 @@
             Width="149" 
             Height="30"
             FontSize="15"
-            SelectedDate="{Binding NewTrack.DataPubblicazione}"/>
+            SelectedDate="{Binding DataPubblicazione}"/>
         <Label x:Name="TrackFeatLabel" 
             Content="Featuring: *" 
             HorizontalAlignment="Left" 

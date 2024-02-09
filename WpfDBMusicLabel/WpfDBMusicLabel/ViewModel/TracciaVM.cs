@@ -52,9 +52,11 @@ namespace WpfDBMusicLabel.ViewModel
         {
             Nome = NEW_NAME,
             Durata = 0,
-            DataPubblicazione = DateTime.Now,
             Testo = NEW_TEXT
         };
+
+        [ObservableProperty]
+        private DateTime dataPubblicazione = DateTime.Now;
 
         [ObservableProperty]
         private List<string> subActionsList = new()
@@ -87,9 +89,12 @@ namespace WpfDBMusicLabel.ViewModel
                 case "Inserisci":
                     if (checkTrack())
                     {
+                        NewTrack.DataPubblicazione = DataPubblicazione;
                         NewTrack.IdProgettos = Features.ToList();
                         _dbContext.Tracce.Local.Add(NewTrack);
                         SaveChanges();
+                        ResetInsert();
+                        ShowSuccess();
                         return true;
                     }
                     return false;
@@ -104,6 +109,7 @@ namespace WpfDBMusicLabel.ViewModel
             NewTrack = new();
             SelectedFeature = null;
             Features = new();
+            DataPubblicazione = new();
         }
 
         private bool checkTrack()
