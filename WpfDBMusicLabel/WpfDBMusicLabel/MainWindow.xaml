@@ -79,6 +79,7 @@
             <it:FirmInsertGrid DataContext="{Binding FirmatarioViewModel}" />
             <it:ProjectInsertView DataContext="{Binding ProgettoViewModel}" />
             <it:ProdInsertGrid DataContext="{Binding ProdottoViewModel}"/>
+            <it:MerchInsertGrid DataContext="{Binding MerchViewModel}"/>
             <Button Name="ConfirmBtn" 
                     Content="Conferma dati" 
                     HorizontalAlignment="Left" 

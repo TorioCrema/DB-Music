@@ -6,9 +6,20 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.InsertTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ProgettiTemplate">
+            <TextBlock Text="{Binding Nome}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ProduttoriTemplate">
+            <TextBlock Text="{Binding Nome}"/>
+        </DataTemplate>
+        <CollectionViewSource x:Key="ProgettiTemplateSource" Source="{Binding Projects}"/>
+        <CollectionViewSource x:Key="ProduttoriTemplateSource" Source="{Binding Producers}"/>
+    </UserControl.Resources>
     <Grid Name="MerchInsert" 
         Margin="0,1,240,0" 
-        Visibility="Collapsed">
+        Visibility="{Binding VisibilityDict[Insert]}"
+          Background="White">
         <Label Name="MerchProjectLabel" 
             Content="Progetto Musicale:" 
             HorizontalAlignment="Left" 
@@ -17,29 +28,30 @@
             FontSize="15"/>
         <ComboBox Name="MerchProjectsCB" 
             HorizontalAlignment="Left" 
-            Margin="148,10,0,0" 
+            Margin="174,10,0,0" 
             VerticalAlignment="Top" 
             Width="149" 
-            Height="30"/>
+            Height="30"
+                  ItemTemplate="{StaticResource ProgettiTemplate}"
+                  ItemsSource="{Binding Source={StaticResource ProgettiTemplateSource}}"
+                  SelectedItem="{Binding SelectedProj, Mode=TwoWay}"/>
         <Label Name="MerchDescLabel" 
             Content="Descrizione:" 
             HorizontalAlignment="Left" 
-            Margin="10,115,0,0" 
+            Margin="16,224,0,0" 
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="95"/>
-        <RichTextBox HorizontalAlignment="Left" 
-            Margin="148,115,0,10" 
+        <TextBox HorizontalAlignment="Left" 
+            Margin="154,224,0,38" 
             Width="350" 
-            FontSize="15">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text=""/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+            FontSize="15"
+            DataContext="{Binding NewMerch}"
+            Text="{Binding Descrizione}"
+            AcceptsReturn="True"
+            TextWrapping="Wrap"/>
         <Label x:Name="MerchPriceLabel" 
-            Content="Prezzo:" 
+            Content="Prezzo di ventita:" 
             HorizontalAlignment="Left" 
             Margin="10,45,0,0" 
             VerticalAlignment="Top" 
@@ -47,9 +59,11 @@
             Width="133"/>
         <TextBox Name="MerchPriceTB" 
             HorizontalAlignment="Left" 
-            Margin="148,45,0,0" 
+            Margin="174,45,0,0" 
             TextWrapping="Wrap" 
-            Text="" 
+            Text="{Binding Prezzo}"
+            DataContext="{Binding NewMerch}"
+            PreviewTextInput="IntegerInputCheck"
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
@@ -63,9 +77,33 @@
             Width="133"/>
         <TextBox Name="MerchQuantityTB" 
             HorizontalAlignment="Left" 
-            Margin="148,80,0,0" 
+            Margin="174,80,0,0" 
             TextWrapping="Wrap" 
-            Text="" 
+            DataContext="{Binding NewMerch}"
+            Text="{Binding QtaProdotta}"
+            PreviewTextInput="IntegerInputCheck"
+            VerticalAlignment="Top" 
+            Width="149" 
+            Height="30" 
+            FontSize="16"/>
+        <ComboBox HorizontalAlignment="Left" Margin="174,118,0,0" VerticalAlignment="Top" Width="149" Height="30"
+                  SelectedItem="{Binding SelectedProd}" ItemTemplate="{StaticResource ProgettiTemplate}"
+                  ItemsSource="{Binding Source={StaticResource ProduttoriTemplateSource}}"/>
+        <Label Content="Produttore" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="112"/>
+        <Label x:Name="ProdPriceLabel" 
+            Content="Prezzo di produzione:" 
+            HorizontalAlignment="Left" 
+            Margin="10,153,0,0" 
+            VerticalAlignment="Top" 
+            FontSize="15" 
+            Width="159"/>
+        <TextBox x:Name="ProdPriceTB" 
+            HorizontalAlignment="Left" 
+            Margin="174,153,0,0" 
+            TextWrapping="Wrap" 
+            Text="{Binding CostoFornituraUnitario}"
+            DataContext="{Binding NewMerch}"
+            PreviewTextInput="IntegerInputCheck"
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
