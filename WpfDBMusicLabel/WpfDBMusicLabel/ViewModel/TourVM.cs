@@ -132,16 +132,12 @@ namespace WpfDBMusicLabel.ViewModel
                     return false;
 
                 case "Inserisci":
-                    if (CurrentSelectedTour != null && CurrentSelectedLuogo != null)
+                    if (NewTourName != null)
                     {
-                        Concerto concerto = new()
-                        {
-                            IdTour = CurrentSelectedTour.IdTour,
-                            IdLuogo = CurrentSelectedLuogo.IdLuogo,
-                            Data = DataConcerto
-                        };
-                        _dbContext.Entry(CurrentSelectedTour).Collection(t => t.Concertos).Load();
-                        CurrentSelectedTour.Concertos.Add(concerto);
+                        _newTour.Nome = NewTourName;
+                        _newTour.Concertos = NewConcerts;
+                        _dbContext.Tours.Local.Add(_newTour);
+                        SaveChanges();
                         ResetInsert();
                         ShowSuccess();
                         return true;

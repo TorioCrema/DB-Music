@@ -25,6 +25,7 @@ namespace WpfDBMusicLabel.ViewModel
         private ProgettoMusicale newProject = new()
         {
             DataFormazione = DateTime.Now,
+            DataScioglimento = null
         };
 
         [ObservableProperty]
@@ -101,53 +102,75 @@ namespace WpfDBMusicLabel.ViewModel
 
         public override bool ExecuteSubAction()
         {
-            if (CurrentSelectedProject == null)
-            {
-                Error = "Selezionare un progetto";
-                return false;
-            }
             switch (CurrentSubAction)
             {
                 case "Vedi album":
-                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Albums).Load();
-                    Albums = CurrentSelectedProject.Albums.ToList();
-                    UpdateResults("Albums");
-                    return true;
+                    if (CurrentSelectedProject != null) { 
+                        _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Albums).Load();
+                        Albums = CurrentSelectedProject.Albums.ToList();
+                        UpdateResults("Albums");
+                        return true;
+                    }
+                    return false;
                 case "Vedi tracce":
-                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Traccia).Load();
-                    Tracce = CurrentSelectedProject.Traccia.ToList();
-                    UpdateResults("Tracks");
-                    return true;
+                    if (CurrentSelectedProject != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Traccia).Load();
+                        Tracce = CurrentSelectedProject.Traccia.ToList();
+                        UpdateResults("Tracks");
+                        return true;
+                    }
+                    return false;
                 case "Vedi firmatari":
-                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdFirmatarios).Load();
-                    Firmatari = CurrentSelectedProject.IdFirmatarios.ToList();
-                    UpdateResults("Firmatari");
-                    return true;
+                    if (CurrentSelectedProject != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdFirmatarios).Load();
+                        Firmatari = CurrentSelectedProject.IdFirmatarios.ToList();
+                        UpdateResults("Firmatari");
+                        return true;
+                    }
+                    return false;
                 case "Vedi concerti":
-                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdConcertos).Load();
-                    Concerti = CurrentSelectedProject.IdConcertos.ToList();
-                    UpdateResults("Concerts");
-                    return true;
+                    if (CurrentSelectedProject != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdConcertos).Load();
+                        Concerti = CurrentSelectedProject.IdConcertos.ToList();
+                        UpdateResults("Concerts");
+                        return true;
+                    }
+                    return false;
                 case "Vedi features":
-                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdTraccia).Load();
-                    Features = CurrentSelectedProject.IdTraccia.ToList();
-                    Features.ForEach(f => _dbContext.Entry(f).Reference(x => x.IdProgettoNavigation).Load());
-                    UpdateResults("Features");
-                    return true;
+                    if (CurrentSelectedProject != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdTraccia).Load();
+                        Features = CurrentSelectedProject.IdTraccia.ToList();
+                        Features.ForEach(f => _dbContext.Entry(f).Reference(x => x.IdProgettoNavigation).Load());
+                        UpdateResults("Features");
+                        return true;
+                    }
+                    return false;
                 case "Vedi merch":
-                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Merchandisings).Load();
-                    Merch = CurrentSelectedProject.Merchandisings.ToList();
-                    UpdateResults("Merch");
-                    return true;
+                    if (CurrentSelectedProject != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Merchandisings).Load();
+                        Merch = CurrentSelectedProject.Merchandisings.ToList();
+                        UpdateResults("Merch");
+                        return true;
+                    }
+                    return false;
                 case "Totale biglietti venduti":
-                    TotBiglietti = 0;
-                    _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdConcertos).Load();
-                    CurrentSelectedProject.IdConcertos.ToList()
-                        .ForEach(x => _dbContext.Entry(x).Collection(c => c.Bigliettos).Load());
-                    CurrentSelectedProject.IdConcertos.ToList()
-                        .ForEach(c => c.Bigliettos.ToList().ForEach(b => TotBiglietti += b.NumVenduti));
-                    UpdateResults("Biglietti");
-                    return true;
+                    if (CurrentSelectedProject != null)
+                    {
+                        TotBiglietti = 0;
+                        _dbContext.Entry(CurrentSelectedProject).Collection(p => p.IdConcertos).Load();
+                        CurrentSelectedProject.IdConcertos.ToList()
+                            .ForEach(x => _dbContext.Entry(x).Collection(c => c.Bigliettos).Load());
+                        CurrentSelectedProject.IdConcertos.ToList()
+                            .ForEach(c => c.Bigliettos.ToList().ForEach(b => TotBiglietti += b.NumVenduti));
+                        UpdateResults("Biglietti");
+                        return true;
+                    }
+                    return false;
                 case "Inserisci":
                     if (CheckProject())
                     {
@@ -201,11 +224,14 @@ namespace WpfDBMusicLabel.ViewModel
 
         private bool CheckProject()
         {
-            if (NewProject.Nome != null && NewProject.Nome.Length > 0
-                && (NewProject.DataScioglimento == null || NewProject.DataScioglimento > NewProject.DataFormazione)
-                && (NewProject.Tipo == "Band" || NewProject.Tipo == "Solista"))
+            if (SelectedType != null)
             {
-                return true;
+                NewProject.Tipo = SelectedType;
+                if (NewProject.Nome != null && NewProject.Nome.Length > 0
+                    && (NewProject.DataScioglimento == null || NewProject.DataScioglimento > NewProject.DataFormazione))
+                {
+                    return true;
+                }
             }
             return false;
         }

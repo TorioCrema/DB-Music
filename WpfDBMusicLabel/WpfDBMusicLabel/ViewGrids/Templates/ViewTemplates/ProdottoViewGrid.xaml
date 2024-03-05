@@ -24,7 +24,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Label Name="FoundLabel" 
-				Content="Tracce trovati" 
+				Content="Prodotti trovati" 
 				HorizontalAlignment="Left" 
 				Margin="0,4,0,0" 
 				VerticalAlignment="Top" 
