@@ -72,7 +72,7 @@
             Margin="148,153,0,0" 
             TextWrapping="Wrap"
             DataContext="{Binding NewFirmatario}"
-            Text="{Binding IndNumCivico}" 
+            Text="{Binding IndNumCivico}"
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 

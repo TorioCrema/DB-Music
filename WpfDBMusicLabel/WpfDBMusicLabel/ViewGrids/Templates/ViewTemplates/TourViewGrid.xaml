@@ -81,13 +81,13 @@
         <Label Name="ActionsLabel" 
 				Content="Azioni disponibili:" 
 				HorizontalAlignment="Left" 
-				Margin="234,4,0,0" 
+				Margin="232,40,0,0" 
 				VerticalAlignment="Top" 
 				Width="133" 
 				FontSize="15"/>
         <ComboBox Name="ActionsCB" 
 					HorizontalAlignment="Left" 
-					Margin="234,39,0,0" 
+					Margin="232,75,0,0" 
 					VerticalAlignment="Top" 
 					Width="133"
 					ItemsSource="{Binding SubActionList}"
@@ -95,7 +95,7 @@
         <Button Name="ConfirmActionBtn" 
 				Content="Conferma Azione" 
 				HorizontalAlignment="Left" 
-				Margin="234,78,0,0" 
+				Margin="232,114,0,0" 
 				VerticalAlignment="Top" 
 				Width="133" 
 				Height="25"
@@ -115,13 +115,5 @@
 			   VerticalAlignment="Top" 
 			   Width="132" 
 			   FontSize="15"/>
-        <ListBox x:Name="ChoiseLB" 
-                 ItemTemplate="{StaticResource BigliettiTemplate}"
-                 ItemsSource="{Binding Biglietti}" 
-                 Margin="233,234,0,0" 
-                 HorizontalAlignment="Left" 
-                 VerticalAlignment="Top" 
-                 Width="134" 
-                 Height="206"/>
     </Grid>
 </UserControl>

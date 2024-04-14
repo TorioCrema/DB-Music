@@ -101,19 +101,5 @@
 				VerticalAlignment="Top" 
 				Width="132" 
 				FontSize="15"/>
-        <ListBox Name="ChoiseLB" 
-				d:ItemsSource="{d:SampleData ItemCount=5}" 
-				Margin="0,156,0,0" 
-				HorizontalAlignment="Center" 
-				VerticalAlignment="Top" 
-				Width="134" 
-				Height="206"/>
-        <Button Name="ConfirmChoiseBtn" 
-				Content="Conferma Scelta" 
-				HorizontalAlignment="Center" 
-				Margin="0,404,0,0" 
-				VerticalAlignment="Top" 
-				Width="134" 
-				Height="25"/>
     </Grid>
 </UserControl>
