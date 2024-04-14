@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,8 +23,7 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private List<string> subActionList = new()
         {
-            "Inserisci Firmatario",
-            "Inserisci Contratto"
+            "Vedi dati"
         };
 
         [ObservableProperty]
@@ -47,6 +47,9 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private uint contractPay = 0;
 
+        [ObservableProperty]
+        private ObservableCollection<Firmatario>? datiFirmatario = null;
+
         public FirmatarioVM()
         {
             _dbContext = new();
@@ -54,10 +57,28 @@ namespace WpfDBMusicLabel.ViewModel
             Firmatari = _dbContext.Firmatari.Local.ToObservableCollection();
         }
 
+        [RelayCommand]
+        private void Confirm() => ExecuteSubAction();
+
         override public bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
             {
+                case "Vedi dati":
+                    if (CurrentSelectedFirmatario != null)
+                    {
+                        DatiFirmatario = new();
+                        _dbContext.Firmatari.Load();
+                        foreach (var firmatario in _dbContext.Firmatari.Local)
+                        {
+                            if (firmatario.Equals(CurrentSelectedFirmatario))
+                            {
+                                DatiFirmatario.Add(firmatario);
+                            }
+                        }
+                        return true;
+                    }
+                    return false;
                 case "Inserisci":
                     if (NewFirmatario != null && ContractPay > 0
                         && DateTime.Compare(ContractStart, ContractEnd) < 0
@@ -90,10 +111,10 @@ namespace WpfDBMusicLabel.ViewModel
 
         private bool CheckFirmatario()
         {
-            if (NewFirmatario.Cf.Length != 16 || NewFirmatario.Ruolo == "RUOLO"
-                || NewFirmatario.Nome == "NOME" || NewFirmatario.Cognome == "COGNOME"
-                || NewFirmatario.IndVia == "VIA" || NewFirmatario.IndCitta == "CITTA"
-                || NewFirmatario.Ruolo == "RUOLO")
+            if (NewFirmatario.Cf.Length != 16 || NewFirmatario.Ruolo.Equals("RUOLO")
+                || NewFirmatario.Nome.Equals("NOME" )|| NewFirmatario.Cognome.Equals("COGNOME")
+                || NewFirmatario.IndVia.Equals("VIA")|| NewFirmatario.IndCitta.Equals("CITTA")
+                || NewFirmatario.IndNumCivico == 0)
             {
                 return false;
             }
