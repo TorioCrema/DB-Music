@@ -25,63 +25,17 @@
         <ListBox Name="ViewLB" 
 				ItemsSource="{Binding Source={StaticResource TracceTemplateSource}}"
 				SelectedItem="{Binding CurrentSelectedTrack, Mode=TwoWay}"
-				Margin="0,37,420,10" 
+				Margin="-118,30,475,17" 
 				SelectionMode="Single"
                 ItemTemplate="{StaticResource TracceTemplate}">
         </ListBox>
         <Label Name="FoundLabel" 
 				Content="Tracce trovate" 
 				HorizontalAlignment="Left" 
-				Margin="0,4,0,0" 
+				Margin="-118,0,0,0" 
 				VerticalAlignment="Top" 
-				Width="197" 
+				Width="198" 
 				FontSize="15" 
 				HorizontalContentAlignment="Center" />
-        <Label Name="ActionsLabel" 
-				Content="Azioni disponibili:" 
-				HorizontalAlignment="Left" 
-				Margin="234,4,0,0" 
-				VerticalAlignment="Top" 
-				Width="133" 
-				FontSize="15"/>
-        <ComboBox Name="ActionsCB" 
-					HorizontalAlignment="Left" 
-					Margin="234,39,0,0" 
-					VerticalAlignment="Top" 
-					Width="133"
-					ItemsSource="{Binding SubActionsList}"/>
-        <Button Name="ConfirmActionBtn" 
-				Content="Conferma Azione" 
-				HorizontalAlignment="Left" 
-				Margin="234,78,0,0" 
-				VerticalAlignment="Top" 
-				Width="133" 
-				Height="25"/>
-        <DataGrid Name="ResultsDG" 
-					HorizontalAlignment="Left" 
-					VerticalAlignment="Top" 
-					Margin="384,39,0,0"
-                  Height="401" Width="223"/>
-        <Label Name="ResultsLabel" 
-				Content="Risultati trovati:" 
-				HorizontalAlignment="Left" 
-				Margin="446,4,0,0" 
-				VerticalAlignment="Top" 
-				Width="132" 
-				FontSize="15"/>
-        <ListBox Name="ChoiseLB" 
-				d:ItemsSource="{d:SampleData ItemCount=5}" 
-				Margin="234,0,0,0" 
-				HorizontalAlignment="Left" 
-				VerticalAlignment="Center" 
-				Width="133" 
-				Height="206"/>
-        <Button Name="ConfirmChoiseBtn" 
-				Content="Conferma Scelta" 
-				HorizontalAlignment="Left" 
-				Margin="234,370,0,0" 
-				VerticalAlignment="Top" 
-				Width="133" 
-				Height="25"/>
     </Grid>
 </UserControl>
