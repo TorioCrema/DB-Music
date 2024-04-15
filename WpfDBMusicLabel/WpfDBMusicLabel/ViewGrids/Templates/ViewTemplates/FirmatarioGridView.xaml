@@ -10,8 +10,8 @@
         <DataTemplate x:Key="ListBoxFirmTemplate">
             <StackPanel Margin="3">
                 <DockPanel>
-                    <TextBlock Text="{Binding Nome}" DockPanel.Dock="Left" Margin="5,0,10,0"/>
-                    <TextBlock Text="{Binding Cognome}" DockPanel.Dock="Right"/>
+                    <TextBlock Text="{Binding IdFirmatario}" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Cf}" DockPanel.Dock="Right"/>
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
@@ -65,14 +65,6 @@
 				Width="133" 
 				Height="25"
                 Command="{Binding ConfirmCommand}"/>
-        <DataGrid Name="ResultsDG" 
-					HorizontalAlignment="Left" 
-					VerticalAlignment="Top" 
-					Margin="414,39,0,0"
-					Height="401" Width="296"
-                  ItemTemplate="{StaticResource DataTemplate}"
-                  ItemsSource="{Binding DatiFirmatario}"
-                  SelectedItem="{Binding CurrentSelectedFirmatario, Mode=TwoWay}"/>
         <Label Name="ResultsLabel" 
 				Content="Risultati trovati:" 
 				HorizontalAlignment="Left" 
@@ -80,5 +72,8 @@
 				VerticalAlignment="Top" 
 				Width="132" 
 				FontSize="15"/>
+        <Label Content="{Binding Nome}" HorizontalAlignment="Left" Margin="446,43,0,0" VerticalAlignment="Top" Width="169"/>
+        <Label Content="{Binding Cognome}" HorizontalAlignment="Left" Margin="446,74,0,0" VerticalAlignment="Top" Width="169"/>
+        <Label Content="{Binding Ruolo}" HorizontalAlignment="Left" Margin="446,105,0,0" VerticalAlignment="Top" Width="169"/>
     </Grid>
 </UserControl>

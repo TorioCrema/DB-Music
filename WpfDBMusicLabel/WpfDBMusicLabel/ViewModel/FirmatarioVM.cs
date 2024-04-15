@@ -48,7 +48,13 @@ namespace WpfDBMusicLabel.ViewModel
         private uint contractPay = 0;
 
         [ObservableProperty]
-        private ObservableCollection<Firmatario>? datiFirmatario = null;
+        private String? nome = null;
+
+        [ObservableProperty]
+        private String? cognome = null;
+
+        [ObservableProperty]
+        private String? ruolo = null;
 
         public FirmatarioVM()
         {
@@ -67,15 +73,9 @@ namespace WpfDBMusicLabel.ViewModel
                 case "Vedi dati":
                     if (CurrentSelectedFirmatario != null)
                     {
-                        DatiFirmatario = new();
-                        _dbContext.Firmatari.Load();
-                        foreach (var firmatario in _dbContext.Firmatari.Local)
-                        {
-                            if (firmatario.Equals(CurrentSelectedFirmatario))
-                            {
-                                DatiFirmatario.Add(firmatario);
-                            }
-                        }
+                        Nome = CurrentSelectedFirmatario.Nome;
+                        Cognome = CurrentSelectedFirmatario.Cognome;
+                        Ruolo = CurrentSelectedFirmatario.Ruolo;
                         return true;
                     }
                     return false;
