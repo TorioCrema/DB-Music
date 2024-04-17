@@ -67,7 +67,12 @@ namespace WpfDBMusicLabel.ViewModel
 
         public void SetCurrentSubAction(string newSubAction) => CurrentSubAction = newSubAction;
 
-        public void ViewGridSelected() => UpdateVisiblitity("View");
+        public void ViewGridSelected() 
+        {
+            UpdateVisiblitity("View");
+            CurrentSubAction = null;
+        } 
+        
 
         public MessageBoxResult ShowError()
         {

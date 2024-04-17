@@ -34,6 +34,10 @@
                     <TextBlock Text="Luogo:" Margin="5,0,10,0"/>
                     <TextBlock FontWeight="Bold" Text="{Binding IdLuogoNavigation.Nome}"/>
                 </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Biglietti:" Margin="5,0,10,0"/>
+                    <TextBlock FontWeight="Bold" Text="{Binding DispTot}" />
+                </DockPanel>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="BigliettiTemplate">

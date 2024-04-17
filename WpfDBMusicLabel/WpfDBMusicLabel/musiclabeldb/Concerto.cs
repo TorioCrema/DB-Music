@@ -20,4 +20,16 @@ public partial class Concerto
     public virtual Tour IdTourNavigation { get; set; } = null!;
 
     public virtual ICollection<ProgettoMusicale> IdProgetti { get; set; } = new List<ProgettoMusicale>();
+
+    public uint DispTot { get => calcTot(); }
+
+    private uint calcTot()
+    {
+        uint tot = 0;
+        foreach (var b in Bigliettos)
+        {
+            tot += b.DispTot;
+        }
+        return tot;
+    }
 }

@@ -26,6 +26,9 @@ namespace WpfDBMusicLabel.ViewModel
         private List<Biglietto> biglietti = new();
 
         [ObservableProperty]
+        private uint dispTot = new();
+
+        [ObservableProperty]
         private List<string> subActionList = new()
         {
             "Vedi concerti"
@@ -126,6 +129,7 @@ namespace WpfDBMusicLabel.ViewModel
                         foreach (var concerto in Concerti)
                         {
                             _dbContext.Entry(concerto).Reference(c => c.IdLuogoNavigation).Load();
+                            _dbContext.Entry(concerto).Collection(c => c.Bigliettos).Load();
                         }
                         return true;
                     }
@@ -155,12 +159,6 @@ namespace WpfDBMusicLabel.ViewModel
 
         [RelayCommand]
         private void Save() => base.SaveChanges();
-
-        new public void ViewGridSelected()
-        {
-            base.ViewGridSelected();
-            CurrentSubAction = null;
-        }
 
         protected override void ResetInsert()
         {
