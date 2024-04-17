@@ -34,6 +34,23 @@ namespace WpfDBMusicLabel.ViewModel
         private ObservableCollection<Traccia>? artistTracks = null;
 
         [ObservableProperty]
+        private string newAlbumName = "";
+
+        [ObservableProperty]
+        private DateTime? newAlbumDate = null;
+
+        [ObservableProperty]
+        private ProgettoMusicale? newAlbumProj = null; 
+
+        [ObservableProperty]
+        private uint newAlbumDuration = 0;
+
+        [ObservableProperty]
+        private ObservableCollection<Traccia>? selectedTracks = null;
+
+        private Album _newAlbum = new();
+
+        [ObservableProperty]
         private Dictionary<string, Visibility> resultVisibility = new()
         {
             { "Prodotti", Visibility.Collapsed },
@@ -89,6 +106,26 @@ namespace WpfDBMusicLabel.ViewModel
                     }
                     Error = "Album non selezionato";
                     return false;
+                case "Inserisci":
+                    if (NewAlbumName != null)
+                    {
+                        _newAlbum.Nome = NewAlbumName;
+                        _newAlbum.Durata = NewAlbumDuration;
+                        _newAlbum.IdProgetto = SelectedArtist.IdProgetto;
+                        _newAlbum.DataPubblicazione = NewAlbumDate.Value;
+                        foreach (var t in SelectedTracks)
+                        {
+                            _newAlbum.IdTraccia.Add(t);
+                        }
+                        _dbContext.Albums.Local.Add(_newAlbum);
+                        SaveChanges();
+                        ResetInsert();
+                        ShowSuccess();
+                        return true;
+                    }
+                    Error = "Informazioni necessarie all'inserimento non presenti.";
+                    ShowError();
+                    return false;
                 default:
                     Error = "The selected sub action is not implemented.";
                     return false;
@@ -120,10 +157,16 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
+        [RelayCommand]
+        private void Save() => base.SaveChanges();
+
         protected override void ResetInsert()
         {
             SelectedArtist = null;
             ArtistTracks = null;
+            NewAlbumDate = DateTime.MinValue;
+            NewAlbumDuration = 0;
+            NewAlbumName = "";
             _dbContext.Albums.Load();
             _dbContext.ProgettiMusicali.Load();
             Artists = _dbContext.ProgettiMusicali.Local.ToList();
