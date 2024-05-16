@@ -11,7 +11,15 @@
         <DataTemplate x:Key="AlbumTemplate">
             <StackPanel>
                 <DockPanel>
-                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="Titolo:" FontWeight="Bold" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding Nome}" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Progetto:" FontWeight="Bold" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                    <TextBlock Text="{Binding IdProgettoNavigation.Nome}" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Data di uscita:" FontWeight="Bold" DockPanel.Dock="Left" Margin="5,0,10,0"/>
                     <TextBlock Text="{Binding DataPubblicazione, StringFormat=d}" DockPanel.Dock="Right"/>
                 </DockPanel>
             </StackPanel>

@@ -14,6 +14,25 @@
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="TracksTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="Titolo:" Margin="2,0,10,0" />
+                    <TextBlock Text="{Binding Nome}" FontWeight="Bold" Margin="2,0,10,0"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Durata (in secondi):" Margin="2,0,10,0"/>
+                    <TextBlock Text="{Binding Durata}" FontWeight="Bold" Margin="2,0,10,0" />
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="NewTracksTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" Margin="2,0,10,0"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
         <CollectionViewSource x:Key="ArtistsViewSource" Source="{Binding Artists}"/>
     </UserControl.Resources>
     <Grid Name="AlbumInsert" 
@@ -37,7 +56,7 @@
         <Label Name="AlbumTracksLabel" 
             Content="Seleziona canzoni" 
             HorizontalAlignment="Left" 
-            Margin="10,150,0,0" 
+            Margin="10,115,0,0" 
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="133"/>
@@ -51,28 +70,40 @@
         <TextBox Name="AlbumNameTB" 
             HorizontalAlignment="Left" 
             Margin="148,45,0,0" 
-            TextWrapping="Wrap" 
-            Text="" 
+            TextWrapping="Wrap"
+            Text="{Binding NewAlbumName}" 
             VerticalAlignment="Top" 
             Width="149" 
             Height="30" 
             FontSize="16"/>
-        <DataGrid
-            Margin="148,150,35,10"
-            ItemsSource="{Binding ArtistTracks}"/>
         <Label x:Name="AlbumDateLabel" 
             Content="Data di uscita:" 
             HorizontalAlignment="Left" 
-            Margin="10,115,0,0" 
+            Margin="10,80,0,0" 
             VerticalAlignment="Top" 
             FontSize="15" 
             Width="133"/>
         <DatePicker Name="AlbumDatePicker" HorizontalAlignment="Left" 
-            Margin="148,115,0,0" 
+            Margin="148,80,0,0" 
             VerticalAlignment="Top" 
             Width="149" 
             Height="30"
             FontSize="15"
-            Text=""/>
+            SelectedDate="{Binding NewAlbumDate, Mode=TwoWay}"/>
+        <ListBox Name="TracceLB"
+            ItemsSource="{Binding ArtistTracks}"
+            ItemTemplate="{StaticResource TracksTemplate}"
+            SelectedItem="{Binding CurrentSelectedTraccia, Mode=TwoWay}"
+            Margin="148,130,190,105"/>
+        <ListBox ItemsSource="{Binding NewTracce}" 
+            ItemTemplate="{StaticResource NewTracksTemplate}"
+            Margin="356,130,0,105"/>
+        <Button Content="Aggiungi" 
+                HorizontalAlignment="Left" 
+                Margin="182,414,0,0" 
+                VerticalAlignment="Top" 
+                Height="25" 
+                Width="80"
+                Command="{Binding AddTracciaCommand}"/>
     </Grid>
 </UserControl>

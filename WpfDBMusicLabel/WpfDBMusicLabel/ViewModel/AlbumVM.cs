@@ -37,7 +37,7 @@ namespace WpfDBMusicLabel.ViewModel
         private string newAlbumName = "";
 
         [ObservableProperty]
-        private DateTime? newAlbumDate = null;
+        private DateTime newAlbumDate = DateTime.Now;
 
         [ObservableProperty]
         private ProgettoMusicale? newAlbumProj = null; 
@@ -48,7 +48,13 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private ObservableCollection<Traccia>? selectedTracks = null;
 
+        [ObservableProperty]
+        private Traccia? currentSelectedTraccia = null;
+
         private Album _newAlbum = new();
+
+        [ObservableProperty]
+        private List<Traccia> newTracce = new();
 
         [ObservableProperty]
         private Dictionary<string, Visibility> resultVisibility = new()
@@ -68,8 +74,10 @@ namespace WpfDBMusicLabel.ViewModel
         {
             _dbContext.Albums.Load();
             _dbContext.ProgettiMusicali.Load();
+            _dbContext.Tracce.Load();
             Artists = _dbContext.ProgettiMusicali.Local.ToList();
             Albums = _dbContext.Albums.Local.ToObservableCollection();
+            ArtistTracks = _dbContext.Tracce.Local.ToObservableCollection();
         }
 
         private void UpdateResults(string key)
@@ -97,6 +105,7 @@ namespace WpfDBMusicLabel.ViewModel
                     }
                     Error = "Album non selezionato";
                     return false;
+
                 case "Vedi tracce":
                     if (CurrentSelectedAlbum != null)
                     {
@@ -106,16 +115,29 @@ namespace WpfDBMusicLabel.ViewModel
                     }
                     Error = "Album non selezionato";
                     return false;
+
                 case "Inserisci":
-                    if (NewAlbumName != null)
+                    if (!checkAlbumName(NewAlbumName))
+                    {
+                        Error = "Nome dell'album già esistente";
+                        ShowError();
+                        return false;
+                    }
+                    else if (NewAlbumName != null 
+                        && SelectedArtist != null 
+                        && NewTracce.Count > 0)
                     {
                         _newAlbum.Nome = NewAlbumName;
                         _newAlbum.Durata = NewAlbumDuration;
                         _newAlbum.IdProgetto = SelectedArtist.IdProgetto;
-                        _newAlbum.DataPubblicazione = NewAlbumDate.Value;
-                        foreach (var t in SelectedTracks)
+                        _newAlbum.DataPubblicazione = NewAlbumDate;
+                        foreach (var t in NewTracce)
                         {
-                            _newAlbum.IdTraccia.Add(t);
+                            var existingTrack = _dbContext.Tracce.Local.FirstOrDefault(tr => tr.IdTraccia == t.IdTraccia);
+                            if (existingTrack != null)
+                            {
+                                _newAlbum.IdTraccia.Add(existingTrack);
+                            }
                         }
                         _dbContext.Albums.Local.Add(_newAlbum);
                         SaveChanges();
@@ -126,6 +148,7 @@ namespace WpfDBMusicLabel.ViewModel
                     Error = "Informazioni necessarie all'inserimento non presenti.";
                     ShowError();
                     return false;
+
                 default:
                     Error = "The selected sub action is not implemented.";
                     return false;
@@ -139,6 +162,7 @@ namespace WpfDBMusicLabel.ViewModel
             {
                 case nameof(SelectedArtist):
                     ArtistTracks = new();
+                    NewTracce = new();
                     if (SelectedArtist != null)
                     {
                         _dbContext.Entry(SelectedArtist).Collection(x => x.Traccia).Load();
@@ -151,6 +175,7 @@ namespace WpfDBMusicLabel.ViewModel
                         }
                     }
                     break;
+
                 case nameof(CurrentSelectedAlbum):
                     ExecuteSubAction();
                     break;
@@ -164,13 +189,50 @@ namespace WpfDBMusicLabel.ViewModel
         {
             SelectedArtist = null;
             ArtistTracks = null;
-            NewAlbumDate = DateTime.MinValue;
+            NewAlbumDate = DateTime.Now;
             NewAlbumDuration = 0;
             NewAlbumName = "";
+            NewTracce = new();
             _dbContext.Albums.Load();
             _dbContext.ProgettiMusicali.Load();
             Artists = _dbContext.ProgettiMusicali.Local.ToList();
             Albums = _dbContext.Albums.Local.ToObservableCollection();
         }
+
+        private bool checkAlbumName(string albumName)
+        {
+            foreach (var album in SelectedArtist.Albums)
+            {
+                if (album.Nome.ToLower().Equals(albumName.ToLower()))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        [RelayCommand]
+        private void AddTraccia()
+        {
+            if (CurrentSelectedTraccia != null)
+            {
+                List<Traccia> tracce = new List<Traccia>();
+                NewTracce.ForEach(t => tracce.Add(t));
+               
+                if (!NewTracce.Any(t => t.Nome.Equals(CurrentSelectedTraccia.Nome)))
+                {
+                    tracce.Add(new Traccia()
+                    {
+                        Nome = CurrentSelectedTraccia.Nome,
+                        Durata = CurrentSelectedTraccia.Durata,
+                        IdTraccia = CurrentSelectedTraccia.IdTraccia
+                    });
+                    NewTracce = tracce;
+                }
+            }
+        }
+
+        [RelayCommand]
+        private void SubAction() => ExecuteSubAction();
     }
 }
