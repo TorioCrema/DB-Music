@@ -109,7 +109,7 @@ namespace WpfDBMusicLabel.ViewModel
             NewTrack = new();
             SelectedFeature = null;
             Features = new();
-            DataPubblicazione = new();
+            DataPubblicazione = DateTime.Now;
         }
 
         private bool checkTrack()
