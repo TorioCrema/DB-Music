@@ -34,7 +34,7 @@
             Height="30"
                   ItemTemplate="{StaticResource ProgettiTemplate}"
                   ItemsSource="{Binding Source={StaticResource ProgettiTemplateSource}}"
-                  SelectedItem="{Binding SelectedProj, Mode=TwoWay}"/>
+                  SelectedItem="{Binding CurrentSelectedProject, Mode=TwoWay}"/>
         <Label Name="MerchDescLabel" 
             Content="Descrizione:" 
             HorizontalAlignment="Left" 

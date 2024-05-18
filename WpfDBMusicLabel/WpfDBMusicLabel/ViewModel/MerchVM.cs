@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,10 +13,13 @@ namespace WpfDBMusicLabel.ViewModel
     partial class MerchVM : AbstractVM
     {
         [ObservableProperty]
+        private List<Merchandising> merch;
+
+        [ObservableProperty]
         private List<ProgettoMusicale> projects;
 
         [ObservableProperty]
-        private ProgettoMusicale selectedProj;
+        private ProgettoMusicale currentSelectedProject;
 
         [ObservableProperty]
         private List<Produttore> producers;
@@ -26,6 +30,12 @@ namespace WpfDBMusicLabel.ViewModel
         [ObservableProperty]
         private Merchandising newMerch = new();
 
+        [ObservableProperty]
+        private List<string> subActionList = new()
+        {
+            "Vedi merch"
+        };
+
         public MerchVM()
         {
             _dbContext.ProgettiMusicali.Load();
@@ -33,21 +43,32 @@ namespace WpfDBMusicLabel.ViewModel
             Projects = _dbContext.ProgettiMusicali.Local.ToList();
             Producers = _dbContext.Produttori.Local.ToList();
             SelectedProd = Producers.First();
-            selectedProj = Projects.First();
+            CurrentSelectedProject = Projects.First();
         }
 
         public override bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
             {
+                case "Vedi merch":
+                    if (CurrentSelectedProject != null)
+                    {
+                        _dbContext.Entry(CurrentSelectedProject).Collection(p => p.Merchandisings).Load();
+                        Merch = CurrentSelectedProject.Merchandisings.ToList();
+                        return true;
+                    }
+                    Error = "Progetto musicale non selezionato";
+                    return false;
+
                 case "Inserisci":
                     NewMerch.IdProduttoreNavigation = SelectedProd;
-                    NewMerch.IdProgettoNavigation = SelectedProj;
+                    NewMerch.IdProgettoNavigation = CurrentSelectedProject;
                     _dbContext.Merchandisings.Local.Add(NewMerch);
                     SaveChanges();
                     ResetInsert();
                     ShowSuccess();
                     return true;
+
                 default:
                     Error = "Azione non implementata";
                     ShowError();
@@ -59,7 +80,10 @@ namespace WpfDBMusicLabel.ViewModel
         {
             NewMerch = new();
             SelectedProd = Producers.First();
-            SelectedProj = Projects.First();
+            CurrentSelectedProject = Projects.First();
         }
+
+        [RelayCommand]
+        private void SubAction() => ExecuteSubAction();
     }
 }
