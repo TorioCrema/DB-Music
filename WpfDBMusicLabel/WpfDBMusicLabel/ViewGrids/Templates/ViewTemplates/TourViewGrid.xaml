@@ -71,7 +71,7 @@
 				SelectedItem="{Binding CurrentSelectedTour, Mode=TwoWay}"
 				Margin="0,37,428,10" 
 				SelectionMode="Single"
-                 ItemTemplate="{StaticResource ListBoxTourTemplate}"
+                ItemTemplate="{StaticResource ListBoxTourTemplate}"
                 Width="NaN">
         </ListBox>
         <Label Name="FoundLabel" 

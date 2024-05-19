@@ -30,9 +30,16 @@
                 </DockPanel>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="ProjectsTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid Name="TourInsert"
-        Margin="0,1,240,0"
+          Margin="0,1,225,0"
           Visibility="{Binding VisibilityDict[Insert]}"
           Background="White">
         <Label Name="TourProjectLabel" 
@@ -54,17 +61,25 @@
                     Margin="14,399,0,0" VerticalAlignment="Top"
                     SelectedDate="{Binding DataConcerto}" Height="24" HorizontalAlignment="Left" Width="118"/>
         <TextBox
-                 Margin="112,20,0,0"
+                 Margin="150,54,0,0"
                  TextWrapping="Wrap"
                  Text="{Binding NewTourName}" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
         <Label x:Name="TourName" 
             Content="Nome Tour:" 
-            Margin="14,17,0,0" 
+            Margin="10,54,0,0" 
             FontSize="15" HorizontalAlignment="Left" Width="88" Height="30" VerticalAlignment="Top"/>
         <ListBox ItemsSource="{Binding NewConcerts}"
                  Margin="339,124,0,0"
                  ItemTemplate="{StaticResource ListBoxConcertTemplate}" HorizontalAlignment="Left" Width="162" Height="257" VerticalAlignment="Top"/>
-        <Button Content="Aggiungi Tour" HorizontalAlignment="Left" Margin="580,146,0,0" VerticalAlignment="Top" Width="104" Height="28"
-                Command="{Binding AddTourCommand}"/>
+        <Label Content="Progetto musicale: " FontSize="15" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Width="135" Height="30"/>
+        <ComboBox Name="ProjectsCB"
+            ItemTemplate="{StaticResource ProjectsTemplate}"
+            ItemsSource="{Binding Progetti}"
+            SelectedItem="{Binding SelectedProject}"
+            HorizontalAlignment="Left" 
+            Margin="150,19,0,0" 
+            VerticalAlignment="Top" 
+            Width="120" 
+            Height="30"/>
     </Grid>
 </UserControl>

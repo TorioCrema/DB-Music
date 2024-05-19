@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,6 +42,12 @@ namespace WpfDBMusicLabel.ViewModel
         private IEnumerable<Concerto>? concerti;
 
         [ObservableProperty]
+        private ObservableCollection<ProgettoMusicale> progetti;
+
+        [ObservableProperty]
+        private ProgettoMusicale selectedProject;
+
+        [ObservableProperty]
         private List<Luogo>? luoghi = new();
 
         [ObservableProperty]
@@ -61,7 +68,10 @@ namespace WpfDBMusicLabel.ViewModel
         {
             _dbContext = new();
             _dbContext.Tours.Load();
+            _dbContext.ProgettiMusicali.Load();
+            Progetti = _dbContext.ProgettiMusicali.Local.ToObservableCollection();
             Tours = _dbContext.Tours.Local.ToObservableCollection();
+            SelectedProject = Progetti.First();
         }
 
         [RelayCommand]
@@ -87,22 +97,6 @@ namespace WpfDBMusicLabel.ViewModel
             }
         }
 
-        [RelayCommand]
-        private void AddTour()
-        {
-            if (NewTourName != "")
-            {
-                _newTour.Nome = NewTourName;
-                _newTour.Concertos = NewConcerts;
-                _dbContext.Tours.Add(_newTour);
-                _dbContext.SaveChanges();
-            }
-            else
-            {
-                Error = "Inserire il nome del tour.";
-            }
-        }
-
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
@@ -117,6 +111,10 @@ namespace WpfDBMusicLabel.ViewModel
                     break;
             }
         }
+
+        [RelayCommand]
+        private void Confirm() => ExecuteSubAction();
+
         override public bool ExecuteSubAction()
         {
             switch (CurrentSubAction)
@@ -136,11 +134,15 @@ namespace WpfDBMusicLabel.ViewModel
                     return false;
 
                 case "Inserisci":
-                    if (NewTourName != null)
+                    if (NewTourName != "" && NewConcerts.Any())
                     {
                         _newTour.Nome = NewTourName;
                         _newTour.Concertos = NewConcerts;
                         _dbContext.Tours.Local.Add(_newTour);
+                        foreach (var c in NewConcerts)
+                        {
+                            SelectedProject.IdConcertos.Add(c);
+                        }
                         SaveChanges();
                         ResetInsert();
                         ShowSuccess();
@@ -163,6 +165,7 @@ namespace WpfDBMusicLabel.ViewModel
         protected override void ResetInsert()
         {
             NewTourName = "";
+            SelectedProject = Progetti.First();
             _newTour = new();
             NewConcerts = new();
             DataConcerto = DateTime.Now;
