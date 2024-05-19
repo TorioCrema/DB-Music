@@ -87,7 +87,7 @@
             Height="30" 
             FontSize="16"/>
         <ComboBox HorizontalAlignment="Left" Margin="174,118,0,0" VerticalAlignment="Top" Width="149" Height="30"
-                  SelectedItem="{Binding SelectedProd}" ItemTemplate="{StaticResource ProgettiTemplate}"
+                  SelectedItem="{Binding Produttore}" ItemTemplate="{StaticResource ProgettiTemplate}"
                   ItemsSource="{Binding Source={StaticResource ProduttoriTemplateSource}}"/>
         <Label Content="Produttore" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="112"/>
         <Label x:Name="ProdPriceLabel" 

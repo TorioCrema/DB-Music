@@ -25,7 +25,7 @@ namespace WpfDBMusicLabel.ViewModel
         private List<Produttore> producers;
 
         [ObservableProperty]
-        private Produttore selectedProd;
+        private Produttore produttore;
 
         [ObservableProperty]
         private Merchandising newMerch = new();
@@ -42,7 +42,7 @@ namespace WpfDBMusicLabel.ViewModel
             _dbContext.Produttori.Load();
             Projects = _dbContext.ProgettiMusicali.Local.ToList();
             Producers = _dbContext.Produttori.Local.ToList();
-            SelectedProd = Producers.First();
+            Produttore = Producers.First();
             CurrentSelectedProject = Projects.First();
         }
 
@@ -61,7 +61,7 @@ namespace WpfDBMusicLabel.ViewModel
                     return false;
 
                 case "Inserisci":
-                    NewMerch.IdProduttoreNavigation = SelectedProd;
+                    NewMerch.IdProduttoreNavigation = Produttore;
                     NewMerch.IdProgettoNavigation = CurrentSelectedProject;
                     _dbContext.Merchandisings.Local.Add(NewMerch);
                     SaveChanges();
@@ -79,11 +79,14 @@ namespace WpfDBMusicLabel.ViewModel
         protected override void ResetInsert()
         {
             NewMerch = new();
-            SelectedProd = Producers.First();
+            Produttore = Producers.First();
             CurrentSelectedProject = Projects.First();
         }
 
         [RelayCommand]
         private void SubAction() => ExecuteSubAction();
+
+        [RelayCommand]
+        private void Confirm() => ExecuteSubAction();
     }
 }

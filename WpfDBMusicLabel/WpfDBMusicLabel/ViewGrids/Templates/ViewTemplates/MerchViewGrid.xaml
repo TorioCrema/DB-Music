@@ -6,15 +6,47 @@
              xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ProjectTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" DockPanel.Dock="Left"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ProductTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="Prodotto: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding Descrizione}" FontWeight="Bold" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Prezzo: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding Prezzo}" FontWeight="Bold" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Quantità: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding QtaProdotta}" FontWeight="Bold" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Produttore: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding IdProduttoreNavigation.Nome}" FontWeight="Bold" />
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <Grid Name="MerchView"
         Margin="10,1,0,-1"
 		Visibility="{Binding VisibilityDict[View]}"
         Background="White">
-        <ListBox Name="ViewLB" 
-		ItemsSource="{Binding Progetti}"
-		SelectedItem="{Binding CurrentSelectedProject, Mode=TwoWay}"
-		Margin="10,37,563,10" 
-		SelectionMode="Single">
+        <ListBox Name="ViewLB"
+			ItemTemplate="{StaticResource ProjectTemplate}"
+			ItemsSource="{Binding Projects}"
+			SelectedItem="{Binding CurrentSelectedProject, Mode=TwoWay}"
+			Margin="10,37,563,10" 
+			SelectionMode="Single">
         </ListBox>
         <Label Name="FoundLabel" 
 		Content="Progetti musicali:" 
@@ -53,8 +85,9 @@
 		VerticalAlignment="Top" 
 		Width="132" 
 		FontSize="15"/>
-        <Label Content="{Binding Nome}" HorizontalAlignment="Left" Margin="446,43,0,0" VerticalAlignment="Top" Width="169"/>
-        <Label Content="{Binding Cognome}" HorizontalAlignment="Left" Margin="446,74,0,0" VerticalAlignment="Top" Width="169"/>
-        <Label Content="{Binding Ruolo}" HorizontalAlignment="Left" Margin="446,105,0,0" VerticalAlignment="Top" Width="169"/>
+        <ListBox Name="ProductsLB" 
+	        Margin="420,39,150,11"
+            ItemTemplate="{StaticResource ProductTemplate}"
+	        ItemsSource="{Binding Merch}"/>
     </Grid>
 </UserControl>
