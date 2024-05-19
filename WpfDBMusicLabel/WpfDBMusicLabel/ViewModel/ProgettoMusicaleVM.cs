@@ -96,6 +96,7 @@ namespace WpfDBMusicLabel.ViewModel
         {
             _dbContext.ProgettiMusicali.Load();
             _dbContext.Firmatari.Load();
+            _dbContext.Luoghi.Load();
             Firmatari = _dbContext.Firmatari.Local.ToList();
             ProgettiMusicali = _dbContext.ProgettiMusicali.Local.ToObservableCollection();
         }
