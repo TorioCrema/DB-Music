@@ -59,11 +59,11 @@
             <a:ProdottoViewGrid DataContext="{Binding ProdottoViewModel}"/>
             <a:TracciaViewGrid DataContext="{Binding TracciaViewModel}"/>
             <a:MerchViewGrid DataContext="{Binding MerchViewModel}" />
+            <a:ProduttoreViewGrid DataContext="{Binding ProduttoreViewModel}" />
         </Grid>
         <Grid Name="InsertGrid" 
               Margin="183,0,0,0"
               Visibility="{Binding InsertGridVisibility}">
-            <!-- TODO: MerchVM -->
             <it:TourInsertGrid DataContext="{Binding TourViewModel}" />
             <it:AlbumInsertGrid DataContext="{Binding AlbumViewModel}" />
             <it:TrackInsertGrid DataContext="{Binding TracciaViewModel}" />

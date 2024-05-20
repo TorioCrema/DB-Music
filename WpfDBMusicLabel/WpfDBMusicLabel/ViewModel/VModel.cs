@@ -26,6 +26,7 @@ namespace WpfDBMusicLabel.ViewModel
             "Tracce",
             "Merchandising",
             "Prodotto",
+            "Produttore",
             "Progetto Musicale"
         };
 
@@ -59,6 +60,9 @@ namespace WpfDBMusicLabel.ViewModel
 
         [ObservableProperty]
         private MerchVM merchViewModel;
+
+        [ObservableProperty]
+        private ProduttoreVM produttoreViewModel;
 
         [ObservableProperty]
         private ObservableCollection<ProgettoMusicale>? progetti;
@@ -131,6 +135,8 @@ namespace WpfDBMusicLabel.ViewModel
             _vmDict.Add("Tracce", TracciaViewModel);
             MerchViewModel = new();
             _vmDict.Add("Merchandising", MerchViewModel);
+            ProduttoreViewModel = new();
+            _vmDict.Add("Produttore", ProduttoreViewModel);
         }
 
         public bool SetCurrentAction(string action)

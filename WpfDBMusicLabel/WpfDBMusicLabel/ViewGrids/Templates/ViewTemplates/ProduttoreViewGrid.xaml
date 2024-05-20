@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates.ProduttoreViewGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfDBMusicLabel.ViewGrids.Templates.ViewTemplates"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ProduttoriTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="{Binding Nome}" DockPanel.Dock="Left"/>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ProductTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="Prodotto: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding Descrizione}" FontWeight="Bold" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Prezzo: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding Prezzo}" FontWeight="Bold" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Quantità: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding QtaProdotta}" FontWeight="Bold" />
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MerchTemplate">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="Prodotto: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding Descrizione}" FontWeight="Bold" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Costo fornitura: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding CostoFornituraUnitario}" FontWeight="Bold" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Quantità: " DockPanel.Dock="Left" />
+                    <TextBlock Text="{Binding QtaProdotta}" FontWeight="Bold" />
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Name="ProduttoreView"
+        Margin="10,1,0,-1"
+        Visibility="{Binding VisibilityDict[View]}"
+        Background="White">
+        <ListBox Name="ViewLB"
+	        ItemTemplate="{StaticResource ProduttoriTemplate}"
+	        ItemsSource="{Binding Produttori}"
+	        SelectedItem="{Binding CurrentSelectedProduttore, Mode=TwoWay}"
+	        Margin="10,37,563,10" 
+	        SelectionMode="Single">
+        </ListBox>
+        <Label Name="FoundLabel" 
+            Content="Produttori:" 
+            HorizontalAlignment="Left" 
+            Margin="0,4,0,0" 
+            VerticalAlignment="Top" 
+            Width="197" 
+            FontSize="15" 
+            HorizontalContentAlignment="Center" />
+        <Label Name="ActionsLabel" 
+            Content="Azioni disponibili:" 
+            HorizontalAlignment="Left" 
+            Margin="242,4,0,0" 
+            VerticalAlignment="Top" 
+            Width="133" 
+            FontSize="15"/>
+        <ComboBox Name="ActionsCB" 
+	        HorizontalAlignment="Left" 
+	        Margin="242,39,0,0" 
+	        VerticalAlignment="Top" 
+	        Width="133"
+	        ItemsSource="{Binding SubActionsList}"
+            SelectedItem="{Binding CurrentSubAction, Mode=TwoWay}"/>
+        <Button Name="ConfirmActionBtn" 
+            Content="Conferma Azione" 
+            HorizontalAlignment="Left" 
+            Margin="242,79,0,0" 
+            VerticalAlignment="Top" 
+            Width="133" 
+            Height="25"
+            Command="{Binding ConfirmCommand}"/>
+        <Label Name="ResultsLabel" 
+            Content="Risultati trovati:" 
+            HorizontalAlignment="Left" 
+            Margin="446,4,0,0" 
+            VerticalAlignment="Top" 
+            Width="132" 
+            FontSize="15"/>
+        <ListBox Name="ProductsLB" 
+            Margin="420,39,150,11"
+            Visibility="{Binding ResultVisibility[Prods]}"
+            ItemTemplate="{StaticResource ProductTemplate}"
+            ItemsSource="{Binding Merch}"/>
+        <ListBox x:Name="MerchLB" 
+            Margin="420,39,150,11"
+            Visibility="{Binding ResultVisibility[Merches]}"
+            ItemTemplate="{StaticResource MerchTemplate}"
+            ItemsSource="{Binding Merch}"/>
+
+    </Grid>
+</UserControl>
