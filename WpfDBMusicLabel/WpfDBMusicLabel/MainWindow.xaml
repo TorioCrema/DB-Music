@@ -56,7 +56,6 @@
             <a:ProgettoViewGrid DataContext="{Binding ProgettoViewModel}"/>
             <a:TourViewGrid DataContext="{Binding TourViewModel}"/>
             <a:FirmatarioGridView DataContext="{Binding FirmatarioViewModel}"/>
-            <a:ProdottoViewGrid DataContext="{Binding ProdottoViewModel}"/>
             <a:TracciaViewGrid DataContext="{Binding TracciaViewModel}"/>
             <a:MerchViewGrid DataContext="{Binding MerchViewModel}" />
             <a:ProduttoreViewGrid DataContext="{Binding ProduttoreViewModel}" />
