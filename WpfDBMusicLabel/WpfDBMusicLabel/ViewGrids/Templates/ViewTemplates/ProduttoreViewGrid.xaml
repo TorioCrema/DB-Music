@@ -23,7 +23,7 @@
                 </DockPanel>
                 <DockPanel>
                     <TextBlock Text="Prezzo: " DockPanel.Dock="Left" />
-                    <TextBlock Text="{Binding Prezzo}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding PrezzoStr}" FontWeight="Bold" />
                 </DockPanel>
                 <DockPanel>
                     <TextBlock Text="Quantità: " DockPanel.Dock="Left" />
@@ -40,7 +40,7 @@
                 </DockPanel>
                 <DockPanel>
                     <TextBlock Text="Costo fornitura: " DockPanel.Dock="Left" />
-                    <TextBlock Text="{Binding CostoFornituraUnitario}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding CostoFornituraUnitarioStr}" FontWeight="Bold" />
                 </DockPanel>
                 <DockPanel>
                     <TextBlock Text="Quantità: " DockPanel.Dock="Left" />
@@ -102,7 +102,7 @@
             Margin="420,39,150,11"
             Visibility="{Binding ResultVisibility[Prods]}"
             ItemTemplate="{StaticResource ProductTemplate}"
-            ItemsSource="{Binding Merch}"/>
+            ItemsSource="{Binding Prodotti}"/>
         <ListBox x:Name="MerchLB" 
             Margin="420,39,150,11"
             Visibility="{Binding ResultVisibility[Merches]}"

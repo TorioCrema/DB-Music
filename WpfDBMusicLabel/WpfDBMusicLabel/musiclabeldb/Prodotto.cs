@@ -13,6 +13,8 @@ public partial class Prodotto
 
     public uint Prezzo { get; set; }
 
+    public string PrezzoStr { get => (Prezzo / 100).ToString("0.00") + "€"; }
+
     public uint QtaProdotta { get; set; }
 
     public uint CostoFornitura { get; set; }

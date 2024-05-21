@@ -15,6 +15,8 @@ public partial class Merchandising
 
     public uint CostoFornituraUnitario { get; set; }
 
+   public string CostoFornituraUnitarioStr { get => (CostoFornituraUnitario / 100).ToString("0.00") + "€"; }
+
     public uint IdProgetto { get; set; }
 
     public uint IdProduttore { get; set; }
