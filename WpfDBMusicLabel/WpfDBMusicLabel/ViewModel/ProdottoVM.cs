@@ -103,6 +103,7 @@ namespace WpfDBMusicLabel.ViewModel
                             NewProd.Formato = Giri33 ? (byte)33 : (byte)45;
                         }
                         _dbContext.Prodotti.Local.Add(NewProd);
+                        SelectedProducer.NumForniture++;
                         SaveChanges();
                         ResetInsert();
                         ShowSuccess();

@@ -64,6 +64,7 @@ namespace WpfDBMusicLabel.ViewModel
                     NewMerch.IdProduttoreNavigation = Produttore;
                     NewMerch.IdProgettoNavigation = CurrentSelectedProject;
                     _dbContext.Merchandisings.Local.Add(NewMerch);
+                    Produttore.NumForniture++;
                     SaveChanges();
                     ResetInsert();
                     ShowSuccess();
