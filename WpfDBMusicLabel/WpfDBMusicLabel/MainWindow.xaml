@@ -78,13 +78,6 @@
                     Width="126" 
                     Margin="578,218,0,0"
                     Command="{Binding ExecuteSubActionCommand}"/>
-            <Button Name="CancelBtn" 
-                    Content="Annulla" 
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Top" 
-                    Height="37" 
-                    Width="126" 
-                    Margin="578,268,0,0"/>
         </Grid>
     </Grid>
 </Window>
